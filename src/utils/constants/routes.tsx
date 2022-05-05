@@ -1,9 +1,9 @@
-import { Home } from '../../pages/home_page';
+import Home from '../../pages/home_page';
 import { Navigate } from 'react-router-dom';
-import { NotFound } from '../../pages/not_found_page';
+import NotFound from '../../pages/not_found_page';
 import { IRouterRoutes } from '../../interfaces/baseInterfaces';
 
-export const routes: IRouterRoutes = {
+const routes: IRouterRoutes = {
   public: [
     {
       path: '/home',
@@ -37,3 +37,5 @@ export const routes: IRouterRoutes = {
     },
   ],
 };
+
+export default routes;

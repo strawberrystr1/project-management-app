@@ -1,5 +1,5 @@
-import React from 'react';
-
-export const Home = () => {
+const Home = () => {
   return <div>index</div>;
 };
+
+export default Home;
