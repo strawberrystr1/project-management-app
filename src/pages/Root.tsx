@@ -6,11 +6,11 @@ const Root = () => {
 
   return (
     <Routes>
-      {routes.public.map((route, i) => (
+      {routes.public.map((route) => (
         <Route path={route.path} element={route.element} key={route.path} />
       ))}
       {isLogged &&
-        routes.private.map((route, i) => (
+        routes.private.map((route) => (
           <Route path={route.path} element={route.element} key={route.path} />
         ))}
     </Routes>
