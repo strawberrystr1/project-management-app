@@ -9,11 +9,9 @@ i18n
   .use(initReactI18next)
   .init({
     detection: {
-      order: ['localStorage', 'cookies'],
-      caches: ['localStorage', 'cookies'],
+      order: ['localStorage'],
     },
 
-    lng: 'en',
     fallbackLng: 'en',
     debug: true,
 
