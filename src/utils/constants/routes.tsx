@@ -1,6 +1,6 @@
-import Home from '../../pages/home_page';
+import Home from '../../pages/home_page/HomePage';
 import { Navigate } from 'react-router-dom';
-import NotFound from '../../pages/not_found_page';
+import NotFound from '../../pages/not_found_page/NotFoundPage';
 import { IRouterRoutes } from '../../interfaces/baseInterfaces';
 
 const routes: IRouterRoutes = {
