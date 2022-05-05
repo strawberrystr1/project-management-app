@@ -1,10 +1,10 @@
 import { Container } from '@mui/material';
-import HeaderStyled from './styles';
+import styles from './style.module.scss';
 
 export const Header = () => {
   return (
-    <HeaderStyled maxWidth={false}>
+    <Container maxWidth={false} component="header" className={styles.HeaderWrapper}>
       <Container maxWidth="xl">header</Container>
-    </HeaderStyled>
+    </Container>
   );
 };

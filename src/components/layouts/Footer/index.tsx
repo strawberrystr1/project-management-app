@@ -1,10 +1,10 @@
 import { Container } from '@mui/material';
-import FooterStyled from './styles';
+import styles from './style.module.scss';
 
 export const Footer = () => {
   return (
-    <FooterStyled maxWidth={false}>
+    <Container maxWidth={false} component="footer" className={styles.FooterWrapper}>
       <Container maxWidth="xl">footer</Container>
-    </FooterStyled>
+    </Container>
   );
 };
