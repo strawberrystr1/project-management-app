@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   AppBar,
   Avatar,
@@ -17,11 +18,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitch from './components/LanguageSwitch';
 import styles from './style.module.scss';
-import React, { useState } from 'react';
 import { stringAvatar } from '../../../utils/functions';
 
 const Header = () => {
-  const isLogged = false; // replace this for state variable
+  const isLogged = true; // replace this for state variable
 
   const { t } = useTranslation();
   const trigger = useScrollTrigger({ disableHysteresis: true });

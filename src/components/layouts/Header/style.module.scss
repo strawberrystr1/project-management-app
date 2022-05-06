@@ -4,15 +4,7 @@
 }
 
 .small{
-  // display: none;
-  // height: 30px;
   @media (min-width: 600px) {
-    min-height: 48px;
+    min-height: 48px !important;
   }
-}
-
-
-.large {
-  // display: block;
-  // height: 80px;
 }
