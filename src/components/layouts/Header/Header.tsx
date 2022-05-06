@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitch from './components/LanguageSwitch';
 import styles from './style.module.scss';
 import React, { useState } from 'react';
 
@@ -32,6 +34,7 @@ const userSettings = [
 ];
 
 const Header = () => {
+  const { t } = useTranslation();
   const isLogged = true; // replace this for state variable
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -63,6 +66,8 @@ const Header = () => {
       <AppBar position="fixed">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
+            <span>{t('example.header')}</span>
+            <LanguageSwitch />
             {isLogged && (
               <Box sx={{ flexGrow: 1, display: 'flex' }}>
                 <Button
