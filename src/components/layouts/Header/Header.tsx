@@ -7,9 +7,11 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Slide,
   Toolbar,
   Tooltip,
   Typography,
+  useScrollTrigger,
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
@@ -18,24 +20,24 @@ import LanguageSwitch from './components/LanguageSwitch';
 import styles from './style.module.scss';
 import React, { useState } from 'react';
 
-// const titleLogo = 'PROJECTS';
-
-const userSettings = [
-  {
-    text: 'edit profile',
-    logo: <EditIcon fontSize="small" />,
-    handleClick: () => console.log('edit'),
-  },
-  {
-    text: 'Logout',
-    logo: <LogoutIcon fontSize="small" />,
-    handleClick: () => console.log('logOut'),
-  },
-];
-
 const Header = () => {
-  const { t } = useTranslation();
   const isLogged = true; // replace this for state variable
+
+  const { t } = useTranslation();
+  const trigger = useScrollTrigger();
+
+  const userSettings = [
+    {
+      text: t('header.editProfile'),
+      logo: <EditIcon fontSize="small" />,
+      handleClick: () => console.log('edit'), //todo
+    },
+    {
+      text: t('header.logOutProfile'),
+      logo: <LogoutIcon fontSize="small" />,
+      handleClick: () => console.log('logOut'), //todo
+    },
+  ];
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -52,42 +54,50 @@ const Header = () => {
     } else {
       nameText = name[0];
     }
-    return {
-      sx: {
-        bgcolor: 'white',
-      },
-      children: `${nameText}`,
-    };
+    return nameText;
+  };
+
+  const btnStyle = {
+    color: 'white',
+    display: 'block',
+    '&:hover': { color: '#c2c2c2' },
   };
 
   return (
-    <>
-      {/* <Container maxWidth={false} component="header" className={styles.headerWrapper}> */}
-      <AppBar position="fixed">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <span>{t('example.header')}</span>
-            <LanguageSwitch />
-            {isLogged && (
-              <Box sx={{ flexGrow: 1, display: 'flex' }}>
-                <Button
-                  onClick={() => console.log('creating new desk')}
-                  sx={{
-                    my: 2,
-                    color: 'white',
-                    display: 'block',
-                    '&:hover': { color: '#c2c2c2' },
-                  }}
-                >
-                  Create new board
-                </Button>
-              </Box>
-            )}
+    <AppBar position="fixed">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          {isLogged && (
+            <Box sx={{ flexGrow: 1, display: 'flex' }}>
+              <Button onClick={() => console.log('creating new desk')} sx={btnStyle}>
+                {t('header.createBoard')}
+              </Button>
+            </Box>
+          )}
+          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '20px', ml: 'auto' }}>
+            {!trigger && <LanguageSwitch />}
+
+            {/* className={trigger ? styles.small : styles.large} */}
             {isLogged ? (
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="User settings">
+                <Tooltip title={t('header.userSettings')}>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar {...stringAvatar('Kent Dodos')} />
+                    <Avatar
+                      sx={
+                        trigger
+                          ? {
+                              bgcolor: 'white',
+                              width: 30,
+                              height: 30,
+                              fontSize: '0.5em',
+                            }
+                          : {
+                              bgcolor: 'white',
+                            }
+                      }
+                    >
+                      {stringAvatar('Kent Dodos')}
+                    </Avatar>
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -129,28 +139,18 @@ const Header = () => {
               </Box>
             ) : (
               <Box sx={{ flexGrow: 1, display: 'flex' }}>
-                <Button
-                  onClick={() => console.log('creating new desk')}
-                  sx={{
-                    my: 2,
-                    color: 'white',
-                    display: 'block',
-                    '&:hover': { color: '#c2c2c2' },
-                  }}
-                >
-                  Create desk
+                <Button onClick={() => console.log('Sign in')} sx={btnStyle}>
+                  {t('header.signInProfile')}
                 </Button>
-                <div>Sign in</div>
-                <div>/</div>
-                <div>Sign up</div>
+                <Button onClick={() => console.log('Sign up')} sx={btnStyle}>
+                  {t('header.signUpProfile')}
+                </Button>
               </Box>
             )}
-          </Toolbar>
-        </Container>
-      </AppBar>
-      <Toolbar />
-      {/* </Container> */}
-    </>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 

@@ -4,5 +4,13 @@
   },
   "example": {
     "header": "Localization example"
+  },
+  "header": {
+    "createBoard": "Create board",
+    "userSettings": "User settings",
+    "editProfile": "Edit",
+    "logOutProfile": "Log out",
+    "signInProfile": "sign in",
+    "signUpProfile": "sign up"
   }
 }
