@@ -7,14 +7,17 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 const CreateBoard = () => {
+  const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
       boardName: '',
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
+      handleClose();
     },
   });
 
@@ -34,11 +37,9 @@ const CreateBoard = () => {
         Create Board
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create new board</DialogTitle>
+        <DialogTitle>{t('forms.new_board.title')}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To create new board, please enter the name for your board.
-          </DialogContentText>
+          <DialogContentText>{t('forms.new_board.description')}</DialogContentText>
           <form onSubmit={formik.handleSubmit}>
             <TextField
               autoFocus
@@ -47,7 +48,7 @@ const CreateBoard = () => {
               margin="dense"
               id="boardName"
               name="boardName"
-              label="Board name"
+              label={t('forms.new_board.label')}
               variant="standard"
               value={formik.values.boardName}
               onChange={formik.handleChange}
@@ -56,10 +57,10 @@ const CreateBoard = () => {
             />
             <DialogActions>
               <Button onClick={handleClose} size="small" variant="contained" color="secondary">
-                Cancel
+                {t('buttons.cancel')}
               </Button>
-              <Button onClick={handleClose} type="submit" size="small" variant="contained">
-                Submit
+              <Button type="submit" size="small" variant="contained">
+                {t('buttons.submit')}
               </Button>
             </DialogActions>
           </form>
