@@ -33,6 +33,15 @@ const themeOptions: ThemeOptions = {
   shape: {
     borderRadius: 6,
   },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: '#226952',
+        },
+      },
+    },
+  },
 };
 
 export const theme = createTheme(themeOptions);
