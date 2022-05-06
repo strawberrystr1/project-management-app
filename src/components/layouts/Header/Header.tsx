@@ -7,7 +7,6 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Slide,
   Toolbar,
   Tooltip,
   Typography,
@@ -19,12 +18,13 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitch from './components/LanguageSwitch';
 import styles from './style.module.scss';
 import React, { useState } from 'react';
+import { stringAvatar } from '../../../utils/functions';
 
 const Header = () => {
-  const isLogged = true; // replace this for state variable
+  const isLogged = false; // replace this for state variable
 
   const { t } = useTranslation();
-  const trigger = useScrollTrigger();
+  const trigger = useScrollTrigger({ disableHysteresis: true });
 
   const userSettings = [
     {
@@ -47,110 +47,102 @@ const Header = () => {
     setAnchorElUser(null);
   };
 
-  const stringAvatar = (name: string) => {
-    let nameText;
-    if (name.split(' ').length > 1) {
-      nameText = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
-    } else {
-      nameText = name[0];
-    }
-    return nameText;
-  };
-
   const btnStyle = {
     color: 'white',
-    display: 'block',
     '&:hover': { color: '#c2c2c2' },
   };
 
   return (
-    <AppBar position="fixed">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {isLogged && (
-            <Box sx={{ flexGrow: 1, display: 'flex' }}>
-              <Button onClick={() => console.log('creating new desk')} sx={btnStyle}>
-                {t('header.createBoard')}
-              </Button>
-            </Box>
-          )}
-          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '20px', ml: 'auto' }}>
-            {!trigger && <LanguageSwitch />}
-
-            {/* className={trigger ? styles.small : styles.large} */}
-            {isLogged ? (
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title={t('header.userSettings')}>
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      sx={
-                        trigger
-                          ? {
-                              bgcolor: 'white',
-                              width: 30,
-                              height: 30,
-                              fontSize: '0.5em',
-                            }
-                          : {
-                              bgcolor: 'white',
-                            }
-                      }
-                    >
-                      {stringAvatar('Kent Dodos')}
-                    </Avatar>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {userSettings.map((setting) => (
-                    <MenuItem
-                      key={setting.text}
-                      onClick={() => {
-                        setting.handleClick();
-                        handleCloseUserMenu();
-                      }}
-                    >
-                      {setting.logo}
-                      <Typography
-                        sx={{
-                          marginLeft: 2,
-                        }}
-                        textAlign="center"
-                      >
-                        {setting.text}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
-            ) : (
+    <>
+      <AppBar position="fixed">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters className={trigger ? styles.small : ''}>
+            {isLogged && (
               <Box sx={{ flexGrow: 1, display: 'flex' }}>
-                <Button onClick={() => console.log('Sign in')} sx={btnStyle}>
-                  {t('header.signInProfile')}
-                </Button>
-                <Button onClick={() => console.log('Sign up')} sx={btnStyle}>
-                  {t('header.signUpProfile')}
+                <Button onClick={() => console.log('creating new desk')} sx={btnStyle}>
+                  {t('header.createBoard')}
                 </Button>
               </Box>
             )}
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '20px', ml: 'auto' }}>
+              {!trigger && <LanguageSwitch />}
+
+              {/* className={trigger ? styles.small : styles.large} */}
+              {isLogged ? (
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title={t('header.userSettings')}>
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        sx={
+                          trigger
+                            ? {
+                                bgcolor: 'white',
+                                width: 30,
+                                height: 30,
+                                fontSize: '0.5em',
+                              }
+                            : {
+                                bgcolor: 'white',
+                              }
+                        }
+                      >
+                        {stringAvatar('Kent Dodos')}
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {userSettings.map((setting) => (
+                      <MenuItem
+                        key={setting.text}
+                        onClick={() => {
+                          setting.handleClick();
+                          handleCloseUserMenu();
+                        }}
+                      >
+                        {setting.logo}
+                        <Typography
+                          sx={{
+                            marginLeft: 2,
+                          }}
+                          textAlign="center"
+                        >
+                          {setting.text}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              ) : (
+                <Box sx={{ flexGrow: 1, display: 'flex' }}>
+                  <Button onClick={() => console.log('Sign in')} sx={btnStyle}>
+                    {t('header.signInProfile')}
+                  </Button>
+                  <Button onClick={() => console.log('Sign up')} sx={btnStyle}>
+                    {t('header.signUpProfile')}
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Toolbar />
+    </>
   );
 };
 
