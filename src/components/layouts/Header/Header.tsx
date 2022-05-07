@@ -1,6 +1,7 @@
 import { Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import CreateBoard from '../../CreateBoard';
+import CreateBoardForm from '../../CreateBoardForm';
+import DialogButton from '../DialogButton';
 import LanguageSwitch from './components/LanguageSwitch';
 import styles from './style.module.scss';
 
@@ -13,7 +14,7 @@ const Header = () => {
         <Container maxWidth="xs">
           <span>{t('example.header')}</span>
           <LanguageSwitch />
-          <CreateBoard />
+          <DialogButton type="new_board" form={(h) => <CreateBoardForm handleClose={h} />} />
         </Container>
       </Container>
     </Container>

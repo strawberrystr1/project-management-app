@@ -4,14 +4,14 @@ const themeOptions: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
-      main: '#226952',
+      main: '#689f38',
     },
     secondary: {
       main: '#868d92',
     },
     background: {
       default: '#272b30',
-      paper: '#3a3f44',
+      paper: '#020202',
     },
     error: {
       main: '#ef6a67',
@@ -27,7 +27,7 @@ const themeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: 'Droid Sans',
+    fontFamily: 'sans-serif',
   },
   spacing: 7,
   shape: {
