@@ -2,11 +2,7 @@ import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-
-const btnStyle = {
-  color: 'white',
-  '&:hover': { color: '#c2c2c2' },
-};
+import styles from '../style.module.scss';
 
 const UnAuthLogo = () => {
   const { t } = useTranslation();
@@ -22,10 +18,10 @@ const UnAuthLogo = () => {
 
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
-      <Button onClick={signIn} sx={btnStyle}>
+      <Button onClick={signIn} className={styles.btnStyle}>
         {t('header.signInProfile')}
       </Button>
-      <Button onClick={signUn} sx={btnStyle}>
+      <Button onClick={signUn} className={styles.btnStyle}>
         {t('header.signUpProfile')}
       </Button>
     </Box>

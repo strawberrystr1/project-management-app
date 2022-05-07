@@ -1,12 +1,7 @@
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-const btnStyle = {
-  color: 'white',
-  '&:hover': { color: '#c2c2c2' },
-};
+import styles from '../style.module.scss';
 
 const CreateBoardBtn = () => {
   const { t } = useTranslation();
@@ -17,7 +12,7 @@ const CreateBoardBtn = () => {
 
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
-      <Button onClick={handleClick} sx={btnStyle}>
+      <Button onClick={handleClick} className={styles.btnStyle}>
         {t('header.createBoard')}
       </Button>
     </Box>
