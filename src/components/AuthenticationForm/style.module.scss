@@ -3,6 +3,10 @@
   margin: 10px 0;
 }
 
+.mr-bot {
+  margin-bottom: 20px !important;
+}
+
 .boxWrapper {
   display: flex;
   justify-content: space-between;
@@ -16,13 +20,13 @@
 }
 
 .input {
-  margin-top: 20px !important;
+  height: 80px;
   width: 70%;
 }
 
 .button {
   &.override {
-    margin-top: 20px;
+    margin-top: 10px;
     height: 40px;
     font-size: 18px;
     width: 100%;

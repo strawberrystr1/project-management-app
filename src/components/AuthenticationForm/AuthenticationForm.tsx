@@ -2,7 +2,7 @@ import { Avatar, Button, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styles from './style.module.scss';
 import { Box } from '@mui/system';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import { Link, useLocation } from 'react-router-dom';
 import validationSchema from '../../utils/helpers/validationSchema';
@@ -10,7 +10,7 @@ import { IFromField, IInitialFormValues } from '../../interfaces/formInterfaces'
 
 const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const { pathname } = useLocation();
-  const [login, setLogin] = useState(pathname.includes('up'));
+  const [login] = useState(pathname.includes('up'));
 
   const initialValues = fields.reduce<IInitialFormValues>((acc, item) => {
     acc[item] = '';
@@ -28,7 +28,7 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
       <Avatar alt="auth-logo" color="primary" className={styles.avatar}>
         <LockOutlinedIcon />
       </Avatar>
-      <Typography fontSize={26} variant="h5">
+      <Typography fontSize={26} variant="h5" className={styles['mr-bot']}>
         {login ? 'Sign Up' : 'Sign in'}
       </Typography>
       {fields.map((item) => (
