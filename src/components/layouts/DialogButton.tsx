@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next';
 type Props = {
   form: (h: () => void) => JSX.Element; // form component
   type: string; //translation type
+  className: string;
 };
 
-const DialogButton = ({ form, type }: Props) => {
+const DialogButton = ({ form, type, className }: Props) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
@@ -22,7 +23,7 @@ const DialogButton = ({ form, type }: Props) => {
 
   return (
     <>
-      <Button variant="contained" onClick={handleClickOpen}>
+      <Button onClick={handleClickOpen} className={className}>
         {t(`buttons.${type}`)}
       </Button>
       <Dialog open={open} onClose={handleClose}>

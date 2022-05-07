@@ -16,5 +16,12 @@
     "submit": "Подтвердить",
     "cancel": "Отмена",
     "new_board": "Создать доску"
+  },
+  "header": {
+    "userSettings": "Настройки пользователя",
+    "editProfile": "Редактировать",
+    "logOutProfile": "Выйти",
+    "signInProfile": "Войти",
+    "signUpProfile": "Регистрация"
   }
 }

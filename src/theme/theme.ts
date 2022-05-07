@@ -1,6 +1,6 @@
 import { ThemeOptions, createTheme } from '@mui/material';
 
-const themeOptions: ThemeOptions = {
+export const themeOptions: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
@@ -32,6 +32,15 @@ const themeOptions: ThemeOptions = {
   spacing: 7,
   shape: {
     borderRadius: 6,
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: '#226952',
+        },
+      },
+    },
   },
 };
 

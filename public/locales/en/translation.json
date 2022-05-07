@@ -16,5 +16,12 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "new_board": "Create board"
+  },
+  "header": {
+    "userSettings": "User settings",
+    "editProfile": "Edit",
+    "logOutProfile": "Log out",
+    "signInProfile": "sign in",
+    "signUpProfile": "sign up"
   }
 }

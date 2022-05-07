@@ -1,23 +1,36 @@
-import { Container } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import CreateBoardForm from '../../CreateBoardForm';
-import DialogButton from '../DialogButton';
+import { AppBar, Box, Container, Toolbar, useScrollTrigger } from '@mui/material';
 import LanguageSwitch from './components/LanguageSwitch';
 import styles from './style.module.scss';
+import AuthLogo from './components/AuthLogo';
+import UnAuthLogo from './components/UnAuthLogo';
+import CreateBoardForm from '../../CreateBoardForm';
+import DialogButton from '../DialogButton';
 
 const Header = () => {
-  const { t } = useTranslation();
+  const isLogged = true; // replace this for state variable
+  const trigger = useScrollTrigger({ disableHysteresis: true });
+
   return (
-    <Container maxWidth={false} component="header" className={styles.headerWrapper}>
-      <Container maxWidth="xl">
-        header
-        <Container maxWidth="xs">
-          <span>{t('example.header')}</span>
-          <LanguageSwitch />
-          <DialogButton type="new_board" form={(h) => <CreateBoardForm handleClose={h} />} />
+    <>
+      <AppBar position="fixed">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters className={trigger ? styles.small : ''}>
+            {isLogged && (
+              <DialogButton
+                type="new_board"
+                className={styles.btnStyle}
+                form={(h) => <CreateBoardForm handleClose={h} />}
+              />
+            )}
+            <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '20px', ml: 'auto' }}>
+              {!trigger && <LanguageSwitch />}
+              {isLogged ? <AuthLogo /> : <UnAuthLogo />}
+            </Box>
+          </Toolbar>
         </Container>
-      </Container>
-    </Container>
+      </AppBar>
+      <Toolbar />
+    </>
   );
 };
 
