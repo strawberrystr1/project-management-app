@@ -32,7 +32,7 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
         error={formik.touched.boardName && Boolean(formik.errors.boardName)}
         helperText={formik.touched.boardName && formik.errors.boardName}
       />
-      <DialogControls handleClose={handleClose} />
+      <DialogControls onCancel={handleClose} />
     </form>
   );
 };
