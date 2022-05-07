@@ -2,3 +2,17 @@
   height: 80px;
   background-color: rgb(65, 1, 44);
 }
+
+.small{
+  @media (min-width: 600px) {
+    min-height: 48px !important;
+  }
+}
+
+.btnStyle{
+  color: white !important;
+
+  &:hover {
+    color: #c2c2c2 !important;
+  }
+}
