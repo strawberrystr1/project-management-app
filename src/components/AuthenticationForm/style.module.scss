@@ -1,0 +1,48 @@
+.avatar {
+  background-color: rgb(185, 172, 190);
+  margin: 10px 0;
+}
+
+.mr-bot {
+  margin-bottom: 20px !important;
+}
+
+.boxWrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  &.buttonsWrapper {
+    width: 70%;
+  }
+}
+
+.input {
+  height: 80px;
+  width: 70%;
+}
+
+.button {
+  &.override {
+    margin-top: 10px;
+    height: 40px;
+    font-size: 18px;
+    width: 100%;
+  }
+}
+
+.buttonView {
+  &.override {
+    align-self: flex-end;
+    margin-top: 10px;
+    text-transform: none;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.699);
+  }
+}
+
+.label {
+  text-transform: capitalize;
+}
