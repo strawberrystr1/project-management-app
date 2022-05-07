@@ -14,6 +14,14 @@
   },
   "buttons": {
     "submit": "Подтвердить",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+  },
+  "header": {
+    "createBoard": "Создать доску",
+    "userSettings": "Настройки пользователя",
+    "editProfile": "Редактировать",
+    "logOutProfile": "Выйти",
+    "signInProfile": "Войти",
+    "signUpProfile": "Регистрация"
   }
 }

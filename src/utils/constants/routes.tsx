@@ -2,6 +2,7 @@ import Home from '../../pages/home_page/HomePage';
 import { Navigate } from 'react-router-dom';
 import NotFound from '../../pages/not_found_page/NotFoundPage';
 import { IRouterRoutes } from '../../interfaces/baseInterfaces';
+import { SignInPage, SignUpPage } from '../../pages/authentication_page';
 
 const routes: IRouterRoutes = {
   public: [
@@ -14,8 +15,12 @@ const routes: IRouterRoutes = {
       element: <Navigate to="/home" replace />,
     },
     {
+      path: '/sign-up',
+      element: <SignUpPage />,
+    },
+    {
       path: '/sign-in',
-      element: <NotFound />,
+      element: <SignInPage />,
     },
     {
       path: '*',
