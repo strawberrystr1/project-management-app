@@ -42,7 +42,7 @@ const Home = () => {
           Our team
         </Typography>
         <Container maxWidth="lg" className={styles.container}>
-          {team.map((member) => (
+          {team.map((member, i) => (
             <Box key={member.name} className={styles['member-wrapper']}>
               <Box className={styles['member']}>
                 <Avatar src={person} alt="person avatar" className={styles['member-avatar']} />
@@ -58,7 +58,7 @@ const Home = () => {
                   </Typography>
                 </Box>
               </Box>
-              <Divider sx={{ background: 'white' }} />
+              {i !== team.length - 1 && <Divider sx={{ background: 'white' }} />}
             </Box>
           ))}
         </Container>
