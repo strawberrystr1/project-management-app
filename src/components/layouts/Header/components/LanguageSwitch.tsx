@@ -13,7 +13,13 @@ const LanguageSwitch = () => {
   };
 
   return (
-    <ToggleButtonGroup value={lang} exclusive onChange={handleToggle} aria-label="text alignment">
+    <ToggleButtonGroup
+      value={lang}
+      size="small"
+      exclusive
+      onChange={handleToggle}
+      aria-label="text alignment"
+    >
       <ToggleButton value="en" aria-label="left aligned">
         EN
       </ToggleButton>
