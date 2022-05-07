@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 type Props = {
   form: (h: () => void) => JSX.Element; // form component
   type: string; //translation type
-  className: string;
+  className?: string;
 };
 
 const DialogButton = ({ form, type, className }: Props) => {
