@@ -4,5 +4,13 @@
   },
   "example": {
     "header": "Пример локализации"
+  },
+  "header": {
+    "createBoard": "Создать доску",
+    "userSettings": "Настройки пользователя",
+    "editProfile": "Редактировать",
+    "logOutProfile": "Выйти",
+    "signInProfile": "Войти",
+    "signUpProfile": "Регистрация"
   }
 }
