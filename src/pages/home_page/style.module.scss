@@ -5,7 +5,7 @@
 }
 
 .container {
-  display: flex;
+  display: flex !important;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -58,10 +58,12 @@
   }
 
   &-avatar {
-    min-width: 250px;
-    height: auto;
-    border-radius: 50%;
-    background-color: #fff;
+    &.override {
+      min-width: 250px;
+      height: auto;
+      border-radius: 50%;
+      background-color: #fff;
+    }
   }
 
   &-info {

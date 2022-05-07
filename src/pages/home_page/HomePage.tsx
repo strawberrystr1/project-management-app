@@ -45,7 +45,11 @@ const Home = () => {
           {team.map((member, i) => (
             <Box key={member.name} className={styles['member-wrapper']}>
               <Box className={styles['member']}>
-                <Avatar src={person} alt="person avatar" className={styles['member-avatar']} />
+                <Avatar
+                  src={person}
+                  alt="person avatar"
+                  className={`${styles['member-avatar']} ${styles.override}`}
+                />
                 <Box className={styles['member-info']}>
                   <a href={member.github}>
                     <img src={githubIcon} alt="link icon" />
