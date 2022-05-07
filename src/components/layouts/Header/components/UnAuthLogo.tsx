@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const btnStyle = {
   color: 'white',
@@ -9,13 +10,14 @@ const btnStyle = {
 
 const UnAuthLogo = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const signIn = () => {
-    console.log('Sign in');
+    navigate(`/sign-ip`);
   };
 
   const signUn = () => {
-    console.log('Sign up');
+    navigate(`/sign-up`);
   };
 
   return (
