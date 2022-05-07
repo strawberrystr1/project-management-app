@@ -1,3 +1,4 @@
-import AuthenticationPage from './AuthenticationPage';
+import SignUpPage from './SignUpPage';
+import SignInPage from './SignInPage';
 
-export default AuthenticationPage;
+export { SignUpPage, SignInPage };

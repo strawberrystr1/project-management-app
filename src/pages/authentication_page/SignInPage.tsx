@@ -1,13 +1,14 @@
 import { Container } from '@mui/material';
 import AuthenticationForm from '../../components/AuthenticationForm';
+import { signinFields } from '../../utils/constants/formFields';
 import styles from './style.module.scss';
 
-const AuthenticationPage = () => {
+const SignInPage = () => {
   return (
     <Container maxWidth="sm" className={styles.authContainer}>
-      <AuthenticationForm />
+      <AuthenticationForm fields={signinFields} />
     </Container>
   );
 };
 
-export default AuthenticationPage;
+export default SignInPage;

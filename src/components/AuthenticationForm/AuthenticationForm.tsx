@@ -6,34 +6,20 @@ import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { Link, useLocation } from 'react-router-dom';
 import validationSchema from '../../utils/helpers/validationSchema';
+import { IFromField, IInitialFormValues } from '../../interfaces/formInterfaces';
 
-const AuthenticationForm = () => {
-  const [login, setLogin] = useState(false);
-
+const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const { pathname } = useLocation();
+  const [login, setLogin] = useState(pathname.includes('up'));
 
-  useEffect(() => {
-    if (pathname.includes('sign-in')) {
-      setLogin(true);
-    } else {
-      setLogin(false);
-    }
-  }, [pathname]);
-
-  const initialValues = !login
-    ? {
-        login: '',
-        password: '',
-        name: '',
-      }
-    : {
-        login: '',
-        password: '',
-      };
+  const initialValues = fields.reduce<IInitialFormValues>((acc, item) => {
+    acc[item] = '';
+    return acc;
+  }, {});
 
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema: login ? validationSchema : validationSchema.omit(['name']),
     onSubmit: (values) => console.log(values),
   });
 
@@ -43,49 +29,33 @@ const AuthenticationForm = () => {
         <LockOutlinedIcon />
       </Avatar>
       <Typography fontSize={26} variant="h5">
-        Sign Up
+        {login ? 'Sign Up' : 'Sign in'}
       </Typography>
-      {!login && (
+      {fields.map((item) => (
         <TextField
           className={styles.input}
-          id="name"
-          name="name"
-          label="Name"
-          value={formik.values.name}
+          classes={{
+            root: styles.label,
+          }}
+          id={item}
+          name={item}
+          label={item}
+          value={formik.values[item]}
           onChange={formik.handleChange}
-          error={formik.errors.name ? true : false}
-          helperText={formik.errors.name ? formik.errors.name : ''}
+          error={formik.errors[item] ? true : false}
+          helperText={formik.errors[item] ? formik.errors[item] : ''}
+          key={item}
         />
-      )}
-      <TextField
-        className={styles.input}
-        id="login"
-        name="login"
-        label="Login"
-        value={formik.values.login}
-        onChange={formik.handleChange}
-        error={formik.errors.login ? true : false}
-        helperText={formik.errors.login ? formik.errors.login : ''}
-      />
-      <TextField
-        className={styles.input}
-        id="password"
-        name="password"
-        label="Password"
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        error={formik.errors.password ? true : false}
-        helperText={formik.errors.password ? formik.errors.password : ''}
-      />
+      ))}
       <Box className={`${styles.boxWrapper} ${styles.buttonsWrapper}`}>
         <Button type="submit" className={`${styles.button} ${styles.override}`} variant="contained">
-          {!login ? 'Sign Up' : 'Sign in'}
+          {login ? 'Sign Up' : 'Sign in'}
         </Button>
         <Link
-          to={!login ? '/sign-in' : '/sign-up'}
+          to={login ? '/sign-in' : '/sign-up'}
           className={`${styles.buttonView} ${styles.override}`}
         >
-          {!login ? 'Already have an account? Sign in' : 'Back to registration'}
+          {login ? 'Already have an account? Sign in' : 'Back to registration'}
         </Link>
       </Box>
     </form>

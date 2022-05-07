@@ -2,7 +2,7 @@ import Home from '../../pages/home_page/HomePage';
 import { Navigate } from 'react-router-dom';
 import NotFound from '../../pages/not_found_page/NotFoundPage';
 import { IRouterRoutes } from '../../interfaces/baseInterfaces';
-import AuthenticationPage from '../../pages/authentication_page';
+import { SignInPage, SignUpPage } from '../../pages/authentication_page';
 
 const routes: IRouterRoutes = {
   public: [
@@ -16,11 +16,11 @@ const routes: IRouterRoutes = {
     },
     {
       path: '/sign-up',
-      element: <AuthenticationPage />,
+      element: <SignUpPage />,
     },
     {
       path: '/sign-in',
-      element: <AuthenticationPage />,
+      element: <SignInPage />,
     },
     {
       path: '*',
