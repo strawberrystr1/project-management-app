@@ -5,8 +5,19 @@
   "example": {
     "header": "Пример локализации"
   },
+  "forms": {
+    "new_board": {
+      "title": "Создайте новую доску",
+      "description": "Введите название доски для создания новой доски",
+      "label": "Название доски"
+    }
+  },
+  "buttons": {
+    "submit": "Подтвердить",
+    "cancel": "Отмена",
+    "new_board": "Создать доску"
+  },
   "header": {
-    "createBoard": "Создать доску",
     "userSettings": "Настройки пользователя",
     "editProfile": "Редактировать",
     "logOutProfile": "Выйти",

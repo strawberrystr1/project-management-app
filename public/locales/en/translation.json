@@ -5,8 +5,19 @@
   "example": {
     "header": "Localization example"
   },
+  "forms": {
+    "new_board": {
+      "title": "Create new board",
+      "description": "To create new board, please enter the name for your board",
+      "label": "Board name"
+    }
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "new_board": "Create board"
+  },
   "header": {
-    "createBoard": "Create board",
     "userSettings": "User settings",
     "editProfile": "Edit",
     "logOutProfile": "Log out",
