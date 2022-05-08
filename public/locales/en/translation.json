@@ -10,6 +10,16 @@
       "title": "Create new board",
       "description": "To create new board, please enter the name for your board",
       "label": "Board name"
+    },
+    "auth": {
+      "title_sup": "Sign Up",
+      "title_sin": "Sign In",
+      "name": "name",
+      "password": "password",
+      "login": "login",
+      "change_btn_sup": "Already have an account? Sign in",
+      "change_btn_sin": "Back to registration",
+      "success": "You successfully loged in!"
     }
   },
   "buttons": {

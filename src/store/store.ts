@@ -1,9 +1,41 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { api } from './reducers/basicAPItemplate';
+import {
+  combineReducers,
+  configureStore,
+  isRejectedWithValue,
+  Middleware,
+  MiddlewareAPI,
+} from '@reduxjs/toolkit';
+import { api } from './services/basicAPItemplate';
+import userReducer from './reducers/userSlice';
 
-export const store = configureStore({
-  reducer: { [api.reducerPath]: api.reducer },
-  middleware: (gDM) => gDM().concat(api.middleware),
+const rootReducer = combineReducers({
+  user: userReducer,
+  [api.reducerPath]: api.reducer,
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export const authChecker: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
+  if (isRejectedWithValue(action)) {
+    if (action.payload.data.message === 'Unauthorized') {
+      localStorage.removeItem('token-rss');
+      window.history.pushState({}, '', '/home');
+    }
+  }
+  return next(action);
+};
+
+const restoreStore = () => {
+  if (localStorage.getItem('token-rss') !== null) {
+    const token = localStorage.getItem('token-rss') as string;
+    return { user: { token } };
+  }
+};
+
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (gDM) => gDM().concat(api.middleware).concat(authChecker),
+  preloadedState: restoreStore(),
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

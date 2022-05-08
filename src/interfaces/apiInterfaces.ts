@@ -5,3 +5,9 @@ export interface IAPIError {
     statusCode: number;
   };
 }
+
+export interface IUserResponse {
+  id: string;
+  login: string;
+  name: string;
+}

@@ -5,28 +5,32 @@ import picture from '../../assets/images/2.png';
 import person from '../../assets/images/person1.png';
 import githubIcon from '../../assets/icons/github.png';
 import team from '../../utils/constants/teamInfo';
+import { useTypedSelector } from '../../hooks/redux';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { token } = useTypedSelector((state) => state.user);
 
   return (
     <Box className={styles['welcome-wrapper']}>
-      <Box className={styles['btns-wrapper']}>
-        <Button
-          onClick={() => navigate('/sign-up')}
-          variant="contained"
-          className={`${styles.btn} ${styles.override}`}
-        >
-          Sign Up
-        </Button>
-        <Button
-          onClick={() => navigate('/sign-in')}
-          variant="contained"
-          className={`${styles.btn} ${styles.override}`}
-        >
-          Log In
-        </Button>
-      </Box>
+      {!token && (
+        <Box className={styles['btns-wrapper']}>
+          <Button
+            onClick={() => navigate('/sign-up')}
+            variant="contained"
+            className={`${styles.btn} ${styles.override}`}
+          >
+            Sign Up
+          </Button>
+          <Button
+            onClick={() => navigate('/sign-in')}
+            variant="contained"
+            className={`${styles.btn} ${styles.override}`}
+          >
+            Log In
+          </Button>
+        </Box>
+      )}
       <Box className={styles['info-wrapper']}>
         <Typography paragraph fontSize={22} className={styles['info-text']}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi provident nisi, ipsum

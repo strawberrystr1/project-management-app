@@ -3,6 +3,14 @@ import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
   endpoints: (build) => ({
+    getUser: build.mutation({
+      query: (token: string) => ({
+        url: `users/`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
     createUser: build.mutation({
       query: (body: IInitialFormValues) => ({
         url: 'signup',
@@ -20,4 +28,4 @@ const getApi = api.injectEndpoints({
   }),
 });
 
-export const { useCreateUserMutation, useSignInMutation } = getApi;
+export const { useCreateUserMutation, useSignInMutation, useGetUserMutation } = getApi;

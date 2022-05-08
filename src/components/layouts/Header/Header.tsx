@@ -5,9 +5,10 @@ import AuthLogo from './components/AuthLogo';
 import UnAuthLogo from './components/UnAuthLogo';
 import CreateBoardForm from '../../CreateBoardForm';
 import DialogButton from '../DialogButton';
+import { useTypedSelector } from '../../../hooks/redux';
 
 const Header = () => {
-  const isLogged = true; // replace this for state variable
+  const { token } = useTypedSelector((state) => state.user);
   const trigger = useScrollTrigger({ disableHysteresis: true });
 
   return (
@@ -15,7 +16,7 @@ const Header = () => {
       <AppBar position="fixed">
         <Container maxWidth="xl">
           <Toolbar disableGutters className={trigger ? styles.small : ''}>
-            {isLogged && (
+            {token && (
               <DialogButton
                 type="new_board"
                 className={styles.btnStyle}
@@ -24,7 +25,7 @@ const Header = () => {
             )}
             <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '20px', ml: 'auto' }}>
               {!trigger && <LanguageSwitch />}
-              {isLogged ? <AuthLogo /> : <UnAuthLogo />}
+              {token ? <AuthLogo /> : <UnAuthLogo />}
             </Box>
           </Toolbar>
         </Container>
