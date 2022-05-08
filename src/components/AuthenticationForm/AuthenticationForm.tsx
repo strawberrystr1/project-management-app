@@ -45,7 +45,7 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
       await signInUser(signInData)
         .unwrap()
         .then((res: { token: string }) => {
-          dispatch(setToken(res.token));
+          dispatch(setToken(true));
           localStorage.setItem('token-rss', res.token);
         });
       setIsSnackBarOpen(true);

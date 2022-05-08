@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useGetUserMutation } from '../store/services/userService';
-import { useTypedSelector } from './redux';
 
 const useAuthCheck = () => {
-  const { token } = useTypedSelector((state) => state.user);
+  const token = localStorage.getItem('token-rss');
 
   const [getUser] = useGetUserMutation();
 
   useEffect(() => {
-    getUser(token);
+    if (token) {
+      getUser(token);
+    }
   }, []);
 };
 

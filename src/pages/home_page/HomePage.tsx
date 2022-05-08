@@ -9,11 +9,11 @@ import { useTypedSelector } from '../../hooks/redux';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { token } = useTypedSelector((state) => state.user);
+  const { isLogged } = useTypedSelector((state) => state.user);
 
   return (
     <Box className={styles['welcome-wrapper']}>
-      {!token && (
+      {!isLogged && (
         <Box className={styles['btns-wrapper']}>
           <Button
             onClick={() => navigate('/sign-up')}

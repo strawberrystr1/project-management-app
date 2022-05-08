@@ -5,7 +5,7 @@ const getApi = api.injectEndpoints({
   endpoints: (build) => ({
     getUser: build.mutation({
       query: (token: string) => ({
-        url: `users/`,
+        url: `users`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

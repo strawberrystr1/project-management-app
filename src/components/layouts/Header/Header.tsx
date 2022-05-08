@@ -8,7 +8,7 @@ import DialogButton from '../DialogButton';
 import { useTypedSelector } from '../../../hooks/redux';
 
 const Header = () => {
-  const { token } = useTypedSelector((state) => state.user);
+  const { isLogged } = useTypedSelector((state) => state.user);
   const trigger = useScrollTrigger({ disableHysteresis: true });
 
   return (
@@ -16,7 +16,7 @@ const Header = () => {
       <AppBar position="fixed">
         <Container maxWidth="xl">
           <Toolbar disableGutters className={trigger ? styles.small : ''}>
-            {token && (
+            {isLogged && (
               <DialogButton
                 type="new_board"
                 className={styles.btnStyle}
@@ -25,7 +25,7 @@ const Header = () => {
             )}
             <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '20px', ml: 'auto' }}>
               {!trigger && <LanguageSwitch />}
-              {token ? <AuthLogo /> : <UnAuthLogo />}
+              {isLogged ? <AuthLogo /> : <UnAuthLogo />}
             </Box>
           </Toolbar>
         </Container>

@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-  token: '',
+  isLogged: false,
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
+    setToken: (state, action: PayloadAction<boolean>) => {
+      state.isLogged = action.payload;
     },
     logOut: (state) => {
-      state.token = '';
+      state.isLogged = false;
     },
   },
 });

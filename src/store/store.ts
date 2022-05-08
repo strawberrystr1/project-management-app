@@ -25,8 +25,7 @@ export const authChecker: Middleware = (api: MiddlewareAPI) => (next) => (action
 
 const restoreStore = () => {
   if (localStorage.getItem('token-rss') !== null) {
-    const token = localStorage.getItem('token-rss') as string;
-    return { user: { token } };
+    return { user: { isLogged: true } };
   }
 };
 
