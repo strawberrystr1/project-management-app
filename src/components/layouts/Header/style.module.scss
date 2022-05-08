@@ -3,6 +3,10 @@
   background-color: rgb(65, 1, 44);
 }
 
+.color{
+  background-color: #486c29 !important;
+}
+
 .small{
   @media (min-width: 600px) {
     min-height: 48px !important;
@@ -15,4 +19,26 @@
   &:hover {
     color: #c2c2c2 !important;
   }
+}
+
+.btnStyleLight{
+  color: black !important;
+
+  &:hover {
+    color: #c2c2c2 !important;
+  }
+}
+
+.btnTestStyle{
+  all: unset;
+  height: 200px;
+  width: 100px;
+  border: 2px solid red;
+  background: #000;
+}
+
+.theme{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

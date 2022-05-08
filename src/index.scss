@@ -1,6 +1,15 @@
 body {
   margin: 0;
   background-color: rgba(187, 176, 176, 0.685);
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: #443e3e;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #2c292b;
+  }
 }
 
 #root {
