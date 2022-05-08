@@ -25,19 +25,21 @@ const BoardColumn = ({ order }: Props) => {
         spacing={0}
         className={styles['column']}
       >
-        <DialogButton
-          type="new_task"
-          btn={(h, type) => (
-            <Button onClick={h} className={styles['new-task-btn']} endIcon={<Add />}>
-              {t(`buttons.${type}`)}
-            </Button>
-          )}
-          form={(h) => <CreateTaskForm handleClose={h} />}
-        />
+        {/* JUST AN EXAMPLE */}
         <Box className={styles['column-item']}>Item 1</Box>
         <Box className={styles['column-item']}>Item 2</Box>
         <Box className={styles['column-item']}>Item 3</Box>
+        {/* JUST AN EXAMPLE */}
       </Stack>
+      <DialogButton
+        type="new_task"
+        btn={(h, type) => (
+          <Button onClick={h} className={styles['new-task-btn']} endIcon={<Add />}>
+            {t(`buttons.${type}`)}
+          </Button>
+        )}
+        form={(h) => <CreateTaskForm handleClose={h} />}
+      />
     </Container>
   );
 };

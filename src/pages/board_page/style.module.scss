@@ -1,10 +1,11 @@
 .new-column-btn {
+  width: 272px !important;
+  min-width: 272px !important;
+  margin-top: 5px !important;
   align-self: flex-start;
-  order: 1.79e308;
   color: white !important;
 }
 
-.board {
+.board-container {
   height: 100%;
-  overflow: hidden;
 }

@@ -10,6 +10,7 @@ const CreateColumnForm = ({ handleClose }: { handleClose: () => void }) => {
       columnName: '',
     },
     onSubmit: (values) => {
+      const order = Number.MAX_VALUE;
       alert(JSON.stringify(values, null, 2));
       handleClose();
     },

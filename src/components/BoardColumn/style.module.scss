@@ -6,10 +6,10 @@
   padding: 0.5rem 0 !important;
   min-width: 272px !important;
   width: 272px !important;
+  overflow-y: hidden;
 }
 
 .column {
-  height: 100%;
   overflow-y: auto;
 }
 

@@ -9,7 +9,14 @@ import styles from './style.module.scss';
 const Board = () => {
   const { t } = useTranslation();
   return (
-    <Stack direction={'row'} spacing={1} className={styles['board']}>
+    <Stack direction={'row'} spacing={1} className={styles['board-container']}>
+      <Stack direction={'row'} spacing={1}>
+        {/* JUST AN EXAMPLE */}
+        {[10, 15, 5, 7].map((item) => (
+          <BoardColumn key={item} order={item} />
+        ))}
+        {/* JUST AN EXAMPLE */}
+      </Stack>
       <DialogButton
         type="new_column"
         btn={(h, type) => (
@@ -19,9 +26,6 @@ const Board = () => {
         )}
         form={(h) => <CreateColumnForm handleClose={h} />}
       />
-      {[10, 15].map((item) => (
-        <BoardColumn key={item} order={item} />
-      ))}
     </Stack>
   );
 };
