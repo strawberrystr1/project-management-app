@@ -1,15 +1,14 @@
 import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
-import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  form: (h: () => void) => JSX.Element; // form component
-  type: string; //translation type
-  className?: string;
+  btn: (h: () => void, t?: string) => JSX.Element;
+  form: (h: () => void) => JSX.Element;
+  type: string;
 };
 
-const DialogButton = ({ form, type, className }: Props) => {
+const DialogButton = ({ form, type, btn }: Props) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
@@ -23,9 +22,7 @@ const DialogButton = ({ form, type, className }: Props) => {
 
   return (
     <>
-      <Button onClick={handleClickOpen} className={className}>
-        {t(`buttons.${type}`)}
-      </Button>
+      {btn(handleClickOpen, type)}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{t(`forms.${type}.title`)}</DialogTitle>
         <DialogContent>
@@ -36,5 +33,7 @@ const DialogButton = ({ form, type, className }: Props) => {
     </>
   );
 };
+
+DialogButton.defaultProps = {};
 
 export default DialogButton;

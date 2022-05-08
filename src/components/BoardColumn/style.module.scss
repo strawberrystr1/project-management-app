@@ -1,5 +1,16 @@
+.new-task-btn {
+  order: 1.79e308;
+}
+
+.column-container {
+  padding: 0.5rem 0 !important;
+  min-width: 272px !important;
+  width: 272px !important;
+}
+
 .column {
-  min-width: 272px;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .column-title {
