@@ -1,25 +1,23 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { IInitialFormValues } from '../../interfaces/formInterfaces';
+import { api } from './basicAPItemplate';
 
-interface IUserInfoState {
-  name: string;
-  string: string;
-  login: string;
-  id: string;
-}
-
-const initialState: IUserInfoState = {
-  name: '',
-  string: '',
-  login: '',
-  id: '',
-};
-
-const signUp = createAsyncThunk('sigUp', async () => {});
-
-const userInfoSlice = createSlice({
-  name: 'userInfo',
-  initialState,
-  reducers: {},
+const getApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    createUser: build.mutation({
+      query: (body: IInitialFormValues) => ({
+        url: 'signup',
+        method: 'POST',
+        body,
+      }),
+    }),
+    signIn: build.mutation({
+      query: (body: Omit<IInitialFormValues, 'name'>) => ({
+        url: 'signin',
+        method: 'POST',
+        body,
+      }),
+    }),
+  }),
 });
 
-export default userInfoSlice.reducer;
+export const { useCreateUserMutation, useSignInMutation } = getApi;

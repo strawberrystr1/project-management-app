@@ -1,19 +1,9 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import testSlice from './reducers/testSlice';
-import userInfoReducer from './reducers/userInfoSlice';
+import { configureStore } from '@reduxjs/toolkit';
+import { api } from './reducers/basicAPItemplate';
 
-const rootReducer = combineReducers({
-  /* for test only */
-  test: testSlice,
-  userInfo: userInfoReducer,
+export const store = configureStore({
+  reducer: { [api.reducerPath]: api.reducer },
+  middleware: (gDM) => gDM().concat(api.middleware),
 });
 
-export const setupStore = () => {
-  return configureStore({
-    reducer: rootReducer,
-  });
-};
-
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore['dispatch'];
+export type RootState = ReturnType<typeof store.getState>;

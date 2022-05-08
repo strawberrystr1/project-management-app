@@ -1,26 +1,55 @@
-import { Avatar, Button, TextField, Typography } from '@mui/material';
+import { Avatar, Button, Snackbar, TextField, Typography, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styles from './style.module.scss';
 import { Box } from '@mui/system';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import validationSchema from '../../utils/helpers/validationSchema';
 import { IFromField, IInitialFormValues } from '../../interfaces/formInterfaces';
+import { useCreateUserMutation, useSignInMutation } from '../../store/reducers/userInfoSlice';
+import { IAPIError } from '../../interfaces/apiInterfaces';
 
 const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const { pathname } = useLocation();
   const [login] = useState(pathname.includes('up'));
+  const [createUser] = useCreateUserMutation({ fixedCacheKey: 'user-data' });
+  const [signInUser, { isSuccess }] = useSignInMutation({ fixedCacheKey: 'user-data' });
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const initialValues = fields.reduce<IInitialFormValues>((acc, item) => {
     acc[item] = '';
     return acc;
   }, {});
 
+  useEffect(() => {
+    console.log(isSuccess);
+  }, [isSuccess]);
+
+  const handleSubmit = async (values: IInitialFormValues) => {
+    try {
+      if (pathname.includes('up')) {
+        await createUser(values).unwrap();
+      }
+      const signInData = {
+        login: values.login,
+        password: values.password,
+      };
+      await signInUser(signInData).unwrap();
+      setErrorMessage('');
+      setTimeout(() => navigate('/boards'), 1000);
+    } catch (e) {
+      console.log(e);
+      const { message } = (e as IAPIError).data;
+      setErrorMessage(message);
+    }
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema: login ? validationSchema : validationSchema.omit(['name']),
-    onSubmit: (values) => console.log(values),
+    onSubmit: handleSubmit,
   });
 
   return (
@@ -58,6 +87,12 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
           {login ? 'Already have an account? Sign in' : 'Back to registration'}
         </Link>
       </Box>
+      <Snackbar open={isSuccess} autoHideDuration={1000}>
+        <Alert severity="success" sx={{ width: '100%' }}>
+          You successfully loged in!
+        </Alert>
+      </Snackbar>
+      {errorMessage && <p>{errorMessage}</p>}
     </form>
   );
 };
