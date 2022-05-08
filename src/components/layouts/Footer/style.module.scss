@@ -1,4 +1,29 @@
 .footerWrapper {
   height: 60px;
-  background-color: red;
+}
+
+.footer {
+  &.override {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+}
+
+.logo {
+  width: 150px;
+  height: 30px;
+}
+
+.link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.git_logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }
