@@ -5,7 +5,7 @@
 }
 
 .container {
-  display: flex;
+  display: flex !important;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -19,10 +19,8 @@
 
 .btn {
   &.override {
-    width: 150px;
-    height: 40px;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
 
     &:nth-child(1) {
       margin-right: 20px;
@@ -58,10 +56,12 @@
   }
 
   &-avatar {
-    min-width: 250px;
-    height: auto;
-    border-radius: 50%;
-    background-color: #fff;
+    &.override {
+      min-width: 250px;
+      height: auto;
+      border-radius: 50%;
+      background-color: #fff;
+    }
   }
 
   &-info {

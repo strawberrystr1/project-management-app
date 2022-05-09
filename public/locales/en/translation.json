@@ -1,6 +1,15 @@
 {
   "welcome_page": {
-    "about_project": ""
+    "about_project": "",
+    "sup_btn": "Sign Up",
+    "sin_btn": "Sign In",
+    "team": "Our team",
+    "about": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi provident nisi, ipsum repellat deserunt ipsam id quod laudantium illum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, rem ducimus! Cupiditate quam recusandae dolor aut dolores distinctio labore deleniti minima. Quaerat enim consectetur voluptate nobis, laboriosam inventore iure ipsam?",
+    "info": {
+      "0": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse, explicabo.",
+      "1": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse, explicabo.",
+      "2": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse, explicabo."
+    }
   },
   "example": {
     "header": "Localization example"
@@ -10,18 +19,30 @@
       "title": "Create new board",
       "description": "To create new board, please enter the name for your board",
       "label": "Board name"
+    },
+    "auth": {
+      "title_sup": "Sign Up",
+      "title_sin": "Sign In",
+      "name": "name",
+      "password": "password",
+      "login": "login",
+      "change_btn_sup": "Already have an account? Sign in",
+      "change_btn_sin": "Back to registration",
+      "success": "You successfully loged in!"
     }
   },
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
-    "new_board": "Create board"
+    "new_board": "Create board",
+    "home": "Home"
   },
   "header": {
     "userSettings": "User settings",
     "editProfile": "Edit",
     "logOutProfile": "Log out",
     "signInProfile": "sign in",
-    "signUpProfile": "sign up"
+    "signUpProfile": "sign up",
+    "burgerMenu": "Menu"
   }
 }

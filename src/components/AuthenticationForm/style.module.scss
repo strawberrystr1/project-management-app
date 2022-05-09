@@ -22,6 +22,11 @@
 .input {
   height: 80px;
   width: 70%;
+  margin-bottom: 10px !important;
+
+  & p {
+    text-transform: none;
+  }
 }
 
 .button {
