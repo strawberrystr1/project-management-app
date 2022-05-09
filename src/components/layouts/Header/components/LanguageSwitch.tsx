@@ -1,20 +1,25 @@
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { useState, MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTypedDispatch, useTypedSelector } from '../../../../hooks/redux';
+import { settingsToggleLanguage } from '../../../../store/reducers/settingsSlice';
 
 const LanguageSwitch = () => {
   const { i18n } = useTranslation();
-  const [lang, setLang] = useState<string | null>(localStorage.getItem('i18nextLng') || 'en');
+  const { language } = useTypedSelector((state) => state.settings);
+  const dispatch = useTypedDispatch();
 
   const handleToggle = (_: MouseEvent<HTMLElement>, newLang: string) => {
-    setLang(newLang);
-    i18n.changeLanguage(newLang);
+    if (newLang !== null) {
+      dispatch(settingsToggleLanguage(newLang));
+      i18n.changeLanguage(newLang);
+    }
   };
 
   return (
     <ToggleButtonGroup
-      value={lang}
+      value={language}
       size="small"
       exclusive
       onChange={handleToggle}

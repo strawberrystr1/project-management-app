@@ -56,14 +56,11 @@ const AuthLogo = () => {
             sx={
               trigger
                 ? {
-                    bgcolor: 'white',
                     width: 30,
                     height: 30,
                     fontSize: '0.5em',
                   }
-                : {
-                    bgcolor: 'white',
-                  }
+                : {}
             }
           >
             {stringAvatar('Kent Dodos')}

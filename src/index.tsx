@@ -1,12 +1,10 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
-import { theme } from './theme/theme';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import './index.css';
+import './index.scss';
+import { CircularProgress } from '@mui/material';
 import './utils/i18n';
 import { store } from './store/store';
 import Loader from './components/Loader';
@@ -14,15 +12,12 @@ import Loader from './components/Loader';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Suspense fallback={<Loader />}>
-        <CssBaseline />
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
+    <Provider store={store}>
+      <Suspense fallback={<CircularProgress />}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Suspense>
-    </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );

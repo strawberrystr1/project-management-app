@@ -12,7 +12,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { isLogged } = useTypedSelector((state) => state.user);
   const { t } = useTranslation();
-  
+
   return (
     <Box className={styles['welcome-wrapper']}>
       {!isLogged && (

@@ -1,10 +1,13 @@
 import { ThemeOptions, createTheme } from '@mui/material';
 
-export const themeOptions: ThemeOptions = {
+const primaryDarkColor = '#689f38';
+const primaryLightColor = '#689f38';
+
+export const themeOptionsDark: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
-      main: '#689f38',
+      main: primaryDarkColor,
     },
     secondary: {
       main: '#868d92',
@@ -37,11 +40,41 @@ export const themeOptions: ThemeOptions = {
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: '#689f38',
+          backgroundColor: primaryDarkColor,
         },
       },
     },
   },
 };
 
-export const theme = createTheme(themeOptions);
+export const themeOptionsLight: ThemeOptions = {
+  palette: {
+    mode: 'light',
+    primary: {
+      main: primaryLightColor,
+    },
+    background: {
+      paper: '#e0dada',
+    },
+  },
+  typography: {
+    fontFamily: 'sans-serif',
+  },
+
+  spacing: 7,
+  shape: {
+    borderRadius: 6,
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: primaryLightColor,
+        },
+      },
+    },
+  },
+};
+
+export const lightTheme = createTheme(themeOptionsLight);
+export const darkTheme = createTheme(themeOptionsDark);

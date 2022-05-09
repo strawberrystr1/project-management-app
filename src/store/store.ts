@@ -2,10 +2,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { api } from './services/basicAPItemplate';
 import userReducer from './reducers/userSlice';
 import authChecker from './middleware';
+import settingsSlice from './reducers/settingsSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
   [api.reducerPath]: api.reducer,
+  settings: settingsSlice,
 });
 
 export const store = configureStore({
