@@ -5,9 +5,10 @@ import AuthLogo from './components/AuthLogo';
 import UnAuthLogo from './components/UnAuthLogo';
 import CreateBoardForm from '../../CreateBoardForm';
 import DialogButton from '../DialogButton';
+import { useTypedSelector } from '../../../hooks/redux';
 
 const Header = () => {
-  const isLogged = true; // replace this for state variable
+  const { isLogged } = useTypedSelector((state) => state.user);
   const trigger = useScrollTrigger({ disableHysteresis: true });
 
   return (

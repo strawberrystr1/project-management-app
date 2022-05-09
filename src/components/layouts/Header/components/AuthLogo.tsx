@@ -13,10 +13,15 @@ import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { stringAvatar } from '../../../../utils/functions';
+import { useTypedDispatch } from '../../../../hooks/redux';
+import { logOut } from '../../../../store/reducers/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AuthLogo = () => {
   const { t } = useTranslation();
   const trigger = useScrollTrigger({ disableHysteresis: true });
+  const dispatch = useTypedDispatch();
+  const navigate = useNavigate();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -35,7 +40,11 @@ const AuthLogo = () => {
     {
       text: t('header.logOutProfile'),
       logo: <LogoutIcon fontSize="small" />,
-      handleClick: () => console.log('logOut'), //todo
+      handleClick: () => {
+        dispatch(logOut());
+        localStorage.removeItem('token-rss');
+        navigate('/home');
+      },
     },
   ];
 

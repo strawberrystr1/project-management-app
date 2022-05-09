@@ -9,7 +9,7 @@ const UnAuthLogo = () => {
   const navigate = useNavigate();
 
   const signIn = () => {
-    navigate(`/sign-ip`);
+    navigate(`/sign-in`);
   };
 
   const signUn = () => {

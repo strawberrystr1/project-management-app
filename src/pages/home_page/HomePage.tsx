@@ -5,32 +5,35 @@ import picture from '../../assets/images/2.png';
 import person from '../../assets/images/person1.png';
 import githubIcon from '../../assets/icons/github.png';
 import team from '../../utils/constants/teamInfo';
-import { useTranslation } from 'react-i18next';
+import { useTypedSelector } from '../../hooks/redux';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { isLogged } = useTypedSelector((state) => state.user);
   const { t } = useTranslation();
-
+  
   return (
     <Box className={styles['welcome-wrapper']}>
-      <Box className={styles['btns-wrapper']}>
-        <Button
-          onClick={() => navigate('/sign-up')}
-          variant="contained"
-          size="large"
-          className={`${styles.btn} ${styles.override}`}
-        >
-          {t('welcome_page.sup_btn')}
-        </Button>
-        <Button
-          onClick={() => navigate('/sign-in')}
-          variant="contained"
-          size="large"
-          className={`${styles.btn} ${styles.override}`}
-        >
-          {t('welcome_page.sin_btn')}
-        </Button>
-      </Box>
+      {!isLogged && (
+        <Box className={styles['btns-wrapper']}>
+          <Button
+            onClick={() => navigate('/sign-up')}
+            variant="contained"
+            size="large"
+            className={`${styles.btn} ${styles.override}`}
+          >
+            {t('welcome_page.sup_btn')}
+          </Button>
+          <Button
+            onClick={() => navigate('/sign-in')}
+            variant="contained"
+            size="large"
+            className={`${styles.btn} ${styles.override}`}
+          >
+            {t('welcome_page.sin_btn')}
+          </Button>
+        </Box>
+      )}
       <Box className={styles['info-wrapper']}>
         <Typography paragraph fontSize={22} className={styles['info-text']}>
           {t('welcome_page.about')}
