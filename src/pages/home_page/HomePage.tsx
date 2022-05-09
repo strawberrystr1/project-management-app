@@ -6,6 +6,7 @@ import person from '../../assets/images/person1.png';
 import githubIcon from '../../assets/icons/github.png';
 import team from '../../utils/constants/teamInfo';
 import { useTypedSelector } from '../../hooks/redux';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
   const navigate = useNavigate();
