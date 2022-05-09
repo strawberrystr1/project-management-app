@@ -21,11 +21,16 @@
       "description": "To create new task, please enter the title and description of the task",
       "taskTitle": "Title",
       "taskDescription": "Description"
+    },
+    "delete_column": {
+      "title": "Remove column",
+      "description": "Do you really want to remove column?"
     }
   },
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
+    "back": "Back",
     "new_board": "Create board",
     "new_column": "New column",
     "new_task": "New task"

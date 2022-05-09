@@ -31,11 +31,11 @@ const routes: IRouterRoutes = {
   private: [
     {
       path: '/boards',
-      element: <Board />,
+      element: <NotFound />,
     },
     {
-      path: '/boards/board/:id',
-      element: <NotFound />,
+      path: '/boards/:boardId',
+      element: <Board />,
     },
     {
       path: '/profile/:id',

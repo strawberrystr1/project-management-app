@@ -1,32 +1,56 @@
 import { Add } from '@mui/icons-material';
-import { Button, Stack } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
 import BoardColumn from '../../components/BoardColumn';
 import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
+import { useTypedSelector } from '../../hooks/redux';
 import styles from './style.module.scss';
+import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 
 const Board = () => {
+  const { boardId } = useParams();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { columns } = useTypedSelector((state) => state.board);
   return (
-    <Stack direction={'row'} spacing={1} className={styles['board-container']}>
-      <Stack direction={'row'} spacing={1}>
-        {/* JUST AN EXAMPLE */}
-        {[10, 15, 5, 7].map((item) => (
-          <BoardColumn key={item} order={item} />
-        ))}
-        {/* JUST AN EXAMPLE */}
+    <Box className={styles['board-wrapper']}>
+      <Button
+        color="secondary"
+        aria-label="back page"
+        className={styles['back-page-button']}
+        size="medium"
+        startIcon={<ArrowBackIosOutlinedIcon fontSize="small" />}
+        onClick={() => navigate('/boards')}
+      >
+        {t('buttons.back')}
+      </Button>
+      <Stack direction={'row'} spacing={1} className={styles['board']}>
+        <Stack direction={'row'} spacing={1}>
+          {/* JUST AN EXAMPLE */}
+
+          {[10, 15, 5].map((order) => (
+            <BoardColumn key={order} id={String(order)} order={order} title={`Title`} />
+          ))}
+
+          {/* JUST AN EXAMPLE */}
+
+          {columns.map(({ id, order, title }) => (
+            <BoardColumn key={id} id={id} order={order} title={title} />
+          ))}
+        </Stack>
+        <DialogButton
+          type="new_column"
+          btn={(h, type) => (
+            <Button onClick={h} className={styles['new-column-btn']} color="info" endIcon={<Add />}>
+              {t(`buttons.${type}`)}
+            </Button>
+          )}
+          form={(h) => <CreateColumnForm handleClose={h} />}
+        />
       </Stack>
-      <DialogButton
-        type="new_column"
-        btn={(h, type) => (
-          <Button onClick={h} className={styles['new-column-btn']} endIcon={<Add />}>
-            {t(`buttons.${type}`)}
-          </Button>
-        )}
-        form={(h) => <CreateColumnForm handleClose={h} />}
-      />
-    </Stack>
+    </Box>
   );
 };
 

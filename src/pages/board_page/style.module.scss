@@ -1,11 +1,18 @@
 .new-column-btn {
   width: 272px !important;
   min-width: 272px !important;
-  margin-top: 5px !important;
   align-self: flex-start;
-  color: white !important;
 }
 
-.board-container {
+.back-page-button {
+  align-self: flex-start;
+}
+
+.board-wrapper {
   height: 100%;
+  display: flex;
+}
+
+.board {
+
 }

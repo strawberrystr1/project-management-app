@@ -1,46 +1,63 @@
 import { Add } from '@mui/icons-material';
-import { Stack, Container, Divider, Box, Typography, Button } from '@mui/material';
+import { Stack, Divider, Box, Typography, Button, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
+import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
+import DialogControls from '../layouts/DialogControls';
 
 type Props = {
+  id: string;
   order: number;
+  title: string;
 };
 
-const BoardColumn = ({ order }: Props) => {
+const BoardColumn = ({ order, title }: Props) => {
   const { t } = useTranslation();
   return (
-    <Container
-      style={{ order: order, display: 'flex', flexDirection: 'column' }}
+    <Box
+      style={{ order, display: 'flex', flexDirection: 'column' }}
       className={styles['column-container']}
     >
-      <Typography variant="h6" className={styles['column-title']}>
-        Title + {order}
-      </Typography>
+      <Box className={styles['title-container']}>
+        <Typography variant="h6" className={styles['column-title']}>
+          {title} + {order}
+        </Typography>
+        <DialogButton
+          type="delete_column"
+          btn={(h) => (
+            <IconButton onClick={h} size="small" color="secondary" aria-label="delete column">
+              <BackspaceOutlinedIcon />
+            </IconButton>
+          )}
+          form={(h) => <DialogControls onCancel={h} />}
+        />
+      </Box>
       <Stack
         direction={'column'}
         divider={<Divider orientation="horizontal" flexItem />}
         spacing={0}
-        className={styles['column']}
+        className={`${styles['column']} container-scroll`}
       >
         {/* JUST AN EXAMPLE */}
-        <Box className={styles['column-item']}>Item 1</Box>
-        <Box className={styles['column-item']}>Item 2</Box>
-        <Box className={styles['column-item']}>Item 3</Box>
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 654, 6, 546, 54, 65, 46, 546, 546, 54].map((item) => (
+          <Box key={item} className={styles['column-item']}>
+            Item #{item}
+          </Box>
+        ))}
         {/* JUST AN EXAMPLE */}
       </Stack>
       <DialogButton
         type="new_task"
         btn={(h, type) => (
-          <Button onClick={h} className={styles['new-task-btn']} endIcon={<Add />}>
+          <Button onClick={h} className={styles['new-task-btn']} color="warning" endIcon={<Add />}>
             {t(`buttons.${type}`)}
           </Button>
         )}
         form={(h) => <CreateTaskForm handleClose={h} />}
       />
-    </Container>
+    </Box>
   );
 };
 
