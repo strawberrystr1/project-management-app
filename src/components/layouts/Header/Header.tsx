@@ -41,12 +41,12 @@ const Header = () => {
               {isLogged && (
                 <DialogButton
                   type="new_board"
-                  btn={(h) => (
-                    <IconButton onClick={h} className={styles.btnStyle}>
+                  btn={(handleOpen) => (
+                    <IconButton onClick={handleOpen} className={styles.btnStyle}>
                       <AddIcon />
                     </IconButton>
                   )}
-                  form={(h) => <CreateBoardForm handleClose={h} />}
+                  form={(handleClose) => <CreateBoardForm handleClose={handleClose} />}
                 />
               )}
             </Box>
@@ -62,12 +62,12 @@ const Header = () => {
               {isLogged && (
                 <DialogButton
                   type="new_board"
-                  btn={(h, type) => (
-                    <Button onClick={h} className={styles.btnStyle}>
+                  btn={(handleOpen, type) => (
+                    <Button onClick={handleOpen} className={styles.btnStyle}>
                       {t(`buttons.${type}`)}
                     </Button>
                   )}
-                  form={(h) => <CreateBoardForm handleClose={h} />}
+                  form={(handleClose) => <CreateBoardForm handleClose={handleClose} />}
                 />
               )}
             </Box>
