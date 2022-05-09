@@ -22,8 +22,50 @@
   align-items: center;
 }
 
+.links_wrapper {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+}
+
 .git_logo {
   width: 30px;
   height: 30px;
   margin-right: 10px;
+}
+
+@media (max-width: 770px) {
+  .footerWrapper {
+    height: 150px;
+  }
+
+  .footer {
+    &.override {
+      flex-direction: column;
+    }
+  }
+
+  .logo {
+    order: 1;
+  }
+
+  .year {
+    order: 2;
+  }
+
+  .links_wrapper {
+    order: 3;
+    width: 100%;
+  }
+
+  .link {
+    & p {
+      font-size: 16px;
+    }
+  }
+
+  .git_logo {
+    width: 20px;
+    height: 20px;
+  }
 }
