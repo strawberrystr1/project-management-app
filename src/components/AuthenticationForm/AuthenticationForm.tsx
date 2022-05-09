@@ -13,6 +13,7 @@ import { IAPIError } from '../../interfaces/apiInterfaces';
 import { useTypedDispatch } from '../../hooks/redux';
 import { setToken } from '../../store/reducers/userSlice';
 import { useTranslation } from 'react-i18next';
+import jwt from 'jwt-decode';
 
 const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const { pathname } = useLocation();
@@ -45,13 +46,13 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
       await signInUser(signInData)
         .unwrap()
         .then((res: { token: string }) => {
-          dispatch(setToken(true));
+          const { userId } = jwt<{ userId: string }>(res.token);
+          dispatch(setToken({ isLogged: true, id: userId }));
           localStorage.setItem('token-rss', res.token);
         });
       setIsSnackBarOpen(true);
       setTimeout(() => navigate('/home'), 1000); // change for board page when it will be ready
     } catch (e) {
-      console.log('e: ', e);
       const { message } = (e as IAPIError).data;
       setErrorMessage(message);
     }

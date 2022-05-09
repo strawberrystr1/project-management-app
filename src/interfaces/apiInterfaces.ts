@@ -11,3 +11,8 @@ export interface IUserResponse {
   login: string;
   name: string;
 }
+
+export interface IRequestBasic {
+  id: string;
+  token: string;
+}

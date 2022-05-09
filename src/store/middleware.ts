@@ -1,8 +1,4 @@
-import {
-  isRejectedWithValue,
-  Middleware,
-  MiddlewareAPI,
-} from '@reduxjs/toolkit';
+import { isRejectedWithValue, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 import { logOut } from './reducers/userSlice';
 
 const authChecker: Middleware = (api: MiddlewareAPI) => (next) => (action) => {

@@ -1,13 +1,14 @@
+import { IRequestBasic, IUserResponse } from '../../interfaces/apiInterfaces';
 import { IInitialFormValues } from '../../interfaces/formInterfaces';
 import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getUser: build.mutation({
-      query: (token: string) => ({
-        url: `users`,
+    getUser: build.mutation<IUserResponse, IRequestBasic>({
+      query: (body) => ({
+        url: `users/${body.id}`,
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${body.token}`,
         },
       }),
     }),
