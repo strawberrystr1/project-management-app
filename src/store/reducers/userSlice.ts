@@ -13,6 +13,7 @@ const userSlice = createSlice({
     },
     logOut: (state) => {
       state.isLogged = false;
+      localStorage.removeItem('token-rss');
     },
   },
 });

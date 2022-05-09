@@ -89,8 +89,8 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
           label={t(`forms.auth.${item}`)}
           value={formik.values[item]}
           onChange={formik.handleChange}
-          error={formik.errors[item] ? true : false}
-          helperText={formik.errors[item] ? formik.errors[item] : ''}
+          error={formik.touched[item] && Boolean(formik.errors[item])}
+          helperText={formik.touched[item] && formik.errors[item]}
           key={item}
         />
       ))}

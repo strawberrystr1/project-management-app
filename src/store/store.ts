@@ -1,27 +1,15 @@
 import {
   combineReducers,
   configureStore,
-  isRejectedWithValue,
-  Middleware,
-  MiddlewareAPI,
 } from '@reduxjs/toolkit';
 import { api } from './services/basicAPItemplate';
 import userReducer from './reducers/userSlice';
+import authChecker from './middleware';
 
 const rootReducer = combineReducers({
   user: userReducer,
   [api.reducerPath]: api.reducer,
 });
-
-export const authChecker: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
-  if (isRejectedWithValue(action)) {
-    if (action.payload.data.message === 'Unauthorized') {
-      localStorage.removeItem('token-rss');
-      window.history.pushState({}, '', '/home');
-    }
-  }
-  return next(action);
-};
 
 const restoreStore = () => {
   if (localStorage.getItem('token-rss') !== null) {
