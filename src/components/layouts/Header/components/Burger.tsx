@@ -1,19 +1,14 @@
-import { Divider, Drawer, IconButton, List, ListItem, MenuItem } from '@mui/material';
+import { Divider, Drawer, IconButton, List, ListItem, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-
 import React, { useState } from 'react';
 import { Box } from '@mui/system';
-import DialogButton from '../../DialogButton';
-import CreateBoardForm from '../../../CreateBoardForm';
-import { useTypedSelector } from '../../../../hooks/redux';
 import ThemeSwitcher from './ThemeSwitcher';
 import LanguageSwitch from './LanguageSwitch';
-import styles from '../style.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const Burger = () => {
-  const isLogged = true; // replace this for state variable
-  const { isDarkTheme } = useTypedSelector((state) => state.settings);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  const { t } = useTranslation();
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -28,6 +23,7 @@ const Burger = () => {
 
   const list = () => (
     <Box onKeyDown={toggleDrawer(false)}>
+      <Typography sx={{ textAlign: 'center', mt: '20px' }}>{t(`header.burgerMenu`)}</Typography>
       <List>
         <ListItem>
           <LanguageSwitch />
@@ -37,19 +33,6 @@ const Burger = () => {
         </ListItem>
       </List>
       <Divider />
-      <List>
-        <ListItem>
-          {isLogged && (
-            <MenuItem onClick={toggleDrawer(false)}>
-              {/* <DialogButton
-                type="new_board"
-                className={isDarkTheme ? styles.btnStyle : styles.btnStyleLight}
-                form={(h) => <CreateBoardForm handleClose={h} />}
-              /> */}
-            </MenuItem>
-          )}
-        </ListItem>
-      </List>
     </Box>
   );
 

@@ -15,13 +15,15 @@
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
-    "new_board": "Create board"
+    "new_board": "Create board",
+    "home": "Home"
   },
   "header": {
     "userSettings": "User settings",
     "editProfile": "Edit",
     "logOutProfile": "Log out",
     "signInProfile": "sign in",
-    "signUpProfile": "sign up"
+    "signUpProfile": "sign up",
+    "burgerMenu": "Menu"
   }
 }

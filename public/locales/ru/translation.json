@@ -15,13 +15,15 @@
   "buttons": {
     "submit": "Подтвердить",
     "cancel": "Отмена",
-    "new_board": "Создать доску"
+    "new_board": "Создать доску",
+    "home": "Домой"
   },
   "header": {
     "userSettings": "Настройки пользователя",
     "editProfile": "Редактировать",
     "logOutProfile": "Выйти",
     "signInProfile": "Войти",
-    "signUpProfile": "Регистрация"
+    "signUpProfile": "Регистрация",
+    "burgerMenu": "Меню"
   }
 }
