@@ -44,5 +44,16 @@
     "signInProfile": "Войти",
     "signUpProfile": "Регистрация",
     "burgerMenu": "Меню"
+  },
+  "settings": {
+    "title": "Настройки профиля",
+    "password": "Изменить пароль",
+    "language": "Изменить язык",
+    "delete": "Удалить профиль",
+    "name": "Имя пользователя",
+    "login": "Логин",
+    "change_btn": "изменить",
+    "delete_btn": "удалить",
+    "placeholder": "Введите новый пароль"
   }
 }

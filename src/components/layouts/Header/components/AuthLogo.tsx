@@ -35,7 +35,7 @@ const AuthLogo = () => {
     {
       text: t('header.editProfile'),
       logo: <EditIcon fontSize="small" />,
-      handleClick: () => console.log('edit'), //todo
+      handleClick: () => navigate('/user/settings'),
     },
     {
       text: t('header.logOutProfile'),

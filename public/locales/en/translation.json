@@ -44,5 +44,16 @@
     "signInProfile": "sign in",
     "signUpProfile": "sign up",
     "burgerMenu": "Menu"
+  },
+  "settings": {
+    "title": "User settings",
+    "password": "Change password",
+    "language": "Change language",
+    "delete": "Delete profile",
+    "name": "User name",
+    "login": "User login",
+    "change_btn": "change",
+    "delete_btn": "delete",
+    "placeholder": "Enter new password"
   }
 }

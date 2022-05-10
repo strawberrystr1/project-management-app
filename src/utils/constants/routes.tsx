@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import NotFound from '../../pages/not_found_page/NotFoundPage';
 import { IRouterRoutes } from '../../interfaces/baseInterfaces';
 import { SignInPage, SignUpPage } from '../../pages/authentication_page';
+import Settings from '../../pages/user_settings';
 
 const routes: IRouterRoutes = {
   public: [
@@ -39,6 +40,10 @@ const routes: IRouterRoutes = {
     {
       path: '/profile/:id',
       element: <NotFound />,
+    },
+    {
+      path: '/user/settings',
+      element: <Settings />,
     },
   ],
 };
