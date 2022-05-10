@@ -1,9 +1,11 @@
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import DialogControls from './layouts/DialogControls';
 
 const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
@@ -12,6 +14,7 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
       handleClose();
+      navigate('/boards');
     },
   });
 

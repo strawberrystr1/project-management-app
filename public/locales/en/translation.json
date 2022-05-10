@@ -20,6 +20,10 @@
       "description": "To create new board, please enter the name for your board",
       "label": "Board name"
     },
+    "delete_board": {
+      "title": "Delete board",
+      "description": "Are you sure to delete \"{{ title }}\" board?"
+    },
     "auth": {
       "title_sup": "Sign Up",
       "title_sin": "Sign In",
@@ -35,7 +39,8 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "new_board": "Create board",
-    "home": "Home"
+    "home": "Home",
+    "boards": "Boards"
   },
   "header": {
     "userSettings": "User settings",
@@ -44,5 +49,9 @@
     "signInProfile": "sign in",
     "signUpProfile": "sign up",
     "burgerMenu": "Menu"
+  },
+  "boards": {
+    "boardDescriptionNoColumns": "No columns yet",
+    "boardDescription": "Columns - {{count}}"
   }
 }

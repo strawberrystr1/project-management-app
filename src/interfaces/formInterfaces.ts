@@ -10,5 +10,5 @@ export interface IDialogButtonProps {
   btn: (handleOpen: () => void, t?: string) => JSX.Element;
   form: (handleClose: () => void) => JSX.Element;
   type: string; //translation type
-  className?: string;
+  message?: string;
 }

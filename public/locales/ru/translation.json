@@ -20,6 +20,10 @@
       "description": "Введите название доски для создания новой доски",
       "label": "Название доски"
     },
+    "delete_board": {
+      "title": "Удалить доску",
+      "description": "Вы уверены, что хотите удалить доску \"{{ title }}\"?"
+    },
     "auth": {
       "title_sup": "Регистрация",
       "title_sin": "Войти",
@@ -35,7 +39,8 @@
     "submit": "Подтвердить",
     "cancel": "Отмена",
     "new_board": "Создать доску",
-    "home": "Домой"
+    "home": "Домой",
+    "boards": "Доски"
   },
   "header": {
     "userSettings": "Настройки пользователя",
@@ -44,5 +49,9 @@
     "signInProfile": "Войти",
     "signUpProfile": "Регистрация",
     "burgerMenu": "Меню"
+  },
+  "boards": {
+    "boardDescriptionNoColumns": "Еще нет колонок",
+    "boardDescription": "Колонок - {{count}}"
   }
 }

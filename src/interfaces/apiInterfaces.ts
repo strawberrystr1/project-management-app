@@ -16,3 +16,8 @@ export interface IRequestBasic {
   id: string;
   token: string;
 }
+
+export interface IBoard {
+  id: string;
+  title: string;
+}
