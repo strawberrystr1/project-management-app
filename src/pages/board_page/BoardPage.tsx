@@ -26,7 +26,7 @@ const Board = () => {
       >
         {t('buttons.back')}
       </Button>
-      <Stack direction={'row'} spacing={1} className={styles['board']}>
+      <Stack direction={'row'} spacing={1} className={styles['board']} mt={1}>
         <Stack direction={'row'} spacing={1}>
           {/* JUST AN EXAMPLE */}
 

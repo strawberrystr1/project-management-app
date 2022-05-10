@@ -1,38 +1,30 @@
 import { Add } from '@mui/icons-material';
-import { Stack, Divider, Box, Typography, Button, IconButton } from '@mui/material';
+import { Stack, Divider, Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
-import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
-import DialogControls from '../layouts/DialogControls';
 import { IColumnResponce } from '../../interfaces/apiInterfaces';
+import { useState } from 'react';
+import ChangeColumnTitle from './components/ChangeColumnTitle';
+import ColumnTitle from './components/ColumnTitle';
 
 const BoardColumn = ({ order, title }: IColumnResponce) => {
   const { t } = useTranslation();
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentTitle, setCurrentTitle] = useState(title);
+  const toggleEdit = () => setIsEdit((prev) => !prev);
   return (
     <Box
       style={{ order, display: 'flex', flexDirection: 'column' }}
       className={styles['column-container']}
     >
       <Box className={styles['title-container']}>
-        <Typography variant="h6" className={styles['column-title']}>
-          {title} + {order}
-        </Typography>
-        <DialogButton
-          type="delete_column"
-          btn={(handleOpenDialog) => (
-            <IconButton
-              onClick={handleOpenDialog}
-              size="small"
-              color="secondary"
-              aria-label="delete column"
-            >
-              <BackspaceOutlinedIcon />
-            </IconButton>
-          )}
-          form={(handleCloseDialog) => <DialogControls onCancel={handleCloseDialog} />}
-        />
+        {isEdit ? (
+          <ChangeColumnTitle currentTitle={currentTitle} toggleEdit={toggleEdit} />
+        ) : (
+          <ColumnTitle currentTitle={currentTitle} toggleEdit={toggleEdit} />
+        )}
       </Box>
       <Stack
         direction={'column'}
