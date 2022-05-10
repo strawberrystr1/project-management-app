@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
-import { IColumnResponce } from '../../interfaces/apiInterfaces';
+import { IColumnResponse } from '../../interfaces/apiInterfaces';
 import { useState } from 'react';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 
-const BoardColumn = ({ order, title }: IColumnResponce) => {
+const BoardColumn = ({ order, title }: IColumnResponse) => {
   const { t } = useTranslation();
   const [isEdit, setIsEdit] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(title);

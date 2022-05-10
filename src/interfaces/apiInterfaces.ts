@@ -17,7 +17,7 @@ export interface IRequestBasic {
   token: string;
 }
 
-export interface IColumnResponce {
+export interface IColumnResponse {
   id: string;
   order: number;
   title: string;

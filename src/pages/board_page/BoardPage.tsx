@@ -5,15 +5,27 @@ import { useNavigate, useParams } from 'react-router-dom';
 import BoardColumn from '../../components/BoardColumn';
 import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
-import { useTypedSelector } from '../../hooks/redux';
+import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import styles from './style.module.scss';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import { useGetColumnsMutation } from '../../store/services/columnsService';
+import { useEffect } from 'react';
+import { setColumns } from '../../store/reducers/boardSlice';
 
 const Board = () => {
   const { boardId } = useParams();
+  const [getColumns] = useGetColumnsMutation();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { columns } = useTypedSelector((state) => state.board);
+  const dispatch = useTypedDispatch();
+
+  useEffect(() => {
+    getColumns({ id: String(boardId), token: String(localStorage.getItem('token-rss')) })
+      .unwrap()
+      .then((data) => dispatch(setColumns(data)));
+  }, []);
+
   return (
     <Box className={styles['board-wrapper']}>
       <Button
@@ -28,14 +40,6 @@ const Board = () => {
       </Button>
       <Stack direction={'row'} spacing={1} className={styles['board']} mt={1}>
         <Stack direction={'row'} spacing={1}>
-          {/* JUST AN EXAMPLE */}
-
-          {[10, 15, 5].map((order) => (
-            <BoardColumn key={order} id={String(order)} order={order} title={`Title`} />
-          ))}
-
-          {/* JUST AN EXAMPLE */}
-
           {columns.map(({ id, order, title }) => (
             <BoardColumn key={id} id={id} order={order} title={title} />
           ))}
