@@ -6,14 +6,9 @@ import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import DialogControls from '../layouts/DialogControls';
+import { IColumnResponce } from '../../interfaces/apiInterfaces';
 
-type Props = {
-  id: string;
-  order: number;
-  title: string;
-};
-
-const BoardColumn = ({ order, title }: Props) => {
+const BoardColumn = ({ order, title }: IColumnResponce) => {
   const { t } = useTranslation();
   return (
     <Box
@@ -26,12 +21,17 @@ const BoardColumn = ({ order, title }: Props) => {
         </Typography>
         <DialogButton
           type="delete_column"
-          btn={(h) => (
-            <IconButton onClick={h} size="small" color="secondary" aria-label="delete column">
+          btn={(handleOpenDialog) => (
+            <IconButton
+              onClick={handleOpenDialog}
+              size="small"
+              color="secondary"
+              aria-label="delete column"
+            >
               <BackspaceOutlinedIcon />
             </IconButton>
           )}
-          form={(h) => <DialogControls onCancel={h} />}
+          form={(handleCloseDialog) => <DialogControls onCancel={handleCloseDialog} />}
         />
       </Box>
       <Stack

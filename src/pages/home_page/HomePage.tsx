@@ -5,41 +5,45 @@ import picture from '../../assets/images/2.png';
 import person from '../../assets/images/person1.png';
 import githubIcon from '../../assets/icons/github.png';
 import team from '../../utils/constants/teamInfo';
+import { useTypedSelector } from '../../hooks/redux';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { isLogged } = useTypedSelector((state) => state.user);
+  const { t } = useTranslation();
 
   return (
     <Box className={styles['welcome-wrapper']}>
-      <Box className={styles['btns-wrapper']}>
-        <Button
-          onClick={() => navigate('/sign-up')}
-          variant="contained"
-          className={`${styles.btn} ${styles.override}`}
-        >
-          Sign Up
-        </Button>
-        <Button
-          onClick={() => navigate('/sign-in')}
-          variant="contained"
-          className={`${styles.btn} ${styles.override}`}
-        >
-          Log In
-        </Button>
-      </Box>
+      {!isLogged && (
+        <Box className={styles['btns-wrapper']}>
+          <Button
+            onClick={() => navigate('/sign-up')}
+            variant="contained"
+            size="large"
+            className={`${styles.btn} ${styles.override}`}
+          >
+            {t('welcome_page.sup_btn')}
+          </Button>
+          <Button
+            onClick={() => navigate('/sign-in')}
+            variant="contained"
+            size="large"
+            className={`${styles.btn} ${styles.override}`}
+          >
+            {t('welcome_page.sin_btn')}
+          </Button>
+        </Box>
+      )}
       <Box className={styles['info-wrapper']}>
         <Typography paragraph fontSize={22} className={styles['info-text']}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi provident nisi, ipsum
-          repellat deserunt ipsam id quod laudantium illum. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Quaerat, rem ducimus! Cupiditate quam recusandae dolor aut dolores
-          distinctio labore deleniti minima. Quaerat enim consectetur voluptate nobis, laboriosam
-          inventore iure ipsam?
+          {t('welcome_page.about')}
         </Typography>
         <img src={picture} alt="main picture" />
       </Box>
       <Box>
         <Typography variant="h2" align="center">
-          Our team
+          {t('welcome_page.team')}
         </Typography>
         <Container maxWidth="lg" className={styles.container}>
           {team.map((member, i) => (
@@ -58,7 +62,7 @@ const Home = () => {
                     {member.name}
                   </Typography>
                   <Typography paragraph align="center" fontSize={18}>
-                    {member.info}
+                    {t(`welcome_page.info.${i}`)}
                   </Typography>
                 </Box>
               </Box>

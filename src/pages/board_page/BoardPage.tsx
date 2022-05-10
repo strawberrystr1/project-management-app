@@ -42,12 +42,17 @@ const Board = () => {
         </Stack>
         <DialogButton
           type="new_column"
-          btn={(h, type) => (
-            <Button onClick={h} className={styles['new-column-btn']} color="info" endIcon={<Add />}>
+          btn={(handleOpenDialog, type) => (
+            <Button
+              onClick={handleOpenDialog}
+              className={styles['new-column-btn']}
+              color="info"
+              endIcon={<Add />}
+            >
               {t(`buttons.${type}`)}
             </Button>
           )}
-          form={(h) => <CreateColumnForm handleClose={h} />}
+          form={(handleCloseDialog) => <CreateColumnForm handleClose={handleCloseDialog} />}
         />
       </Stack>
     </Box>

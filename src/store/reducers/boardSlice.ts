@@ -1,13 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-type Column = {
-  id: string;
-  title: string;
-  order: number;
-};
+import { IColumnResponce } from '../../interfaces/apiInterfaces';
 
 type BoardState = {
-  columns: Column[];
+  columns: IColumnResponce[];
 };
 
 const initialState: BoardState = { columns: [] };

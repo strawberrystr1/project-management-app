@@ -1,14 +1,9 @@
 import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IDialogButtonProps } from '../../interfaces/formInterfaces';
 
-type Props = {
-  btn: (h: () => void, t?: string) => JSX.Element;
-  form: (h: () => void) => JSX.Element;
-  type: string;
-};
-
-const DialogButton = ({ form, type, btn }: Props) => {
+const DialogButton = ({ form, type, btn }: IDialogButtonProps) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 

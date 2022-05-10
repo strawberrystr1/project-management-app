@@ -1,21 +1,22 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import testSlice from './reducers/testSlice';
-import userInfoReducer from './reducers/userInfoSlice';
+import { api } from './services/basicAPItemplate';
+import userReducer from './reducers/userSlice';
+import authChecker from './middleware';
+import settingsSlice from './reducers/settingsSlice';
 import boardReducer from './reducers/boardSlice';
 
 const rootReducer = combineReducers({
-  /* for test only */
-  test: testSlice,
-  userInfo: userInfoReducer,
+  user: userReducer,
+  [api.reducerPath]: api.reducer,
+  settings: settingsSlice,
   board: boardReducer,
 });
 
-export const setupStore = () => {
-  return configureStore({
-    reducer: rootReducer,
-  });
-};
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (gDM) => gDM().concat(api.middleware).concat(authChecker),
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore['dispatch'];
+export type AppStore = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
