@@ -24,6 +24,10 @@
       "title": "Delete board",
       "description": "Are you sure to delete \"{{ title }}\" board?"
     },
+    "update_board": {
+      "title": "Edit board",
+      "description": "Edit title of your current board"
+    },
     "auth": {
       "title_sup": "Sign Up",
       "title_sin": "Sign In",

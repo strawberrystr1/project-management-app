@@ -1,18 +1,17 @@
-import { Card, CardActionArea, CardContent, Grid, IconButton, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Card, CardActionArea, CardContent, Grid, Typography } from '@mui/material';
 import { IBoard } from '../../interfaces/apiInterfaces';
-import { getSubstring } from '../../utils/functions';
-import ConfirmForm from '../ConfirmForm';
-import DialogButton from '../layouts/DialogButton';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-// todo change columnsLength of each board
-const columnsLengthMock = 0;
+import UpdateBoardBtn from './UpdateBoardBtn';
+import DeleteBoardBtn from './DeleteBoardBtn';
+import { useGetBoardByIdQuery } from '../../store/services/boardsService';
 
 const BoardCard = ({ board }: { board: IBoard }) => {
+  const token = localStorage.getItem('token-rss') as string;
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { data } = useGetBoardByIdQuery({ id: board.id, token });
+  const columnsLength = data?.columns?.length;
 
   return (
     <Grid item xs={2} sm={4} md={4} key={board.id}>
@@ -28,40 +27,17 @@ const BoardCard = ({ board }: { board: IBoard }) => {
               {board.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {columnsLengthMock > 0
+              {columnsLength && columnsLength > 0
                 ? t(`boards.boardDescription`, {
-                    count: columnsLengthMock,
+                    count: columnsLength,
                   })
                 : t(`boards.boardDescriptionNoColumns`)}
             </Typography>
           </CardContent>
         </CardActionArea>
 
-        <DialogButton
-          type="delete_board"
-          message={t(`forms.delete_board.description`, {
-            title: getSubstring(board.title),
-          })}
-          btn={(handleOpen) => (
-            <IconButton
-              sx={{ position: 'absolute', right: 0, top: 0 }}
-              aria-label="delete"
-              color="warning"
-              onClick={handleOpen}
-            >
-              <DeleteIcon />
-            </IconButton>
-          )}
-          form={(handleClose) => (
-            <ConfirmForm
-              handleConfirm={() => {
-                console.log('delete', board.id); //todo
-                handleClose();
-              }}
-              handleClose={handleClose}
-            />
-          )}
-        />
+        <DeleteBoardBtn board={board} />
+        <UpdateBoardBtn board={board} />
       </Card>
     </Grid>
   );

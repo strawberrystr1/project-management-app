@@ -2,26 +2,25 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useCreateBoardMutation } from '../store/services/boardsService';
+import { IBoard } from '../interfaces/apiInterfaces';
+import { useCreateBoardMutation, useUpdateBoardMutation } from '../store/services/boardsService';
 import DialogControls from './layouts/DialogControls';
 
-const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
+const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; board: IBoard }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [createBoard] = useCreateBoardMutation();
+  const [updateBoard] = useUpdateBoardMutation();
 
   const formik = useFormik({
     initialValues: {
-      boardName: '',
+      boardName: board.title,
     },
     onSubmit: async (values) => {
       const token = localStorage.getItem('token-rss') as string;
+      await updateBoard({ id: board.id, token, title: values.boardName }).unwrap();
+
       handleClose();
       navigate('/boards');
-      await createBoard({
-        token,
-        title: values.boardName,
-      }).unwrap();
     },
   });
 
@@ -47,4 +46,4 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
   );
 };
 
-export default CreateBoardForm;
+export default UpdateBoardForm;

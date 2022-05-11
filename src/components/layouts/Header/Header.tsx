@@ -20,7 +20,6 @@ import Burger from './components/Burger';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { useTypedSelector } from '../../../hooks/redux';
-import { useEffect } from 'react';
 
 const Header = () => {
   const { isLogged } = useTypedSelector((state) => state.user);
