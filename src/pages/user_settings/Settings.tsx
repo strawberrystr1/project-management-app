@@ -1,24 +1,50 @@
-import { Box, Button, Divider, Input, Typography } from '@mui/material';
+import { Box, Divider, TextField, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitch from '../../components/layouts/Header/components/LanguageSwitch';
-import { useTypedSelector } from '../../hooks/redux';
-import { useGetUserMutation } from '../../store/services/userService';
+import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
+import {
+  useGetUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} from '../../store/services/userService';
 import styles from './style.module.scss';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { logOut } from '../../store/reducers/userSlice';
+import { useNavigate } from 'react-router-dom';
+import SettingsItem from '../../components/SettingsItem/SettingsItem';
+import SettingsFormItem from '../../components/SettingsItem/SettingsFormItem';
+import { IUserResponse } from '../../interfaces/apiInterfaces';
 
 const Settings = () => {
   const [getUser, { data }] = useGetUserMutation();
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
+  const [deleteUser, { isLoading: deleteLoading }] = useDeleteUserMutation();
   const { userId } = useTypedSelector((state) => state.user);
+  const dispatch = useTypedDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const fetchUser = async () => {
     const token = localStorage.getItem('token-rss') as string;
     await getUser({ id: userId, token }).unwrap();
   };
 
+  const deleteProfile = async () => {
+    const token = localStorage.getItem('token-rss') as string;
+    const body = {
+      token,
+      id: userId,
+    };
+    await deleteUser(body).unwrap();
+    dispatch(logOut());
+    navigate('/home');
+  };
+
   useEffect(() => {
     fetchUser();
   }, []);
+
   return (
     <>
       <Box className={styles.settings_wrapper}>
@@ -27,41 +53,30 @@ const Settings = () => {
         </Typography>
         <Box className={styles.flex_container}>
           <Box className={styles.settings_block}>
-            <Box>
-              <Typography fontSize={20} gutterBottom={true}>
-                {t('settings.password')}:
-              </Typography>
-              <Box className={styles.settings_item}>
-                <Input placeholder={t('settings.placeholder')} />
-                <Button variant="contained" size="small">
-                  {t('settings.change_btn')}
-                </Button>
-              </Box>
-            </Box>
-            <Divider />
-            <Box>
-              <Box className={styles.settings_item}>
-                <Typography fontSize={20} gutterBottom={true}>
-                  {t('settings.language')}:
-                </Typography>
-                <LanguageSwitch />
-              </Box>
-            </Box>
-            <Divider />
-            <Box>
-              <Box className={styles.settings_item}>
-                <Typography fontSize={20} gutterBottom={true}>
-                  {t('settings.delete')}:
-                </Typography>
-                <Button variant="contained" color="error" size="small">
+            <SettingsFormItem
+              userId={userId}
+              data={data as IUserResponse}
+              omit={['name', 'login']}
+              fieldName={'password'}
+            />
+            <SettingsItem render={() => <LanguageSwitch />} type="language" />
+            <SettingsItem
+              render={() => (
+                <LoadingButton
+                  variant="contained"
+                  color="error"
+                  size="small"
+                  onClick={deleteProfile}
+                  loading={deleteLoading}
+                >
                   {t('settings.delete_btn')}
-                </Button>
-              </Box>
-            </Box>
-            <Divider />
+                </LoadingButton>
+              )}
+              type="delete"
+            />
           </Box>
           <Box>
-            <Typography>{t('settings.name')}:</Typography>
+            <Typography>{t('settings.name_block')}:</Typography>
             <Typography gutterBottom={true} variant="h3">
               {data?.name}
             </Typography>

@@ -1,4 +1,8 @@
-import { IRequestBasic, IUserResponse } from '../../interfaces/apiInterfaces';
+import {
+  IChangePasswordRequest,
+  IRequestBasic,
+  IUserResponse,
+} from '../../interfaces/apiInterfaces';
 import { IInitialFormValues } from '../../interfaces/formInterfaces';
 import { api } from './basicAPItemplate';
 
@@ -26,7 +30,32 @@ const getApi = api.injectEndpoints({
         body,
       }),
     }),
+    updateUser: build.mutation<IUserResponse, IChangePasswordRequest>({
+      query: (body) => ({
+        url: `users/${body.id}`,
+        method: 'PUT',
+        body: body.body,
+        headers: {
+          Authorization: `Bearer ${body.token}`,
+        },
+      }),
+    }),
+    deleteUser: build.mutation<unknown, IRequestBasic>({
+      query: (body) => ({
+        url: `users/${body.id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${body.token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useCreateUserMutation, useSignInMutation, useGetUserMutation } = getApi;
+export const {
+  useCreateUserMutation,
+  useSignInMutation,
+  useGetUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = getApi;

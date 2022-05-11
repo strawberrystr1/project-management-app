@@ -49,11 +49,13 @@
     "title": "User settings",
     "password": "Change password",
     "language": "Change language",
+    "name": "Change name",
     "delete": "Delete profile",
-    "name": "User name",
+    "name_block": "User name",
     "login": "User login",
     "change_btn": "change",
     "delete_btn": "delete",
-    "placeholder": "Enter new password"
+    "placeholder_name": "Enter new name",
+    "placeholder_password": "Enter new password"
   }
 }

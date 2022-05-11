@@ -16,3 +16,12 @@ export interface IRequestBasic {
   id: string;
   token: string;
 }
+
+interface IUserData {
+  name: string;
+  login: string;
+  password: string;
+}
+export interface IChangePasswordRequest extends IRequestBasic {
+  body: IUserData;
+}
