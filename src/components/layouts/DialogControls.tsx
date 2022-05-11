@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button';
+import { LoadingButton } from '@mui/lab';
 import DialogActions from '@mui/material/DialogActions';
 import { useTranslation } from 'react-i18next';
 
@@ -7,9 +8,18 @@ type Props = {
   cancelBtnName: string;
   onConfirm: () => void;
   onCancel: () => void;
+  loading?: boolean;
+  disable?: boolean;
 };
 
-const DialogControls = ({ cancelBtnName, onCancel, confirmBtnName, onConfirm }: Props) => {
+const DialogControls = ({
+  cancelBtnName,
+  onCancel,
+  confirmBtnName,
+  onConfirm,
+  loading = false,
+  disable = false,
+}: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -23,7 +33,9 @@ const DialogControls = ({ cancelBtnName, onCancel, confirmBtnName, onConfirm }: 
       >
         {t('buttons.cancel')}
       </Button>
-      <Button
+      <LoadingButton
+        disabled={disable}
+        loading={loading}
         onClick={onConfirm}
         type="submit"
         size="small"
@@ -31,7 +43,7 @@ const DialogControls = ({ cancelBtnName, onCancel, confirmBtnName, onConfirm }: 
         className={confirmBtnName}
       >
         {t('buttons.submit')}
-      </Button>
+      </LoadingButton>
     </DialogActions>
   );
 };

@@ -1,5 +1,6 @@
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useCreateBoardMutation } from '../store/services/boardsService';
@@ -8,7 +9,8 @@ import DialogControls from './layouts/DialogControls';
 const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [createBoard] = useCreateBoardMutation();
+  const [createBoard, { isLoading }] = useCreateBoardMutation();
+  const [isDisable, setIsDisable] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -17,12 +19,13 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
     onSubmit: async (values) => {
       if (values.boardName.trim().length === 0) return;
       const token = localStorage.getItem('token-rss') as string;
-      handleClose();
-      navigate('/boards');
+      setIsDisable(true);
       await createBoard({
         token,
         title: values.boardName,
       }).unwrap();
+      handleClose();
+      navigate('/boards');
     },
   });
 
@@ -43,7 +46,7 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
         error={formik.touched.boardName && Boolean(formik.errors.boardName)}
         helperText={formik.touched.boardName && formik.errors.boardName}
       />
-      <DialogControls onCancel={handleClose} />
+      <DialogControls disable={isDisable} loading={isLoading} onCancel={handleClose} />
     </form>
   );
 };

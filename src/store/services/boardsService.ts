@@ -65,20 +65,6 @@ const getApi = api.injectEndpoints({
         },
       }),
     }),
-    // createUser: build.mutation({
-    //   query: (body: IInitialFormValues) => ({
-    //     url: 'signup',
-    //     method: 'POST',
-    //     body,
-    //   }),
-    // }),
-    // signIn: build.mutation({
-    //   query: (body: Omit<IInitialFormValues, 'name'>) => ({
-    //     url: 'signin',
-    //     method: 'POST',
-    //     body,
-    //   }),
-    // }),
   }),
 });
 
