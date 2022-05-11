@@ -36,6 +36,14 @@
       "description": "Do you really want to remove column?",
       "label": "Board name"
     },
+    "delete_board": {
+      "title": "Delete board",
+      "description": "Are you sure to delete \"{{ title }}\" board?"
+    },
+    "update_board": {
+      "title": "Edit board",
+      "description": "Edit title of your current board"
+    },
     "auth": {
       "title_sup": "Sign Up",
       "title_sin": "Sign In",
@@ -52,6 +60,7 @@
     "cancel": "Cancel",
     "back": "Back",
     "new_board": "Create board",
+    "boards": "Boards",
     "new_column": "New column",
     "new_task": "New task",
     "home": "Home"
@@ -63,5 +72,9 @@
     "signInProfile": "sign in",
     "signUpProfile": "sign up",
     "burgerMenu": "Menu"
+  },
+  "boards": {
+    "boardDescriptionNoColumns": "No columns yet",
+    "boardDescription": "Columns - {{count}}"
   }
 }

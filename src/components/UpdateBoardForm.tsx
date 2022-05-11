@@ -1,29 +1,25 @@
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useCreateBoardMutation } from '../store/services/boardsService';
+import { IBoard } from '../interfaces/apiInterfaces';
+import { useUpdateBoardMutation } from '../store/services/boardsService';
 import DialogControls from './layouts/DialogControls';
 
-const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
+const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; board: IBoard }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [createBoard, { isLoading }] = useCreateBoardMutation();
-  const [isDisable, setIsDisable] = useState(false);
+  const [updateBoard] = useUpdateBoardMutation();
 
   const formik = useFormik({
     initialValues: {
-      boardName: '',
+      boardName: board.title,
     },
     onSubmit: async (values) => {
       if (values.boardName.trim().length === 0) return;
       const token = localStorage.getItem('token-rss') as string;
-      setIsDisable(true);
-      await createBoard({
-        token,
-        title: values.boardName,
-      }).unwrap();
+      await updateBoard({ id: board.id, token, title: values.boardName }).unwrap();
+
       handleClose();
       navigate('/boards');
     },
@@ -46,9 +42,9 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
         error={formik.touched.boardName && Boolean(formik.errors.boardName)}
         helperText={formik.touched.boardName && formik.errors.boardName}
       />
-      <DialogControls disable={isDisable} loading={isLoading} onCancel={handleClose} />
+      <DialogControls onCancel={handleClose} />
     </form>
   );
 };
 
-export default CreateBoardForm;
+export default UpdateBoardForm;

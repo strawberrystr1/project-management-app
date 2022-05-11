@@ -36,6 +36,14 @@
       "description": "Вы действительно хотите удалить колонку?",
       "label": "Название доски"
     },
+    "delete_board": {
+      "title": "Удалить доску",
+      "description": "Вы уверены, что хотите удалить доску \"{{ title }}\"?"
+    },
+    "update_board": {
+      "title": "Редактировать доску",
+      "description": "Редактировать название текущей доски"
+    },
     "auth": {
       "title_sup": "Регистрация",
       "title_sin": "Войти",
@@ -52,6 +60,7 @@
     "cancel": "Отмена",
     "back": "Назад",
     "new_board": "Создать доску",
+    "boards": "Доски",
     "new_column": "Новая колонка",
     "new_task": "Новая задача",
     "home": "Домой"
@@ -63,5 +72,9 @@
     "signInProfile": "Войти",
     "signUpProfile": "Регистрация",
     "burgerMenu": "Меню"
+  },
+  "boards": {
+    "boardDescriptionNoColumns": "Еще нет колонок",
+    "boardDescription": "Колонок - {{count}}"
   }
 }
