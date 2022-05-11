@@ -32,7 +32,6 @@ export interface IColumn {
   id: string;
   title: string;
   order: number;
-  done: boolean;
   tasks: ITask[];
 }
 export interface ITask {

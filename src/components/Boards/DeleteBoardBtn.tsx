@@ -4,8 +4,8 @@ import DialogButton from '../layouts/DialogButton';
 import { IBoard } from '../../interfaces/apiInterfaces';
 import { getSubstring } from '../../utils/functions';
 import { useTranslation } from 'react-i18next';
-import ConfirmForm from '../ConfirmForm';
 import { useDeleteBoardMutation } from '../../store/services/boardsService';
+import DialogControls from '../layouts/DialogControls';
 
 const DeleteBoardBtn = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
@@ -34,13 +34,12 @@ const DeleteBoardBtn = ({ board }: { board: IBoard }) => {
         </IconButton>
       )}
       form={(handleClose) => (
-        <ConfirmForm
-          handleConfirm={() => {
-            console.log('delete', board.id); //todo
+        <DialogControls
+          onConfirm={() => {
             handleDeleteBoard(board.id);
             handleClose();
           }}
-          handleClose={handleClose}
+          onCancel={handleClose}
         />
       )}
     />
