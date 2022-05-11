@@ -15,6 +15,7 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
       boardName: '',
     },
     onSubmit: async (values) => {
+      if (values.boardName.trim().length === 0) return;
       const token = localStorage.getItem('token-rss') as string;
       handleClose();
       navigate('/boards');

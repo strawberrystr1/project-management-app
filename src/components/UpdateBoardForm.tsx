@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { IBoard } from '../interfaces/apiInterfaces';
-import { useCreateBoardMutation, useUpdateBoardMutation } from '../store/services/boardsService';
+import { useUpdateBoardMutation } from '../store/services/boardsService';
 import DialogControls from './layouts/DialogControls';
 
 const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; board: IBoard }) => {
@@ -16,6 +16,7 @@ const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; boar
       boardName: board.title,
     },
     onSubmit: async (values) => {
+      if (values.boardName.trim().length === 0) return;
       const token = localStorage.getItem('token-rss') as string;
       await updateBoard({ id: board.id, token, title: values.boardName }).unwrap();
 
