@@ -21,6 +21,14 @@
   }
 }
 
+.btnStyleLocation{
+  color: rgb(197, 197, 197) !important;
+
+  &:hover {
+    color: #c2c2c2 !important;
+  }
+}
+
 .btnStyleLight{
   color: black !important;
 

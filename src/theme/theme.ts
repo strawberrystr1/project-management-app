@@ -13,8 +13,13 @@ export const themeOptionsDark: ThemeOptions = {
       main: '#868d92',
     },
     background: {
-      default: '#272b30',
-      paper: '#020202',
+      // was
+      // default: '#272b30',
+      // paper: '#020202',
+      // maybe better?
+      // paper: '#272b30',
+      // default: '#020202',
+      // maybe the best to set default?
     },
     error: {
       main: '#ef6a67',
@@ -52,6 +57,9 @@ export const themeOptionsLight: ThemeOptions = {
     mode: 'light',
     primary: {
       main: primaryLightColor,
+    },
+    secondary: {
+      main: '#e0dada',
     },
     background: {
       paper: '#e0dada',
