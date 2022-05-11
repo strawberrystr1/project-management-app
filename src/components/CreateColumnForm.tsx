@@ -1,17 +1,24 @@
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useAddColumnMutation } from '../store/services/columnsService';
 import DialogControls from './layouts/DialogControls';
 
-const CreateColumnForm = ({ handleClose }: { handleClose: () => void }) => {
+type Props = {
+  handleClose: () => void;
+  order: number;
+  boardId?: string;
+};
+
+const CreateColumnForm = ({ handleClose, order, boardId }: Props) => {
   const { t } = useTranslation();
+  const [addColumn] = useAddColumnMutation();
   const formik = useFormik({
     initialValues: {
       columnName: '',
     },
-    onSubmit: (values) => {
-      const order = Number.MAX_VALUE;
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: ({ columnName }) => {
+      boardId && addColumn({ order, title: columnName, id: boardId });
       handleClose();
     },
   });

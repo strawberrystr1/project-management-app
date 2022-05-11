@@ -22,3 +22,13 @@ export interface IColumnResponse {
   order: number;
   title: string;
 }
+
+export interface IDeleteColumn {
+  boardId: string;
+  columnId: string;
+}
+
+export interface IUpdateColumn {
+  paths: IDeleteColumn;
+  body: Omit<IColumnResponse, 'id'>;
+}

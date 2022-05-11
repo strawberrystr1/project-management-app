@@ -5,26 +5,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import BoardColumn from '../../components/BoardColumn';
 import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
-import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import styles from './style.module.scss';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
-import { useGetColumnsMutation } from '../../store/services/columnsService';
-import { useEffect } from 'react';
-import { setColumns } from '../../store/reducers/boardSlice';
+import { useGetColumnsQuery } from '../../store/services/columnsService';
+
+import { getNewOrder } from '../../utils/functions';
 
 const Board = () => {
   const { boardId } = useParams();
-  const [getColumns] = useGetColumnsMutation();
+  const { data = [] } = useGetColumnsQuery({ id: String(boardId) });
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { columns } = useTypedSelector((state) => state.board);
-  const dispatch = useTypedDispatch();
-
-  useEffect(() => {
-    getColumns({ id: String(boardId), token: String(localStorage.getItem('token-rss')) })
-      .unwrap()
-      .then((data) => dispatch(setColumns(data)));
-  }, []);
 
   return (
     <Box className={styles['board-wrapper']}>
@@ -40,8 +31,8 @@ const Board = () => {
       </Button>
       <Stack direction={'row'} spacing={1} className={styles['board']} mt={1}>
         <Stack direction={'row'} spacing={1}>
-          {columns.map(({ id, order, title }) => (
-            <BoardColumn key={id} id={id} order={order} title={title} />
+          {data.map(({ id, order, title }) => (
+            <BoardColumn key={id} id={id} order={order} title={title} boardId={boardId} />
           ))}
         </Stack>
         <DialogButton
@@ -56,7 +47,13 @@ const Board = () => {
               {t(`buttons.${type}`)}
             </Button>
           )}
-          form={(handleCloseDialog) => <CreateColumnForm handleClose={handleCloseDialog} />}
+          form={(handleCloseDialog) => (
+            <CreateColumnForm
+              handleClose={handleCloseDialog}
+              order={getNewOrder(data)}
+              boardId={boardId}
+            />
+          )}
         />
       </Stack>
     </Box>

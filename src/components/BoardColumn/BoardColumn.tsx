@@ -9,10 +9,13 @@ import { useState } from 'react';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 
-const BoardColumn = ({ order, title }: IColumnResponse) => {
+interface Props extends IColumnResponse {
+  boardId: string;
+}
+
+const BoardColumn = ({ id, order, title, boardId }: Props) => {
   const { t } = useTranslation();
   const [isEdit, setIsEdit] = useState(false);
-  const [currentTitle, setCurrentTitle] = useState(title);
   const toggleEdit = () => setIsEdit((prev) => !prev);
   return (
     <Box
@@ -21,9 +24,20 @@ const BoardColumn = ({ order, title }: IColumnResponse) => {
     >
       <Box className={styles['title-container']}>
         {isEdit ? (
-          <ChangeColumnTitle currentTitle={currentTitle} toggleEdit={toggleEdit} />
+          <ChangeColumnTitle
+            currentTitle={title}
+            toggleEdit={toggleEdit}
+            boardId={boardId}
+            columnId={id}
+            order={order}
+          />
         ) : (
-          <ColumnTitle currentTitle={currentTitle} toggleEdit={toggleEdit} />
+          <ColumnTitle
+            currentTitle={title}
+            toggleEdit={toggleEdit}
+            boardId={boardId}
+            columnId={id}
+          />
         )}
       </Box>
       <Stack
@@ -51,6 +65,10 @@ const BoardColumn = ({ order, title }: IColumnResponse) => {
       />
     </Box>
   );
+};
+
+BoardColumn.defaultProps = {
+  boardId: '',
 };
 
 export default BoardColumn;

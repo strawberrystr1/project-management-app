@@ -2,13 +2,19 @@ import { IconButton, Typography } from '@mui/material';
 import DialogButton from '../../layouts/DialogButton';
 import DialogControls from '../../layouts/DialogControls';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
+import { useDeleteColumnMutation } from '../../../store/services/columnsService';
 
 type Props = {
   currentTitle: string;
   toggleEdit: () => void;
+  boardId: string;
+  columnId: string;
 };
 
-const ColumnTitle = ({ currentTitle, toggleEdit }: Props) => {
+const ColumnTitle = ({ currentTitle, toggleEdit, boardId, columnId }: Props) => {
+  const [deleteColumn] = useDeleteColumnMutation();
+  const deleteColumnCallback = () => deleteColumn({ boardId, columnId });
+
   return (
     <>
       <Typography variant="h6" onClick={toggleEdit}>
@@ -26,7 +32,9 @@ const ColumnTitle = ({ currentTitle, toggleEdit }: Props) => {
             <BackspaceOutlinedIcon />
           </IconButton>
         )}
-        form={(handleCloseDialog) => <DialogControls onCancel={handleCloseDialog} />}
+        form={(handleCloseDialog) => (
+          <DialogControls onCancel={handleCloseDialog} onConfirm={deleteColumnCallback} />
+        )}
       />
     </>
   );
