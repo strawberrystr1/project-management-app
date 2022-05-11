@@ -3,6 +3,7 @@ import DialogButton from '../../layouts/DialogButton';
 import DialogControls from '../../layouts/DialogControls';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import { useDeleteColumnMutation } from '../../../store/services/columnsService';
+import styles from './style.module.scss';
 
 type Props = {
   currentTitle: string;
@@ -17,7 +18,7 @@ const ColumnTitle = ({ currentTitle, toggleEdit, boardId, columnId }: Props) => 
 
   return (
     <>
-      <Typography variant="h6" onClick={toggleEdit}>
+      <Typography className={styles['column-title']} onClick={toggleEdit}>
         {currentTitle}
       </Typography>
       <DialogButton

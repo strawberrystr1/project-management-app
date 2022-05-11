@@ -3,6 +3,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useRef } from 'react';
 import { useUpdateColumnMutation } from '../../../store/services/columnsService';
+import styles from './style.module.scss';
 
 type Props = {
   currentTitle: string;
@@ -25,7 +26,13 @@ const ChangeColumnTitle = ({ currentTitle, toggleEdit, boardId, columnId, order 
   };
   return (
     <>
-      <Input autoFocus defaultValue={currentTitle} inputRef={textarea} />
+      <Input
+        autoFocus
+        defaultValue={currentTitle}
+        multiline
+        className={styles['column-title']}
+        inputRef={textarea}
+      />
       <IconButton onClick={OnConfirm} size="small" color="success" aria-label="delete column">
         <CheckCircleOutlineIcon />
       </IconButton>
