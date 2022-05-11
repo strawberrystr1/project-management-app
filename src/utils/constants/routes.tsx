@@ -4,6 +4,7 @@ import NotFound from '../../pages/not_found_page/NotFoundPage';
 import { IRouterRoutes } from '../../interfaces/baseInterfaces';
 import { SignInPage, SignUpPage } from '../../pages/authentication_page';
 import Boards from '../../pages/boards_page';
+import Board from '../../pages/board_page';
 
 const routes: IRouterRoutes = {
   public: [
@@ -34,8 +35,8 @@ const routes: IRouterRoutes = {
       element: <Boards />,
     },
     {
-      path: '/boards/board/:id',
-      element: <NotFound />,
+      path: '/boards/:boardId',
+      element: <Board />,
     },
     {
       path: '/profile/:id',

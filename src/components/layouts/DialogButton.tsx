@@ -31,4 +31,6 @@ const DialogButton = ({ form, type, btn, message }: IDialogButtonProps) => {
   );
 };
 
+DialogButton.defaultProps = {};
+
 export default DialogButton;

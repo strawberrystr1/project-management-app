@@ -47,3 +47,8 @@ export interface IFile {
   filename: string;
   fileSize: number;
 }
+export interface IColumnResponce {
+  id: string;
+  order: number;
+  title: string;
+}

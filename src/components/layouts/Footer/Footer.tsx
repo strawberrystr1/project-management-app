@@ -13,7 +13,7 @@ const Footer = () => {
     >
       <Container maxWidth="xl" className={`${styles.footer} ${styles.override}`}>
         <a href="https://rs.school/react/">
-          <img className={styles.logo} src="./assets/rs_school_js.svg" alt="school logo" />
+          <img className={styles.logo} src="../assets/rs_school_js.svg" alt="school logo" />
         </a>
         <div className={styles.links_wrapper}>
           {teamInfo.map((item) => (

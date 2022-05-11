@@ -17,7 +17,23 @@
   "forms": {
     "new_board": {
       "title": "Create new board",
-      "description": "To create new board, please enter the name for your board",
+      "description": "To create new board, please enter the title of the board",
+      "label": "Title"
+    },
+    "new_column": {
+      "title": "Create new column",
+      "description": "To create new column, please enter the title of the column",
+      "label": "Title"
+    },
+    "new_task": {
+      "title": "Create new task",
+      "description": "To create new task, please enter the title and description of the task",
+      "taskTitle": "Title",
+      "taskDescription": "Description"
+    },
+    "delete_column": {
+      "title": "Remove column",
+      "description": "Do you really want to remove column?",
       "label": "Board name"
     },
     "delete_board": {
@@ -42,9 +58,12 @@
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
+    "back": "Back",
     "new_board": "Create board",
-    "home": "Home",
     "boards": "Boards"
+    "new_column": "New column",
+    "new_task": "New task",
+    "home": "Home"
   },
   "header": {
     "userSettings": "User settings",
