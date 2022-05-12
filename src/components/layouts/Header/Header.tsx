@@ -8,12 +8,13 @@ import {
   useScrollTrigger,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import LanguageSwitch from './components/LanguageSwitch';
 import styles from './style.module.scss';
 import AuthLogo from './components/AuthLogo';
 import CreateBoardForm from '../../CreateBoardForm';
 import DialogButton from '../DialogButton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import Burger from './components/Burger';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,13 @@ const Header = () => {
   const { t } = useTranslation();
   const trigger = useScrollTrigger({ disableHysteresis: true });
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const navigateToBoards = () => navigate('/boards');
+  const navigateToHome = () => navigate('/home');
+  const btnNavigationClass = (btnLocation: string) => {
+    return btnLocation === location.pathname ? styles.btnStyleLocation : styles.btnStyle;
+  };
 
   return (
     <>
@@ -34,41 +42,55 @@ const Header = () => {
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, columnGap: '10px' }}>
               <Burger />
 
-              <IconButton className={styles.btnStyle} onClick={() => navigate('/home')}>
+              <IconButton className={btnNavigationClass('/home')} onClick={navigateToHome}>
                 <HomeIcon />
               </IconButton>
 
               {isLogged && (
-                <DialogButton
-                  type="new_board"
-                  btn={(handleOpen) => (
-                    <IconButton onClick={handleOpen} className={styles.btnStyle}>
-                      <AddIcon />
-                    </IconButton>
-                  )}
-                  form={(handleClose) => <CreateBoardForm handleClose={handleClose} />}
-                />
+                <>
+                  <IconButton onClick={navigateToBoards} className={btnNavigationClass('/boards')}>
+                    <DashboardIcon />
+                  </IconButton>
+                  <DialogButton
+                    type="new_board"
+                    btn={(handleOpen) => (
+                      <IconButton onClick={handleOpen} className={styles.btnStyle}>
+                        <AddIcon />
+                      </IconButton>
+                    )}
+                    form={(handleClose) => <CreateBoardForm handleClose={handleClose} />}
+                  />
+                </>
               )}
             </Box>
 
             <Box sx={{ display: { xs: 'none', md: 'flex' }, columnGap: '10px' }}>
               <Button
-                className={styles.btnStyle}
-                onClick={() => navigate('/home')}
+                className={btnNavigationClass('/home')}
+                onClick={navigateToHome}
                 startIcon={<HomeIcon />}
               >
                 {t(`buttons.home`)}
               </Button>
               {isLogged && (
-                <DialogButton
-                  type="new_board"
-                  btn={(handleOpen, type) => (
-                    <Button onClick={handleOpen} className={styles.btnStyle}>
-                      {t(`buttons.${type}`)}
-                    </Button>
-                  )}
-                  form={(handleClose) => <CreateBoardForm handleClose={handleClose} />}
-                />
+                <>
+                  <Button
+                    className={btnNavigationClass('/boards')}
+                    onClick={navigateToBoards}
+                    startIcon={<DashboardIcon />}
+                  >
+                    {t(`buttons.boards`)}
+                  </Button>
+                  <DialogButton
+                    type="new_board"
+                    btn={(handleOpen, type) => (
+                      <Button onClick={handleOpen} className={styles.btnStyle}>
+                        {t(`buttons.${type}`)}
+                      </Button>
+                    )}
+                    form={(handleClose) => <CreateBoardForm handleClose={handleClose} />}
+                  />
+                </>
               )}
             </Box>
 

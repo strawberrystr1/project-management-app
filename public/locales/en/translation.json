@@ -17,8 +17,32 @@
   "forms": {
     "new_board": {
       "title": "Create new board",
-      "description": "To create new board, please enter the name for your board",
+      "description": "To create new board, please enter the title of the board",
+      "label": "Title"
+    },
+    "new_column": {
+      "title": "Create new column",
+      "description": "To create new column, please enter the title of the column",
+      "label": "Title"
+    },
+    "new_task": {
+      "title": "Create new task",
+      "description": "To create new task, please enter the title and description of the task",
+      "taskTitle": "Title",
+      "taskDescription": "Description"
+    },
+    "delete_column": {
+      "title": "Remove column",
+      "description": "Do you really want to remove column?",
       "label": "Board name"
+    },
+    "delete_board": {
+      "title": "Delete board",
+      "description": "Are you sure to delete \"{{ title }}\" board?"
+    },
+    "update_board": {
+      "title": "Edit board",
+      "description": "Edit title of your current board"
     },
     "auth": {
       "title_sup": "Sign Up",
@@ -34,7 +58,11 @@
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
+    "back": "Back",
     "new_board": "Create board",
+    "boards": "Boards",
+    "new_column": "New column",
+    "new_task": "New task",
     "home": "Home"
   },
   "header": {
@@ -57,5 +85,9 @@
     "delete_btn": "delete",
     "placeholder_name": "Enter new name",
     "placeholder_password": "Enter new password"
+  },
+  "boards": {
+    "boardDescriptionNoColumns": "No columns yet",
+    "boardDescription": "Columns - {{count}}"
   }
 }

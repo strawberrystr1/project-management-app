@@ -16,9 +16,33 @@
   },
   "forms": {
     "new_board": {
-      "title": "Создайте новую доску",
-      "description": "Введите название доски для создания новой доски",
+      "title": "Создать новую доску",
+      "description": "Введите название для новой доски",
+      "label": "Название"
+    },
+    "new_column": {
+      "title": "Создать новую колонку",
+      "description": "Введите название для новой колонки",
+      "label": "Название"
+    },
+    "new_task": {
+      "title": "Создать новую задачу",
+      "description": "Введите название и описание новой задачи",
+      "taskTitle": "Название",
+      "taskDescription": "Описание"
+    },
+    "delete_column": {
+      "title": "Удалить колонку",
+      "description": "Вы действительно хотите удалить колонку?",
       "label": "Название доски"
+    },
+    "delete_board": {
+      "title": "Удалить доску",
+      "description": "Вы уверены, что хотите удалить доску \"{{ title }}\"?"
+    },
+    "update_board": {
+      "title": "Редактировать доску",
+      "description": "Редактировать название текущей доски"
     },
     "auth": {
       "title_sup": "Регистрация",
@@ -34,7 +58,11 @@
   "buttons": {
     "submit": "Подтвердить",
     "cancel": "Отмена",
+    "back": "Назад",
     "new_board": "Создать доску",
+    "boards": "Доски",
+    "new_column": "Новая колонка",
+    "new_task": "Новая задача",
     "home": "Домой"
   },
   "header": {
@@ -57,5 +85,9 @@
     "placeholder_password": "Введите новый пароль",
     "name_block": "Имя пользователя",
     "placeholder_name": "Введите новое имя"
+  },
+  "boards": {
+    "boardDescriptionNoColumns": "Еще нет колонок",
+    "boardDescription": "Колонок - {{count}}"
   }
 }
