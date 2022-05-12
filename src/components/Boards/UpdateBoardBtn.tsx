@@ -3,12 +3,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DialogButton from '../layouts/DialogButton';
 import UpdateBoardForm from '../UpdateBoardForm';
 import { IBoard } from '../../interfaces/apiInterfaces';
-import { getSubstring } from '../../utils/functions';
-import { useTranslation } from 'react-i18next';
 
 const UpdateBoardBtn = ({ board }: { board: IBoard }) => {
-  const { t } = useTranslation();
-
   return (
     <DialogButton
       type="update_board"

@@ -18,10 +18,8 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
     },
     onSubmit: async (values) => {
       if (values.boardName.trim().length === 0) return;
-      const token = localStorage.getItem('token-rss') as string;
       setIsDisable(true);
       await createBoard({
-        token,
         title: values.boardName,
       }).unwrap();
       handleClose();

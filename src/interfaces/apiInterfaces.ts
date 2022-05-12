@@ -18,7 +18,6 @@ export interface IRequestBasic {
 }
 
 export interface ICreateBoard {
-  token: string;
   title: string;
   id?: string;
 }

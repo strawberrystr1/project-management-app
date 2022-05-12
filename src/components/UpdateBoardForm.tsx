@@ -17,8 +17,7 @@ const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; boar
     },
     onSubmit: async (values) => {
       if (values.boardName.trim().length === 0) return;
-      const token = localStorage.getItem('token-rss') as string;
-      await updateBoard({ id: board.id, token, title: values.boardName }).unwrap();
+      await updateBoard({ id: board.id, title: values.boardName }).unwrap();
 
       handleClose();
       navigate('/boards');

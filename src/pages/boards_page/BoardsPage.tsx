@@ -6,18 +6,8 @@ import AddCard from '../../components/Boards/AddCard';
 import BoardCard from '../../components/Boards/BoardCard';
 import { useGetBoardsQuery } from '../../store/services/boardsService';
 
-// const boards: IBoard[] = [
-//   { id: '1', title: 'Home tasks (1)' },
-//   { id: '2', title: 'RSSchool (2)' },
-//   { id: '3', title: 'React tasks (3)' },
-//   { id: '4', title: 'Future works (4)' },
-//   { id: '5', title: 'Vocation (5)' },
-//   { id: '6', title: 'V5' },
-// ];
-
 const Boards = () => {
-  const token = localStorage.getItem('token-rss') as string;
-  const { data: boards } = useGetBoardsQuery(token);
+  const { data: boards } = useGetBoardsQuery();
 
   return (
     <>
