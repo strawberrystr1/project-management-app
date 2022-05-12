@@ -5,28 +5,36 @@ import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
 import { IColumnResponse } from '../../interfaces/apiInterfaces';
-import { useState } from 'react';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 
 interface Props extends IColumnResponse {
   boardId: string;
+  editId: string;
+  activateEdit: (id: string) => void;
+  disactivateEdit: () => void;
 }
 
-const BoardColumn = ({ id, order, title, boardId }: Props) => {
+const BoardColumn = ({
+  id,
+  order,
+  title,
+  boardId,
+  editId,
+  activateEdit,
+  disactivateEdit,
+}: Props) => {
   const { t } = useTranslation();
-  const [isEdit, setIsEdit] = useState(false);
-  const toggleEdit = () => setIsEdit((prev) => !prev);
   return (
     <Box
       style={{ order, display: 'flex', flexDirection: 'column' }}
       className={styles['column-container']}
     >
       <Box className={styles['title-container']}>
-        {isEdit ? (
+        {editId === id ? (
           <ChangeColumnTitle
             currentTitle={title}
-            toggleEdit={toggleEdit}
+            disactivateEdit={disactivateEdit}
             boardId={boardId}
             columnId={id}
             order={order}
@@ -34,7 +42,7 @@ const BoardColumn = ({ id, order, title, boardId }: Props) => {
         ) : (
           <ColumnTitle
             currentTitle={title}
-            toggleEdit={toggleEdit}
+            activateEdit={() => activateEdit(id)}
             boardId={boardId}
             columnId={id}
           />
@@ -56,12 +64,17 @@ const BoardColumn = ({ id, order, title, boardId }: Props) => {
       </Stack>
       <DialogButton
         type="new_task"
-        btn={(h, type) => (
-          <Button onClick={h} className={styles['new-task-btn']} color="warning" endIcon={<Add />}>
+        btn={(handleOpenDialog, type) => (
+          <Button
+            onClick={handleOpenDialog}
+            className={styles['new-task-btn']}
+            color="warning"
+            endIcon={<Add />}
+          >
             {t(`buttons.${type}`)}
           </Button>
         )}
-        form={(h) => <CreateTaskForm handleClose={h} />}
+        form={(handleCloseDialog) => <CreateTaskForm handleClose={handleCloseDialog} />}
       />
     </Box>
   );

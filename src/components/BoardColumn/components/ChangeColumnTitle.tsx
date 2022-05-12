@@ -7,22 +7,22 @@ import styles from './style.module.scss';
 
 type Props = {
   currentTitle: string;
-  toggleEdit: () => void;
+  disactivateEdit: () => void;
   boardId: string;
   columnId: string;
   order: number;
 };
 
-const ChangeColumnTitle = ({ currentTitle, toggleEdit, boardId, columnId, order }: Props) => {
+const ChangeColumnTitle = ({ currentTitle, disactivateEdit, boardId, columnId, order }: Props) => {
   const textarea = useRef<HTMLInputElement>();
   const [updateColumn] = useUpdateColumnMutation();
-  const OnConfirm = () => {
+  const onConfirm = () => {
     textarea.current &&
       updateColumn({
         paths: { boardId, columnId },
         body: { order, title: textarea.current.value },
       });
-    toggleEdit();
+    disactivateEdit();
   };
   return (
     <>
@@ -33,10 +33,10 @@ const ChangeColumnTitle = ({ currentTitle, toggleEdit, boardId, columnId, order 
         className={styles['column-title']}
         inputRef={textarea}
       />
-      <IconButton onClick={OnConfirm} size="small" color="success" aria-label="delete column">
+      <IconButton onClick={onConfirm} size="small" color="success" aria-label="delete column">
         <CheckCircleOutlineIcon />
       </IconButton>
-      <IconButton onClick={toggleEdit} size="small" color="error" aria-label="delete column">
+      <IconButton onClick={disactivateEdit} size="small" color="error" aria-label="delete column">
         <HighlightOffIcon />
       </IconButton>
     </>
