@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import SettingsItem from '../../components/SettingsItem/SettingsItem';
 import SettingsFormItem from '../../components/SettingsItem/SettingsFormItem';
 import { IUserResponse } from '../../interfaces/apiInterfaces';
+import DialogButton from '../../components/layouts/DialogButton';
+import DialogControls from '../../components/layouts/DialogControls';
 
 const Settings = () => {
   const [getUser, { data }] = useGetUserMutation();
@@ -62,15 +64,30 @@ const Settings = () => {
             <SettingsItem render={() => <LanguageSwitch />} type="language" />
             <SettingsItem
               render={() => (
-                <LoadingButton
-                  variant="contained"
-                  color="error"
-                  size="small"
-                  onClick={deleteProfile}
-                  loading={deleteLoading}
-                >
-                  {t('settings.delete_btn')}
-                </LoadingButton>
+                <DialogButton
+                  type="delete_profile"
+                  message=" "
+                  btn={(handleOpen) => (
+                    <LoadingButton
+                      variant="contained"
+                      color="error"
+                      size="small"
+                      onClick={handleOpen}
+                      loading={deleteLoading}
+                    >
+                      {t('settings.delete_btn')}
+                    </LoadingButton>
+                  )}
+                  form={(handleClose) => (
+                    <DialogControls
+                      onConfirm={() => {
+                        deleteProfile();
+                        handleClose();
+                      }}
+                      onCancel={handleClose}
+                    />
+                  )}
+                />
               )}
               type="delete"
             />

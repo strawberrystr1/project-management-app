@@ -6,6 +6,8 @@ import validationSchema from '../../utils/helpers/validationSchema';
 import { useUpdateUserMutation } from '../../store/services/userService';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IUserResponse } from '../../interfaces/apiInterfaces';
+import DialogButton from '../layouts/DialogButton';
+import DialogControls from '../layouts/DialogControls';
 
 interface IProps {
   userId: string;
@@ -29,8 +31,8 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
         password: formik.values.password,
       },
     };
-    console.log(body);
     await updateUser(body).unwrap();
+    formik.resetForm();
   };
 
   const formik = useFormik({
@@ -45,7 +47,7 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
         <Typography fontSize={20} gutterBottom={true}>
           {t(`settings.${fieldName}`)}:
         </Typography>
-        <form onSubmit={formik.handleSubmit} className={styles.settings_item}>
+        <form className={styles.settings_item}>
           <TextField
             placeholder={t(`settings.placeholder_${fieldName}`)}
             id={fieldName}
@@ -53,16 +55,33 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
             onChange={formik.handleChange}
             error={formik.touched.password && !!formik.errors.password}
             helperText={formik.touched.password && formik.errors.password}
+            value={formik.values.password}
           />
-          <LoadingButton
-            className={styles.submit}
-            type="submit"
-            variant="contained"
-            size="small"
-            loading={isLoading}
-          >
-            {t('settings.change_btn')}
-          </LoadingButton>
+          <DialogButton
+            type="change_password"
+            message=" "
+            btn={(handleOpen) => (
+              <LoadingButton
+                className={styles.submit}
+                type="button"
+                variant="contained"
+                size="small"
+                loading={isLoading}
+                onClick={handleOpen}
+              >
+                {t('settings.change_btn')}
+              </LoadingButton>
+            )}
+            form={(handleClose) => (
+              <DialogControls
+                onConfirm={() => {
+                  handleSubmit();
+                  handleClose();
+                }}
+                onCancel={handleClose}
+              />
+            )}
+          />
         </form>
       </Box>
       <Divider />

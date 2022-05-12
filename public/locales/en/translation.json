@@ -53,6 +53,12 @@
       "change_btn_sup": "Already have an account? Sign in",
       "change_btn_sin": "Back to registration",
       "success": "You successfully loged in!"
+    },
+    "change_password": {
+      "title": "Are you sure you want to change password ?"
+    },
+    "delete_profile": {
+      "title": "Are you sure you want to delete account ?"
     }
   },
   "buttons": {

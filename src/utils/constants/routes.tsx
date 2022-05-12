@@ -3,9 +3,9 @@ import { Navigate } from 'react-router-dom';
 import NotFound from '../../pages/not_found_page/NotFoundPage';
 import { IRouterRoutes } from '../../interfaces/baseInterfaces';
 import { SignInPage, SignUpPage } from '../../pages/authentication_page';
-import Settings from '../../pages/user_settings';
 import Boards from '../../pages/boards_page';
 import Board from '../../pages/board_page';
+import Settings from '../../pages/user_settings';
 
 const routes: IRouterRoutes = {
   public: [
