@@ -14,7 +14,7 @@ const TaskPopup = () => {
     order: 1,
     description: 'Domestic cat needs to be stroked gently',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    boardId: '8d3bad56-ad8a-495d-9500-18ae4d1de8dc',
+    boardId: 'efb4cdbf-3c27-427f-a269-4a2b290e69e1',
     columnId: '41344d09-b995-451f-93dc-2f17ae13a4a9',
   };
 
@@ -23,9 +23,14 @@ const TaskPopup = () => {
   return (
     <Box>
       <Button onClick={() => setOpen(true)}>open</Button>
-      <Dialog open={open} maxWidth="md" fullWidth={true}>
+      <Dialog open={open} maxWidth="md" fullWidth={true} onClose={handleClose}>
         <DialogContent>
-          <TaskHeader title={task.title} column={task.columnId} user={task.userId} />
+          <TaskHeader
+            title={task.title}
+            column={task.columnId}
+            user={task.userId}
+            board={task.boardId}
+          />
           <TaskDescription description={task.description} />
         </DialogContent>
         <Button onClick={handleClose} className={styles.close}>

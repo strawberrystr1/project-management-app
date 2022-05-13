@@ -15,9 +15,9 @@
 }
 
 .close {
-  min-width: 20px;
+  min-width: 20px !important;
   height: 20px;
-  position: absolute;
+  position: absolute !important;
   right: 5px;
   top: 10px;
 }

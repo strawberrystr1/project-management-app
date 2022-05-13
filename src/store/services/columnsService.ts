@@ -3,6 +3,7 @@ import {
   IColumnResponse,
   IDeleteColumn,
   IUpdateColumn,
+  ISingleColumnRequest,
 } from '../../interfaces/apiInterfaces';
 import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
@@ -62,6 +63,14 @@ const getApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Columns', id: 'LIST' }],
     }),
+    getColumnById: build.query<IColumnResponse, Omit<ISingleColumnRequest, 'token'>>({
+      query: (data) => ({
+        url: `boards/${data.id}/columns/${data.columnId}`,
+        headers: {
+          Authorization: `Bearer ${readToken()}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -70,4 +79,5 @@ export const {
   useAddColumnMutation,
   useDeleteColumnMutation,
   useUpdateColumnMutation,
+  useGetColumnByIdQuery,
 } = getApi;

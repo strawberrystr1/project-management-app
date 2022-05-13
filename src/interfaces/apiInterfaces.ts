@@ -17,6 +17,10 @@ export interface IRequestBasic {
   token: string;
 }
 
+export interface ISingleColumnRequest extends IRequestBasic {
+  columnId: string;
+}
+
 export interface ICreateBoard {
   token: string;
   title: string;
