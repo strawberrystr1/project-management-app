@@ -28,8 +28,7 @@ const Board = () => {
 
   return (
     <Box className={styles['board-wrapper']}>
-      {' '}
-      <Stack direction={'row'} spacing={1} className={styles['board']} mt={1}>
+      <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
         <Stack direction={'row'} spacing={1}>
           {data.map(({ id, order, title }) => (
             <BoardColumn
