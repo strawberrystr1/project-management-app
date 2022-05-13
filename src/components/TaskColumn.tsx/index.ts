@@ -1,3 +1,3 @@
-import TaskColumn from './Task.Column';
+import TaskColumn from './TaskColumn';
 
 export default TaskColumn;

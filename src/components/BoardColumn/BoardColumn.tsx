@@ -1,5 +1,5 @@
 import { Add } from '@mui/icons-material';
-import { Stack, Divider, Box, Button } from '@mui/material';
+import { Stack, Divider, Box, Button, Paper } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
@@ -42,68 +42,67 @@ const BoardColumn = ({
     });
   };
   return (
-    <Box
-      style={{ order, display: 'flex', flexDirection: 'column' }}
-      className={styles['column-container']}
-    >
-      <Box className={styles['title-container']}>
-        {editId === id ? (
-          <ChangeColumnTitle
-            currentTitle={title}
-            disactivateEdit={disactivateEdit}
-            boardId={boardId}
-            columnId={id}
-            order={order}
-          />
+    <Box style={{ order }} className={styles['column-container']}>
+      <Paper elevation={2} className={styles['column-wrapper']}>
+        <Box className={styles['title-container']}>
+          {editId === id ? (
+            <ChangeColumnTitle
+              currentTitle={title}
+              disactivateEdit={disactivateEdit}
+              boardId={boardId}
+              columnId={id}
+              order={order}
+            />
+          ) : (
+            <ColumnTitle
+              currentTitle={title}
+              activateEdit={() => activateEdit(id)}
+              boardId={boardId}
+              columnId={id}
+            />
+          )}
+        </Box>
+        <Stack
+          direction={'column'}
+          divider={<Divider orientation="horizontal" flexItem />}
+          spacing={1}
+          className={`${styles['column']}`}
+        >
+          {data.map((item) => (
+            <TaskColumn
+              key={item.id}
+              id={item.id}
+              order={item.order}
+              title={item.title}
+              description={item.description}
+              boardId={item.boardId}
+              columnId={item.columnId}
+              userId={item.userId}
+            />
+          ))}
+        </Stack>
+
+        {isLoading ? (
+          <Loader />
         ) : (
-          <ColumnTitle
-            currentTitle={title}
-            activateEdit={() => activateEdit(id)}
-            boardId={boardId}
-            columnId={id}
+          <DialogButton
+            type="new_task"
+            btn={(handleOpenDialog, type) => (
+              <Button
+                onClick={handleOpenDialog}
+                className={styles['new-task-btn']}
+                color="warning"
+                endIcon={<Add />}
+              >
+                {t(`buttons.${type}`)}
+              </Button>
+            )}
+            form={(handleCloseDialog) => (
+              <CreateTaskForm handleClose={handleCloseDialog} addTask={addTaskCallback} />
+            )}
           />
         )}
-      </Box>
-      <Stack
-        direction={'column'}
-        divider={<Divider orientation="horizontal" flexItem />}
-        spacing={0}
-        className={`${styles['column']}`}
-      >
-        {data.map((item) => (
-          <TaskColumn
-            key={item.id}
-            id={item.id}
-            order={item.order}
-            title={item.title}
-            description={item.description}
-            boardId={item.boardId}
-            columnId={item.columnId}
-            userId={item.userId}
-          />
-        ))}
-      </Stack>
-
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <DialogButton
-          type="new_task"
-          btn={(handleOpenDialog, type) => (
-            <Button
-              onClick={handleOpenDialog}
-              className={styles['new-task-btn']}
-              color="warning"
-              endIcon={<Add />}
-            >
-              {t(`buttons.${type}`)}
-            </Button>
-          )}
-          form={(handleCloseDialog) => (
-            <CreateTaskForm handleClose={handleCloseDialog} addTask={addTaskCallback} />
-          )}
-        />
-      )}
+      </Paper>
     </Box>
   );
 };

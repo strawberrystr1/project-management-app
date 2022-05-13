@@ -1,8 +1,14 @@
 .column-container {
-  padding: 0 5px;
   min-width: 272px;
   width: 272px;
   overflow-y: hidden;
+}
+
+.column-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: .5rem;
 }
 
 .column {
@@ -22,4 +28,5 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 0 .2rem .5rem;
 }
