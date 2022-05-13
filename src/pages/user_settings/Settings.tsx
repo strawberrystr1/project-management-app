@@ -20,7 +20,6 @@ import DialogControls from '../../components/layouts/DialogControls';
 
 const Settings = () => {
   const [getUser, { data }] = useGetUserMutation();
-  const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [deleteUser, { isLoading: deleteLoading }] = useDeleteUserMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const dispatch = useTypedDispatch();

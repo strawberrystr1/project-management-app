@@ -14,7 +14,6 @@ const userSlice = createSlice({
       state.userId = action.payload.id;
     },
     logOut: (state) => {
-      console.log('1');
       state.isLogged = false;
       state.userId = '';
       localStorage.removeItem('token-rss');

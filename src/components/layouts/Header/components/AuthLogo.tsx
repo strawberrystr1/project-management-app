@@ -10,18 +10,21 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { stringAvatar } from '../../../../utils/functions';
-import { useTypedDispatch } from '../../../../hooks/redux';
+import { useTypedDispatch, useTypedSelector } from '../../../../hooks/redux';
 import { logOut } from '../../../../store/reducers/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { useGetUserMutation } from '../../../../store/services/userService';
 
 const AuthLogo = () => {
   const { t } = useTranslation();
   const trigger = useScrollTrigger({ disableHysteresis: true });
   const dispatch = useTypedDispatch();
   const navigate = useNavigate();
+  const [getUser, { data }] = useGetUserMutation();
+  const { userId } = useTypedSelector((state) => state.user);
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -48,6 +51,15 @@ const AuthLogo = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token-rss') as string;
+      await getUser({ id: userId, token }).unwrap();
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title={t('header.userSettings')}>
@@ -63,7 +75,7 @@ const AuthLogo = () => {
                 : {}
             }
           >
-            {stringAvatar('Kent Dodos')}
+            {data && stringAvatar(data.name)}
           </Avatar>
         </IconButton>
       </Tooltip>
