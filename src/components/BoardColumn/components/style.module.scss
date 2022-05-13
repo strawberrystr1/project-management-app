@@ -1,0 +1,8 @@
+.column-title {
+  font-size: 1.25rem !important;
+  width: 100%;
+  word-break: break-word;
+  &:hover {
+    cursor: pointer;
+  }
+}
