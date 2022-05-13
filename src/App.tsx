@@ -23,7 +23,7 @@ function App() {
       const token = localStorage.getItem('token-rss');
       if (token) {
         const { userId } = jwt<{ userId: string }>(token);
-        const res = await getUser({ id: userId, token }).unwrap();
+        const res = await getUser(userId).unwrap();
         dispatch(setToken({ id: res.id, isLogged: true }));
       }
     } catch (error) {

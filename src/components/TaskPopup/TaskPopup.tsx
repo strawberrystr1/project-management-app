@@ -12,10 +12,10 @@ const TaskPopup = () => {
     id: '40af606c-c0bb-47d1-bc20-a2857242cde3',
     title: 'Task: pet the cat',
     order: 1,
-    description: 'Domestic cat needs to be stroked gently',
-    userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    boardId: 'efb4cdbf-3c27-427f-a269-4a2b290e69e1',
-    columnId: '41344d09-b995-451f-93dc-2f17ae13a4a9',
+    description: 'Domestic cat needs to be stroked gently veru vewr werwe werwer',
+    userId: '5b818181-8afb-46e0-903c-dd0190f8705c',
+    boardId: '8c4602af-9393-4476-907c-c0f7a7a4b632',
+    columnId: '8ee15c2d-578b-4edb-b02d-0a42669c579a',
   };
 
   const handleClose = () => setOpen(false);
