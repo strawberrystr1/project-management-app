@@ -7,6 +7,12 @@ import styles from './style.module.scss';
 import { IColumnResponse } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
+import { useAddTaskMutation, useGetTasksQuery } from '../../store/services/tasksService';
+import TaskColumn from '../TaskColumn.tsx';
+import { getNewOrder } from '../../utils/functions';
+import { IInitialFormValues } from '../../interfaces/formInterfaces';
+import { useTypedSelector } from '../../hooks/redux';
+import Loader from '../Loader';
 
 interface Props extends IColumnResponse {
   boardId: string;
@@ -25,6 +31,16 @@ const BoardColumn = ({
   disactivateEdit,
 }: Props) => {
   const { t } = useTranslation();
+  const { data = [] } = useGetTasksQuery({ boardId, columnId: id });
+
+  const { userId } = useTypedSelector((state) => state.user);
+  const [addTask, { isLoading }] = useAddTaskMutation();
+  const addTaskCallback = ({ title, description }: IInitialFormValues) => {
+    addTask({
+      paths: { boardId, columnId: id },
+      body: { title, description, order: getNewOrder(data), userId },
+    });
+  };
   return (
     <Box
       style={{ order, display: 'flex', flexDirection: 'column' }}
@@ -52,30 +68,42 @@ const BoardColumn = ({
         direction={'column'}
         divider={<Divider orientation="horizontal" flexItem />}
         spacing={0}
-        className={`${styles['column']} container-scroll`}
+        className={`${styles['column']}`}
       >
-        {/* JUST AN EXAMPLE */}
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-          <Box key={item} className={styles['column-item']}>
-            Item #{item}
-          </Box>
+        {data.map((item) => (
+          <TaskColumn
+            key={item.id}
+            id={item.id}
+            order={item.order}
+            title={item.title}
+            description={item.description}
+            boardId={item.boardId}
+            columnId={item.columnId}
+            userId={item.userId}
+          />
         ))}
-        {/* JUST AN EXAMPLE */}
       </Stack>
-      <DialogButton
-        type="new_task"
-        btn={(handleOpenDialog, type) => (
-          <Button
-            onClick={handleOpenDialog}
-            className={styles['new-task-btn']}
-            color="warning"
-            endIcon={<Add />}
-          >
-            {t(`buttons.${type}`)}
-          </Button>
-        )}
-        form={(handleCloseDialog) => <CreateTaskForm handleClose={handleCloseDialog} />}
-      />
+
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <DialogButton
+          type="new_task"
+          btn={(handleOpenDialog, type) => (
+            <Button
+              onClick={handleOpenDialog}
+              className={styles['new-task-btn']}
+              color="warning"
+              endIcon={<Add />}
+            >
+              {t(`buttons.${type}`)}
+            </Button>
+          )}
+          form={(handleCloseDialog) => (
+            <CreateTaskForm handleClose={handleCloseDialog} addTask={addTaskCallback} />
+          )}
+        />
+      )}
     </Box>
   );
 };

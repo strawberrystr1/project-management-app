@@ -62,3 +62,20 @@ export interface IUpdateColumn {
   paths: IDeleteColumn;
   body: Omit<IColumnResponse, 'id'>;
 }
+
+export interface ITaskResponse extends IColumnResponse, IDeleteColumn {
+  description: string;
+  userId: string;
+}
+
+export type IGetTasks = IDeleteColumn;
+
+export interface ICreateTask {
+  paths: IGetTasks;
+  body: {
+    title: string;
+    order: number;
+    description: string;
+    userId: string;
+  };
+}
