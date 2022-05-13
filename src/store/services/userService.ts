@@ -4,15 +4,16 @@ import {
   IUserResponse,
 } from '../../interfaces/apiInterfaces';
 import { IInitialFormValues } from '../../interfaces/formInterfaces';
+import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getUser: build.mutation<IUserResponse, IRequestBasic>({
+    getUser: build.mutation<IUserResponse, Omit<IRequestBasic, 'token'>>({
       query: (body) => ({
         url: `users/${body.id}`,
         headers: {
-          Authorization: `Bearer ${body.token}`,
+          Authorization: `Bearer ${readToken()}`,
         },
       }),
     }),
@@ -30,22 +31,22 @@ const getApi = api.injectEndpoints({
         body,
       }),
     }),
-    updateUser: build.mutation<IUserResponse, IChangePasswordRequest>({
+    updateUser: build.mutation<IUserResponse, Omit<IChangePasswordRequest, 'token'>>({
       query: (body) => ({
         url: `users/${body.id}`,
         method: 'PUT',
         body: body.body,
         headers: {
-          Authorization: `Bearer ${body.token}`,
+          Authorization: `Bearer ${readToken()}`,
         },
       }),
     }),
-    deleteUser: build.mutation<unknown, IRequestBasic>({
+    deleteUser: build.mutation<unknown, Omit<IRequestBasic, 'token'>>({
       query: (body) => ({
         url: `users/${body.id}`,
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${body.token}`,
+          Authorization: `Bearer ${readToken()}`,
         },
       }),
     }),

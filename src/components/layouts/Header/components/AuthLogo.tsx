@@ -53,8 +53,7 @@ const AuthLogo = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem('token-rss') as string;
-      await getUser({ id: userId, token }).unwrap();
+      await getUser({ id: userId }).unwrap();
     };
 
     fetchUser();

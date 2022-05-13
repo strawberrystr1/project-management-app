@@ -8,6 +8,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { IUserResponse } from '../../interfaces/apiInterfaces';
 import DialogButton from '../layouts/DialogButton';
 import DialogControls from '../layouts/DialogControls';
+import { readToken } from '../../utils/functions';
 
 interface IProps {
   userId: string;
@@ -21,7 +22,7 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
   const [updateUser, { isLoading }] = useUpdateUserMutation();
 
   const handleSubmit = async () => {
-    const token = localStorage.getItem('token-rss') as string;
+    const token = readToken();
     const body = {
       id: userId,
       token,

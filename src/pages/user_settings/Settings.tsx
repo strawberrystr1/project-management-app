@@ -17,6 +17,7 @@ import SettingsFormItem from '../../components/SettingsItem/SettingsFormItem';
 import { IUserResponse } from '../../interfaces/apiInterfaces';
 import DialogButton from '../../components/layouts/DialogButton';
 import DialogControls from '../../components/layouts/DialogControls';
+import { readToken } from '../../utils/functions';
 
 const Settings = () => {
   const [getUser, { data }] = useGetUserMutation();
@@ -27,14 +28,13 @@ const Settings = () => {
   const navigate = useNavigate();
 
   const fetchUser = async () => {
-    const token = localStorage.getItem('token-rss') as string;
-    await getUser({ id: userId, token }).unwrap();
+    const token = readToken();
+    await getUser({ id: userId }).unwrap();
   };
 
   const deleteProfile = async () => {
-    const token = localStorage.getItem('token-rss') as string;
+    const token = readToken();
     const body = {
-      token,
       id: userId,
     };
     await deleteUser(body).unwrap();
