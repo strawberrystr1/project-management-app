@@ -17,6 +17,14 @@ export interface IRequestBasic {
   token: string;
 }
 
+interface IUserData {
+  name: string;
+  login: string;
+  password: string;
+}
+export interface IChangePasswordRequest extends IRequestBasic {
+  body: IUserData;
+}
 export interface ICreateBoard {
   token: string;
   title: string;

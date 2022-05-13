@@ -53,6 +53,12 @@
       "change_btn_sup": "Уже есть акаунт? Войти",
       "change_btn_sin": "Вернуться к регистрации",
       "success": "Вы вошли в акаунт!"
+    },
+    "change_password": {
+      "title": "Вы уверены что хотите изменить пароль ?"
+    },
+    "delete_profile": {
+      "title": "Вы уверены что хотите удалить аккаунт ?"
     }
   },
   "buttons": {
@@ -72,6 +78,19 @@
     "signInProfile": "Войти",
     "signUpProfile": "Регистрация",
     "burgerMenu": "Меню"
+  },
+  "settings": {
+    "title": "Настройки профиля",
+    "password": "Изменить пароль",
+    "language": "Изменить язык",
+    "delete": "Удалить профиль",
+    "name": "Изменить имя",
+    "login": "Логин",
+    "change_btn": "изменить",
+    "delete_btn": "удалить",
+    "placeholder_password": "Введите новый пароль",
+    "name_block": "Имя пользователя",
+    "placeholder_name": "Введите новое имя"
   },
   "boards": {
     "boardDescriptionNoColumns": "Еще нет колонок",

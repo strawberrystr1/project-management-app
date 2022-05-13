@@ -53,6 +53,12 @@
       "change_btn_sup": "Already have an account? Sign in",
       "change_btn_sin": "Back to registration",
       "success": "You successfully loged in!"
+    },
+    "change_password": {
+      "title": "Are you sure you want to change password ?"
+    },
+    "delete_profile": {
+      "title": "Are you sure you want to delete account ?"
     }
   },
   "buttons": {
@@ -72,6 +78,19 @@
     "signInProfile": "sign in",
     "signUpProfile": "sign up",
     "burgerMenu": "Menu"
+  },
+  "settings": {
+    "title": "User settings",
+    "password": "Change password",
+    "language": "Change language",
+    "name": "Change name",
+    "delete": "Delete profile",
+    "name_block": "User name",
+    "login": "User login",
+    "change_btn": "change",
+    "delete_btn": "delete",
+    "placeholder_name": "Enter new name",
+    "placeholder_password": "Enter new password"
   },
   "boards": {
     "boardDescriptionNoColumns": "No columns yet",
