@@ -1,0 +1,41 @@
+.headerWrapper {
+  height: 80px;
+  background-color: rgb(65, 1, 44);
+}
+
+.color {
+  background-color: #486c29 !important;
+}
+
+@media (min-width: 600px) {
+  .small {
+    min-height: 48px !important;
+  }
+}
+
+.btnStyle {
+  color: white !important;
+}
+.btnStyle:hover {
+  color: #c2c2c2 !important;
+}
+
+.btnStyleLocation {
+  color: rgb(197, 197, 197) !important;
+}
+.btnStyleLocation:hover {
+  color: #c2c2c2 !important;
+}
+
+.btnStyleLight {
+  color: black !important;
+}
+.btnStyleLight:hover {
+  color: #c2c2c2 !important;
+}
+
+.theme {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}/*# sourceMappingURL=style.module.css.map */

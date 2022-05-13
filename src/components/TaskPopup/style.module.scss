@@ -1,0 +1,23 @@
+.wrapper {
+  padding: 10px 20px;
+}
+
+.description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_btns {
+    width: 20%;
+    display: flex;
+    justify-content: space-between !important;
+  }
+}
+
+.close {
+  min-width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 5px;
+  top: 10px;
+}
