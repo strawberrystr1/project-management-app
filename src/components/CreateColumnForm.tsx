@@ -3,15 +3,19 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import DialogControls from './layouts/DialogControls';
 
-const CreateColumnForm = ({ handleClose }: { handleClose: () => void }) => {
+type Props = {
+  handleClose: () => void;
+  addColumn: (title: string) => void;
+};
+
+const CreateColumnForm = ({ handleClose, addColumn }: Props) => {
   const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
       columnName: '',
     },
-    onSubmit: (values) => {
-      const order = Number.MAX_VALUE;
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: ({ columnName }) => {
+      addColumn(columnName);
       handleClose();
     },
   });

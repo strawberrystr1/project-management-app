@@ -19,7 +19,7 @@ const BoardCard = ({ board }: { board: IBoard }) => {
         <CardActionArea
           onClick={() => {
             console.log('open card', board.id);
-            navigate(`/boards/board/${board.id}`);
+            navigate(`/boards/${board.id}`);
           }}
         >
           <CardContent>
