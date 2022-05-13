@@ -47,8 +47,18 @@ export interface IFile {
   filename: string;
   fileSize: number;
 }
-export interface IColumnResponce {
+export interface IColumnResponse {
   id: string;
   order: number;
   title: string;
+}
+
+export interface IDeleteColumn {
+  boardId: string;
+  columnId: string;
+}
+
+export interface IUpdateColumn {
+  paths: IDeleteColumn;
+  body: Omit<IColumnResponse, 'id'>;
 }
