@@ -8,7 +8,7 @@ import { IColumnResponse } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation, useGetTasksQuery } from '../../store/services/tasksService';
-import TaskColumn from '../TaskColumn.tsx';
+import TaskColumn from '../TaskColumn';
 import { getNewOrder } from '../../utils/functions';
 import { IInitialFormValues } from '../../interfaces/formInterfaces';
 import { useTypedSelector } from '../../hooks/redux';
@@ -62,12 +62,7 @@ const BoardColumn = ({
             />
           )}
         </Box>
-        <Stack
-          direction={'column'}
-          divider={<Divider orientation="horizontal" flexItem />}
-          spacing={1}
-          className={`${styles['column']}`}
-        >
+        <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
           {data.map((item) => (
             <TaskColumn
               key={item.id}
