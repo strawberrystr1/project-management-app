@@ -1,16 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { IBoard, ICreateBoard, IRequestBasic } from '../../interfaces/apiInterfaces';
+import { IBoard, ICreateBoard } from '../../interfaces/apiInterfaces';
+import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
-
-
 
 const getApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getBoards: build.query<IBoard[], string>({
-      query: (token) => ({
+    getBoards: build.query<IBoard[], void>({
+      query: () => ({
         url: 'boards',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${readToken()}`,
         },
       }),
       providesTags: (result) =>
@@ -26,7 +25,7 @@ const getApi = api.injectEndpoints({
         url: `boards`,
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${body.token}`,
+          Authorization: `Bearer ${readToken()}`,
         },
         body: {
           title: body.title,
@@ -39,7 +38,7 @@ const getApi = api.injectEndpoints({
         url: `boards/${body.id}`,
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${body.token}`,
+          Authorization: `Bearer ${readToken()}`,
         },
         body: {
           title: body.title,
@@ -47,21 +46,21 @@ const getApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'boards', id: 'LIST' }],
     }),
-    deleteBoard: build.mutation<unknown, IRequestBasic>({
-      query: (body) => ({
-        url: `boards/${body.id}`,
+    deleteBoard: build.mutation<unknown, string>({
+      query: (id) => ({
+        url: `boards/${id}`,
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${body.token}`,
+          Authorization: `Bearer ${readToken()}`,
         },
       }),
       invalidatesTags: [{ type: 'boards', id: 'LIST' }],
     }),
-    getBoardById: build.query<IBoard, IRequestBasic>({
-      query: (body) => ({
-        url: `boards/${body.id}`,
+    getBoardById: build.query<IBoard, string>({
+      query: (id) => ({
+        url: `boards/${id}`,
         headers: {
-          Authorization: `Bearer ${body.token}`,
+          Authorization: `Bearer ${readToken()}`,
         },
       }),
     }),

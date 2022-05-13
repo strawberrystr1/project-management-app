@@ -9,12 +9,10 @@ import DialogControls from '../layouts/DialogControls';
 
 const DeleteBoardBtn = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
-  const token = localStorage.getItem('token-rss') as string;
-
   const [deleteBoard] = useDeleteBoardMutation();
 
   const handleDeleteBoard = async (id: string) => {
-    await deleteBoard({ id, token }).unwrap();
+    await deleteBoard(id).unwrap();
   };
 
   return (
@@ -25,7 +23,7 @@ const DeleteBoardBtn = ({ board }: { board: IBoard }) => {
       })}
       btn={(handleOpen) => (
         <IconButton
-          sx={{ position: 'absolute', right: 0, bottom: 0 }}
+          sx={{ position: 'absolute', right: 0, top: 0, transform: 'translate(0,100%)' }}
           aria-label="delete"
           color="warning"
           onClick={handleOpen}

@@ -26,7 +26,6 @@ export interface IChangePasswordRequest extends IRequestBasic {
   body: IUserData;
 }
 export interface ICreateBoard {
-  token: string;
   title: string;
   id?: string;
 }
