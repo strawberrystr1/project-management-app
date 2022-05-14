@@ -13,7 +13,7 @@ import { getNewOrder } from '../../utils/functions';
 import { IInitialFormValues } from '../../interfaces/formInterfaces';
 import { useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
-
+import { Droppable, DroppableProvided } from '@react-forked/dnd';
 interface Props extends IColumnResponse {
   boardId: string;
   editId: string;
@@ -63,18 +63,26 @@ const BoardColumn = ({
           )}
         </Box>
         <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
-          {data.map((item) => (
-            <TaskColumn
-              key={item.id}
-              id={item.id}
-              order={item.order}
-              title={item.title}
-              description={item.description}
-              boardId={item.boardId}
-              columnId={item.columnId}
-              userId={item.userId}
-            />
-          ))}
+          <Droppable droppableId={id} direction="vertical">
+            {(droppableProvided: DroppableProvided) => (
+              <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
+                {data.map((item, index) => (
+                  <TaskColumn
+                    key={item.id}
+                    index={index}
+                    id={item.id}
+                    order={item.order}
+                    title={item.title}
+                    description={item.description}
+                    boardId={item.boardId}
+                    columnId={item.columnId}
+                    userId={item.userId}
+                  />
+                ))}
+                {droppableProvided.placeholder}
+              </div>
+            )}
+          </Droppable>
         </Stack>
 
         {isLoading ? (

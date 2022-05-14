@@ -73,6 +73,7 @@ export interface IUpdateColumn {
 export interface ITaskResponse extends IColumnResponse, IDeleteColumn {
   description: string;
   userId: string;
+  index: number;
 }
 
 export type IGetTasks = IDeleteColumn;

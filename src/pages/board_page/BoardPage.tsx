@@ -7,6 +7,7 @@ import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
 import styles from './style.module.scss';
 import { useAddColumnMutation, useGetColumnsQuery } from '../../store/services/columnsService';
+import { DragDropContext, DropResult, ResponderProvided } from '@react-forked/dnd';
 
 import { getNewOrder } from '../../utils/functions';
 import { useState } from 'react';
@@ -26,45 +27,61 @@ const Board = () => {
     addColumn({ order: getNewOrder(data), id: String(boardId), title });
   };
 
+  const onDragEnd = (result: DropResult, provided?: ResponderProvided) => {
+    const { source, destination, draggableId } = result;
+    if (!destination) {
+      return;
+    }
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+    // todo
+    console.log('source.droppableId', source.droppableId);
+    console.log('destination.droppableId', destination.droppableId);
+  };
+
   return (
-    <Box className={styles['board-wrapper']}>
-      <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
-        <Stack direction={'row'} spacing={1}>
-          {data.map(({ id, order, title }) => (
-            <BoardColumn
-              key={id}
-              id={id}
-              order={order}
-              title={title}
-              boardId={boardId}
-              editId={editId}
-              activateEdit={activateEdit}
-              disactivateEdit={disactivateEdit}
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Box className={styles['board-wrapper']}>
+        <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
+          <Stack direction={'row'} spacing={1}>
+            {data.map(({ id, order, title }) => (
+              <BoardColumn
+                key={id}
+                id={id}
+                order={order}
+                title={title}
+                boardId={boardId}
+                editId={editId}
+                activateEdit={activateEdit}
+                disactivateEdit={disactivateEdit}
+              />
+            ))}
+          </Stack>
+
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <DialogButton
+              type="new_column"
+              btn={(handleOpenDialog, type) => (
+                <Button
+                  onClick={handleOpenDialog}
+                  className={styles['new-column-btn']}
+                  color="info"
+                  endIcon={<Add />}
+                >
+                  {t(`buttons.${type}`)}
+                </Button>
+              )}
+              form={(handleCloseDialog) => (
+                <CreateColumnForm handleClose={handleCloseDialog} addColumn={addColumnCallback} />
+              )}
             />
-          ))}
+          )}
         </Stack>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <DialogButton
-            type="new_column"
-            btn={(handleOpenDialog, type) => (
-              <Button
-                onClick={handleOpenDialog}
-                className={styles['new-column-btn']}
-                color="info"
-                endIcon={<Add />}
-              >
-                {t(`buttons.${type}`)}
-              </Button>
-            )}
-            form={(handleCloseDialog) => (
-              <CreateColumnForm handleClose={handleCloseDialog} addColumn={addColumnCallback} />
-            )}
-          />
-        )}
-      </Stack>
-    </Box>
+      </Box>
+    </DragDropContext>
   );
 };
 
