@@ -8,6 +8,8 @@ import { useGetBoardsQuery } from '../../store/services/boardsService';
 
 const Boards = () => {
   const { data: boards } = useGetBoardsQuery();
+  // IBoard[]
+  console.log('boards', boards);
 
   return (
     <>
@@ -18,7 +20,7 @@ const Boards = () => {
         </IconButton>
       </Stack>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-        {boards && boards.map((board) => <BoardCard key={board.id} board={board} />)}
+        {boards && boards.map((board) => <BoardCard key={board['_id']} board={board} />)}
 
         <DialogButton
           type="new_board"

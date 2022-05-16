@@ -11,21 +11,22 @@ import styles from './style.module.scss';
 const BoardCard = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data = [] } = useGetColumnsQuery({ id: board.id });
+  // const { data = [] } = useGetColumnsQuery({ id: board['_id'] }); //todo
 
   // const { data } = useGetBoardByIdQuery(board.id);
-  const columnsLength = data.length;
+  // const columnsLength = data.length; //todo
+  const columnsLength = 42;
 
   return (
-    <Grid item xs={2} sm={4} md={4} key={board.id}>
+    <Grid item xs={2} sm={4} md={4} key={board['_id']}>
       <Card
         className={styles['card-item']}
         sx={{ maxWidth: 345, position: 'relative', maxHeight: 100, overflow: 'auto' }}
       >
         <CardActionArea
           onClick={() => {
-            console.log('open card', board.id);
-            navigate(`/boards/${board.id}`);
+            console.log('open card', board['_id']);
+            navigate(`/boards/${board['_id']}`);
           }}
         >
           <CardContent>

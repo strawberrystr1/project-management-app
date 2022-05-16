@@ -30,8 +30,10 @@ export interface ICreateBoard {
   id?: string;
 }
 export interface IBoard {
-  id: string;
+  owner: string;
   title: string;
+  users: string[]; //todo change?
+  _id: string;
   columns?: IColumn[];
 }
 

@@ -15,7 +15,7 @@ const getApi = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'boards' as const, id })),
+            ...result.map(({ _id }) => ({ type: 'boards' as const, _id })),
             { type: 'boards', id: 'LIST' },
           ]
           : [{ type: 'boards', id: 'LIST' }],
