@@ -7,7 +7,7 @@ import styles from './style.module.scss';
 import { IColumn } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
-import { useAddTaskMutation, useGetTasksQuery } from '../../store/services/tasksService';
+import { useAddTaskMutation } from '../../store/services/tasksService';
 import TaskColumn from '../TaskColumn';
 import { getNewOrder } from '../../utils/functions';
 import { IInitialFormValues } from '../../interfaces/formInterfaces';
@@ -18,6 +18,7 @@ interface Props extends IColumn {
   editId: string;
   activateEdit: (id: string) => void;
   disactivateEdit: () => void;
+  updateBoard: () => void;
 }
 
 const BoardColumn = ({
@@ -29,16 +30,27 @@ const BoardColumn = ({
   editId,
   activateEdit,
   disactivateEdit,
+  updateBoard,
 }: Props) => {
   const { t } = useTranslation();
 
-  const [addTask] = useAddTaskMutation();
+  const [addTask, { isLoading }] = useAddTaskMutation();
+  const { userId } = useTypedSelector((state) => state.user);
+
   const addTaskCallback = ({ title, description }: IInitialFormValues) => {
-    /* addTask({
-      paths: { boardId, columnId: id },
-      body: { title, description, order: getNewOrder(data), userId },
-    }); */
+    addTask({
+      title,
+      description,
+      order: getNewOrder(tasks),
+      userId,
+      boardId,
+      columnId: _id,
+      users: [],
+    })
+      .unwrap()
+      .then(updateBoard);
   };
+
   return (
     <Box style={{ order }} className={styles['column-container']}>
       <Paper elevation={2} className={styles['column-wrapper']}>
@@ -66,22 +78,26 @@ const BoardColumn = ({
           ))}
         </Stack>
 
-        <DialogButton
-          type="new_task"
-          btn={(handleOpenDialog, type) => (
-            <Button
-              onClick={handleOpenDialog}
-              className={styles['new-task-btn']}
-              color="warning"
-              endIcon={<Add />}
-            >
-              {t(`buttons.${type}`)}
-            </Button>
-          )}
-          form={(handleCloseDialog) => (
-            <CreateTaskForm handleClose={handleCloseDialog} addTask={addTaskCallback} />
-          )}
-        />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <DialogButton
+            type="new_task"
+            btn={(handleOpenDialog, type) => (
+              <Button
+                onClick={handleOpenDialog}
+                className={styles['new-task-btn']}
+                color="warning"
+                endIcon={<Add />}
+              >
+                {t(`buttons.${type}`)}
+              </Button>
+            )}
+            form={(handleCloseDialog) => (
+              <CreateTaskForm handleClose={handleCloseDialog} addTask={addTaskCallback} />
+            )}
+          />
+        )}
       </Paper>
     </Box>
   );

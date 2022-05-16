@@ -36,7 +36,7 @@ export interface IBoard {
   title: string;
   users: string[]; //todo change?
   _id: string;
-  columns?: IColumn[];
+  columns: IColumn[];
 }
 export interface IColumn {
   _id: string;
@@ -61,16 +61,7 @@ export interface IFile {
   fileSize: number;
 }
 
-export interface IDeleteColumn {
-  boardId: string;
-  columnId: string;
-}
-
-export interface IUpdateColumn {
-  paths: IDeleteColumn;
-  body: Omit<IColumn, '_id'>;
-}
-
+/* THIS CODE IS USED IN OLD METHODS */
 export interface ITaskResponse extends IColumn, IDeleteColumn {
   description: string;
   userId: string;
@@ -78,12 +69,22 @@ export interface ITaskResponse extends IColumn, IDeleteColumn {
 
 export type IGetTasks = IDeleteColumn;
 
-export interface ICreateTask {
-  paths: IGetTasks;
-  body: {
-    title: string;
-    order: number;
-    description: string;
-    userId: string;
-  };
+/* THIS CODE IS USED IN OLD METHODS */
+
+export interface ICreateColumn {
+  title: string;
+  boardId: string;
+  order: number;
 }
+
+export interface IDeleteColumn {
+  boardId: string;
+  columnId: string;
+}
+
+export interface IUpdateColumn {
+  columnId: string;
+  body: ICreateColumn;
+}
+
+export type ICreateTask = Omit<ITask, '_id'>;

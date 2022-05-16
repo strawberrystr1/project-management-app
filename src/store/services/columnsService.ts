@@ -3,6 +3,7 @@ import {
   IDeleteColumn,
   IUpdateColumn,
   IColumn,
+  ICreateColumn,
 } from '../../interfaces/apiInterfaces';
 import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
@@ -18,16 +19,13 @@ const getApi = api.injectEndpoints({
       }),
     }),
     addColumn: build.mutation({
-      query: (body: IColumn) => ({
-        url: `boards/${body._id}/columns`,
+      query: (body: ICreateColumn) => ({
+        url: `boards/${body.boardId}/columns`,
         method: 'POST',
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },
-        body: {
-          title: body.title,
-          order: body.order,
-        },
+        body,
       }),
     }),
     deleteColumn: build.mutation({
@@ -38,19 +36,15 @@ const getApi = api.injectEndpoints({
           Authorization: `Bearer ${readToken()}`,
         },
       }),
-      invalidatesTags: [{ type: 'Columns', id: 'LIST' }],
     }),
     updateColumn: build.mutation({
-      query: (data: IUpdateColumn) => ({
-        url: `boards/${data.paths.boardId}/columns/${data.paths.columnId}`,
+      query: ({ body, columnId }: IUpdateColumn) => ({
+        url: `boards/${body.boardId}/columns/${columnId}`,
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },
-        body: {
-          title: data.body.title,
-          order: data.body.order,
-        },
+        body,
       }),
     }),
   }),

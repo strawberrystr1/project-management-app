@@ -5,6 +5,8 @@ import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import { useDeleteColumnMutation } from '../../../store/services/columnsService';
 import styles from './style.module.scss';
 import Loader from '../../Loader';
+import { useTypedDispatch } from '../../../hooks/redux';
+import { removeColumn } from '../../../store/reducers/boardSlice';
 
 type Props = {
   currentTitle: string;
@@ -14,34 +16,34 @@ type Props = {
 };
 
 const ColumnTitle = ({ currentTitle, activateEdit, boardId, columnId }: Props) => {
-  const [deleteColumn, { isLoading }] = useDeleteColumnMutation();
-  const deleteColumnCallback = () => deleteColumn({ boardId, columnId });
+  const [deleteColumn] = useDeleteColumnMutation();
+  const dispatch = useTypedDispatch();
+  const deleteColumnCallback = () => {
+    dispatch(removeColumn(columnId));
+    deleteColumn({ boardId, columnId });
+  };
 
   return (
     <>
       <Typography className={styles['column-title']} onClick={activateEdit}>
         {currentTitle}
       </Typography>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <DialogButton
-          type="delete_column"
-          btn={(handleOpenDialog) => (
-            <IconButton
-              onClick={handleOpenDialog}
-              size="small"
-              color="secondary"
-              aria-label="delete column"
-            >
-              <BackspaceOutlinedIcon />
-            </IconButton>
-          )}
-          form={(handleCloseDialog) => (
-            <DialogControls onCancel={handleCloseDialog} onConfirm={deleteColumnCallback} />
-          )}
-        />
-      )}
+      <DialogButton
+        type="delete_column"
+        btn={(handleOpenDialog) => (
+          <IconButton
+            onClick={handleOpenDialog}
+            size="small"
+            color="secondary"
+            aria-label="delete column"
+          >
+            <BackspaceOutlinedIcon />
+          </IconButton>
+        )}
+        form={(handleCloseDialog) => (
+          <DialogControls onCancel={handleCloseDialog} onConfirm={deleteColumnCallback} />
+        )}
+      />
     </>
   );
 };
