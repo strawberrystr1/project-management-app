@@ -1,10 +1,10 @@
 import { Box, Divider, Typography } from '@mui/material';
-import { ITaskResponse } from '../../interfaces/apiInterfaces';
+import { ITask } from '../../interfaces/apiInterfaces';
 import styles from './style.module.scss';
 
-type Props = ITaskResponse;
+type Props = Pick<ITask, '_id' | 'title' | 'order'>;
 
-const TaskColumn = ({ id, title, order }: Props) => {
+const TaskColumn = ({ _id, title, order }: Props) => {
   return (
     <Box style={{ order }} className={styles['task-container']}>
       <Typography className={styles['task-title']}>{title}</Typography>

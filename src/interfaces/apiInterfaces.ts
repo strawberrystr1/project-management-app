@@ -39,28 +39,26 @@ export interface IBoard {
   columns?: IColumn[];
 }
 export interface IColumn {
-  id: string;
+  _id: string;
   title: string;
   order: number;
+  boardId: string;
   tasks: ITask[];
 }
 export interface ITask {
-  id: string;
+  _id: string;
   title: string;
   order: number;
-  done: boolean;
   description: string;
   userId: string;
-  files: IFile[];
+  boardId: string;
+  columnId: string;
+  users: string[];
 }
+
 export interface IFile {
   filename: string;
   fileSize: number;
-}
-export interface IColumnResponse {
-  id: string;
-  order: number;
-  title: string;
 }
 
 export interface IDeleteColumn {
@@ -70,10 +68,10 @@ export interface IDeleteColumn {
 
 export interface IUpdateColumn {
   paths: IDeleteColumn;
-  body: Omit<IColumnResponse, 'id'>;
+  body: Omit<IColumn, '_id'>;
 }
 
-export interface ITaskResponse extends IColumnResponse, IDeleteColumn {
+export interface ITaskResponse extends IColumn, IDeleteColumn {
   description: string;
   userId: string;
 }
