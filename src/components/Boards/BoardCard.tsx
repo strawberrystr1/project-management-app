@@ -4,18 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import UpdateBoardBtn from './UpdateBoardBtn';
 import DeleteBoardBtn from './DeleteBoardBtn';
-import { useGetColumnsQuery } from '../../store/services/columnsService';
-
 import styles from './style.module.scss';
+import { useGetBoardByIdQuery } from '../../store/services/boardsService';
+import { useGetColumnsQuery } from '../../store/services/columnsService';
 
 const BoardCard = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   // const { data = [] } = useGetColumnsQuery({ id: board['_id'] }); //todo
+  // const { data } = useGetBoardByIdQuery(board["_id"]);
+  const { data } = useGetBoardByIdQuery(board['_id']); //todo getting all columns from each board
 
-  // const { data } = useGetBoardByIdQuery(board.id);
-  // const columnsLength = data.length; //todo
-  const columnsLength = 42;
+  const columnsLength = data?.columns ? data?.columns.length : 0;
 
   return (
     <Grid item xs={2} sm={4} md={4} key={board['_id']}>

@@ -27,7 +27,9 @@ export interface IChangePasswordRequest extends IRequestBasic {
 }
 export interface ICreateBoard {
   title: string;
-  id?: string;
+  owner: string;
+  users?: string[]; //todo change?
+  _id?: string;
 }
 export interface IBoard {
   owner: string;
@@ -36,7 +38,6 @@ export interface IBoard {
   _id: string;
   columns?: IColumn[];
 }
-
 export interface IColumn {
   id: string;
   title: string;
