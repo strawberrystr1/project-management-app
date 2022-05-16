@@ -19,14 +19,14 @@ const getApi = api.injectEndpoints({
     }),
     createUser: build.mutation({
       query: (body: IInitialFormValues) => ({
-        url: 'signup',
+        url: 'auth/signup',
         method: 'POST',
         body,
       }),
     }),
     signIn: build.mutation({
       query: (body: Omit<IInitialFormValues, 'name'>) => ({
-        url: 'signin',
+        url: 'auth/signin',
         method: 'POST',
         body,
       }),
