@@ -17,6 +17,7 @@ import Loader from '../Loader';
 import { Droppable, DroppableProvided } from '@react-forked/dnd';
 interface Props extends IColumn {
   editId: string;
+  index: number;
   activateEdit: (id: string) => void;
   disactivateEdit: () => void;
   updateBoard: () => void;
@@ -27,6 +28,7 @@ interface Props extends IColumn {
 const BoardColumn = ({
   _id,
   order,
+  index,
   title,
   boardId,
   tasks,
@@ -41,6 +43,7 @@ const BoardColumn = ({
 
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
+  const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
 
   const addTaskCallback = ({ title, description }: IInitialFormValues) => {
     addTask({
@@ -81,7 +84,7 @@ const BoardColumn = ({
           <Droppable droppableId={_id} direction="vertical">
             {(droppableProvided: DroppableProvided) => (
               <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
-                {tasks.map((task, index) => (
+                {sortedTasks.map((task, index) => (
                   <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
                     <TaskColumn
                       _id={task._id}

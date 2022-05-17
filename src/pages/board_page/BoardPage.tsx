@@ -12,7 +12,7 @@ import { getNewOrder } from '../../utils/functions';
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
-import { setBoard, updateColumnTasks } from '../../store/reducers/boardSlice';
+import { setBoard, updateColumnTasks1 } from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
 import TaskPopup from '../../components/TaskPopup';
@@ -33,6 +33,8 @@ const Board = () => {
   };
 
   useEffect(updateBoard, [boardId]);
+
+  console.log('board', board);
 
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
@@ -79,9 +81,39 @@ const Board = () => {
       const removedItem = copyColumnFrom.splice(source.index, 1); //deleting item
       copyColumnFrom.splice(destination.index, 0, removedItem[0]); //deleting item
       // todo map change order to current column
-      dispatch(updateColumnTasks({ columnId: source.droppableId, tasks: copyColumnFrom }));
+      // dispatch(updateColumnTasks1({ columnId: source.droppableId, tasks: copyColumnFrom }));
+
+      // rerender
+      const apiCopyColumnFrom = copyColumnFrom.map((task, index) => {
+        return {
+          _id: task._id,
+          title: task.title,
+          order: index,
+          description: task.description,
+          userId: task.userId,
+          boardId: task.boardId,
+          columnId: task.columnId,
+          users: task.users,
+        };
+      });
+
+      dispatch(
+        updateColumnTasks1({
+          columnId: source.droppableId,
+          tasks: apiCopyColumnFrom,
+        })
+      );
+
+      // console.log('apiCopyColumnFrom', apiCopyColumnFrom);
+      setTasks(apiCopyColumnFrom);
+      // {
+      //   columnIdSource: source.droppableId,
+      //   columnIdDestination: destination.droppableId,
+      //   indexSource: source.index,
+      //   indexDestination: destination.index,
+      //          }
       // todo add api method
-      return;
+      // return;
     }
     // если колонки разные, то работаем с columnFrom и с columnTo
     const columnTo = board.columns.find((column) => column._id === destination.droppableId)?.tasks;
@@ -106,10 +138,11 @@ const Board = () => {
               <Loader />
             ) : (
               board.columns &&
-              board.columns.map(({ _id, order, title, tasks }) => (
+              board.columns.map(({ _id, order, title, tasks }, index) => (
                 <BoardColumn
                   key={_id}
                   _id={_id}
+                  index={index}
                   order={order}
                   boardId={boardId}
                   title={title}
