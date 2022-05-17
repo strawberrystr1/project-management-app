@@ -15,7 +15,7 @@ const getApi = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'boards' as const, id })),
+            ...result.map(({ _id }) => ({ type: 'boards' as const, id: _id })),
             { type: 'boards', id: 'LIST' },
           ]
           : [{ type: 'boards', id: 'LIST' }],
@@ -27,21 +27,21 @@ const getApi = api.injectEndpoints({
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },
-        body: {
-          title: body.title,
-        },
+        body,
       }),
       invalidatesTags: [{ type: 'boards', id: 'LIST' }],
     }),
     updateBoard: build.mutation<unknown, ICreateBoard>({
       query: (body) => ({
-        url: `boards/${body.id}`,
+        url: `boards/${body["_id"]}`,
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },
         body: {
           title: body.title,
+          owner: body.owner,
+          users: body.users,
         },
       }),
       invalidatesTags: [{ type: 'boards', id: 'LIST' }],
@@ -64,7 +64,15 @@ const getApi = api.injectEndpoints({
         },
       }),
     }),
+    getBoard: build.mutation<IBoard, string>({
+      query: (id) => ({
+        url: `boards/${id}`,
+        headers: {
+          Authorization: `Bearer ${readToken()}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetBoardsQuery, useCreateBoardMutation, useDeleteBoardMutation, useUpdateBoardMutation, useGetBoardByIdQuery } = getApi;
+export const { useGetBoardsQuery, useCreateBoardMutation, useDeleteBoardMutation, useUpdateBoardMutation, useGetBoardByIdQuery, useGetBoardMutation } = getApi;

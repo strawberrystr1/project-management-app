@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useTypedSelector } from '../hooks/redux';
 import { useCreateBoardMutation } from '../store/services/boardsService';
 import DialogControls from './layouts/DialogControls';
 
@@ -11,6 +12,9 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
   const { t } = useTranslation();
   const [createBoard, { isLoading }] = useCreateBoardMutation();
   const [isDisable, setIsDisable] = useState(false);
+  //todo owner ??? from state?
+  // const { userId } = useTypedSelector((state) => state.user);
+  // console.log('userId', userId);
 
   const formik = useFormik({
     initialValues: {
@@ -21,6 +25,8 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
       setIsDisable(true);
       await createBoard({
         title: values.boardName,
+        owner: '627bacb62e3447fd8b1a79c5', //todo random owner
+        users: [],
       }).unwrap();
       handleClose();
       navigate('/boards');

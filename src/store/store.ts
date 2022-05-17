@@ -3,11 +3,13 @@ import { api } from './services/basicAPItemplate';
 import userReducer from './reducers/userSlice';
 import authChecker from './middleware';
 import settingsSlice from './reducers/settingsSlice';
+import boardSlice from './reducers/boardSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
   [api.reducerPath]: api.reducer,
   settings: settingsSlice,
+  board: boardSlice,
 });
 
 export const store = configureStore({

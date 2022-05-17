@@ -1,13 +1,13 @@
 import { Box, Divider, Typography } from '@mui/material';
-import { ITaskResponse } from '../../interfaces/apiInterfaces';
+import { ITask } from '../../interfaces/apiInterfaces';
 import styles from './style.module.scss';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from '@react-forked/dnd';
 
-type Props = ITaskResponse;
+type Props = { _id: string; title: string; order: number; index: number };
 
-const TaskColumn = ({ id, title, order, index }: Props) => {
+const TaskColumn = ({ _id, title, order, index }: Props) => {
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable draggableId={_id} index={index}>
       {(draggableProvided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <Box
           ref={draggableProvided.innerRef}
