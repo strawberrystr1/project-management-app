@@ -1,81 +1,104 @@
 import { Add } from '@mui/icons-material';
-import { Stack, Divider, Box, Button } from '@mui/material';
+import { Stack, Box, Button, Paper } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
-import { IColumnResponse } from '../../interfaces/apiInterfaces';
+import { IColumn } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
+import { useAddTaskMutation } from '../../store/services/tasksService';
+import TaskColumn from '../TaskColumn';
+import { getNewOrder } from '../../utils/functions';
+import { IInitialFormValues } from '../../interfaces/formInterfaces';
+import { useTypedSelector } from '../../hooks/redux';
+import Loader from '../Loader';
 
-interface Props extends IColumnResponse {
-  boardId: string;
+interface Props extends IColumn {
   editId: string;
   activateEdit: (id: string) => void;
   disactivateEdit: () => void;
+  updateBoard: () => void;
 }
 
 const BoardColumn = ({
-  id,
+  _id,
   order,
   title,
   boardId,
+  tasks,
   editId,
   activateEdit,
   disactivateEdit,
+  updateBoard,
 }: Props) => {
   const { t } = useTranslation();
+
+  const [addTask, { isLoading }] = useAddTaskMutation();
+  const { userId } = useTypedSelector((state) => state.user);
+
+  const addTaskCallback = ({ title, description }: IInitialFormValues) => {
+    addTask({
+      title,
+      description,
+      order: getNewOrder(tasks),
+      userId,
+      boardId,
+      columnId: _id,
+      users: [],
+    })
+      .unwrap()
+      .then(updateBoard);
+  };
+
   return (
-    <Box
-      style={{ order, display: 'flex', flexDirection: 'column' }}
-      className={styles['column-container']}
-    >
-      <Box className={styles['title-container']}>
-        {editId === id ? (
-          <ChangeColumnTitle
-            currentTitle={title}
-            disactivateEdit={disactivateEdit}
-            boardId={boardId}
-            columnId={id}
-            order={order}
-          />
+    <Box style={{ order }} className={styles['column-container']}>
+      <Paper elevation={2} className={styles['column-wrapper']}>
+        <Box className={styles['title-container']}>
+          {editId === _id ? (
+            <ChangeColumnTitle
+              currentTitle={title}
+              disactivateEdit={disactivateEdit}
+              boardId={boardId}
+              columnId={_id}
+              order={order}
+            />
+          ) : (
+            <ColumnTitle
+              currentTitle={title}
+              activateEdit={() => activateEdit(_id)}
+              boardId={boardId}
+              columnId={_id}
+            />
+          )}
+        </Box>
+        <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
+          {tasks.map((task) => (
+            <TaskColumn key={task._id} _id={task._id} order={task.order} title={task.title} />
+          ))}
+        </Stack>
+
+        {isLoading ? (
+          <Loader />
         ) : (
-          <ColumnTitle
-            currentTitle={title}
-            activateEdit={() => activateEdit(id)}
-            boardId={boardId}
-            columnId={id}
+          <DialogButton
+            type="new_task"
+            btn={(handleOpenDialog, type) => (
+              <Button
+                onClick={handleOpenDialog}
+                className={styles['new-task-btn']}
+                color="warning"
+                endIcon={<Add />}
+              >
+                {t(`buttons.${type}`)}
+              </Button>
+            )}
+            form={(handleCloseDialog) => (
+              <CreateTaskForm handleClose={handleCloseDialog} addTask={addTaskCallback} />
+            )}
           />
         )}
-      </Box>
-      <Stack
-        direction={'column'}
-        divider={<Divider orientation="horizontal" flexItem />}
-        spacing={0}
-        className={`${styles['column']} container-scroll`}
-      >
-        {/* JUST AN EXAMPLE */}
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-          <Box key={item} className={styles['column-item']}>
-            Item #{item}
-          </Box>
-        ))}
-        {/* JUST AN EXAMPLE */}
-      </Stack>
-      <DialogButton
-        type="new_task"
-        btn={(handleOpenDialog, type) => (
-          <Button
-            onClick={handleOpenDialog}
-            className={styles['new-task-btn']}
-            color="warning"
-            endIcon={<Add />}
-          >
-            {t(`buttons.${type}`)}
-          </Button>
-        )}
-        form={(handleCloseDialog) => <CreateTaskForm handleClose={handleCloseDialog} />}
-      />
+      </Paper>
     </Box>
   );
 };

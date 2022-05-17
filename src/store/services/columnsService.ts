@@ -1,43 +1,33 @@
 import {
   IRequestBasic,
-  IColumnResponse,
   IDeleteColumn,
   IUpdateColumn,
   ISingleColumnRequest,
+  IColumn,
+  ICreateColumn,
 } from '../../interfaces/apiInterfaces';
 import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getColumns: build.query<IColumnResponse[], Omit<IRequestBasic, 'token'>>({
+    getColumns: build.query<IColumn[], Omit<IRequestBasic, 'token'>>({
       query: (body) => ({
         url: `boards/${body.id}/columns`,
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },
       }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Columns' as const, id })),
-              { type: 'Columns', id: 'LIST' },
-            ]
-          : [{ type: 'Columns', id: 'LIST' }],
     }),
     addColumn: build.mutation({
-      query: (body: IColumnResponse) => ({
-        url: `boards/${body.id}/columns`,
+      query: (body: ICreateColumn) => ({
+        url: `boards/${body.boardId}/columns`,
         method: 'POST',
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },
-        body: {
-          title: body.title,
-          order: body.order,
-        },
+        body,
       }),
-      invalidatesTags: [{ type: 'Columns', id: 'LIST' }],
     }),
     deleteColumn: build.mutation({
       query: (queries: IDeleteColumn) => ({
@@ -47,28 +37,15 @@ const getApi = api.injectEndpoints({
           Authorization: `Bearer ${readToken()}`,
         },
       }),
-      invalidatesTags: [{ type: 'Columns', id: 'LIST' }],
     }),
     updateColumn: build.mutation({
-      query: (data: IUpdateColumn) => ({
-        url: `boards/${data.paths.boardId}/columns/${data.paths.columnId}`,
+      query: ({ body, columnId }: IUpdateColumn) => ({
+        url: `boards/${body.boardId}/columns/${columnId}`,
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },
-        body: {
-          title: data.body.title,
-          order: data.body.order,
-        },
-      }),
-      invalidatesTags: [{ type: 'Columns', id: 'LIST' }],
-    }),
-    getColumnById: build.query<IColumnResponse, Omit<ISingleColumnRequest, 'token'>>({
-      query: (data) => ({
-        url: `boards/${data.id}/columns/${data.columnId}`,
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
+        body,
       }),
     }),
   }),
@@ -79,5 +56,4 @@ export const {
   useAddColumnMutation,
   useDeleteColumnMutation,
   useUpdateColumnMutation,
-  useGetColumnByIdQuery,
 } = getApi;

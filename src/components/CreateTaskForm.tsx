@@ -5,7 +5,12 @@ import { IInitialFormValues } from '../interfaces/formInterfaces';
 import { taskFields } from '../utils/constants/formFields';
 import DialogControls from './layouts/DialogControls';
 
-const CreateTaskForm = ({ handleClose }: { handleClose: () => void }) => {
+type Props = {
+  handleClose: () => void;
+  addTask: ({ title, description }: IInitialFormValues) => void;
+};
+
+const CreateTaskForm = ({ handleClose, addTask }: Props) => {
   const { t } = useTranslation();
   const initialValues = taskFields.reduce<IInitialFormValues>((acc, item) => {
     acc[item] = '';
@@ -14,9 +19,8 @@ const CreateTaskForm = ({ handleClose }: { handleClose: () => void }) => {
 
   const formik = useFormik({
     initialValues,
-    onSubmit: (values) => {
-      const order = Number.MAX_VALUE;
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: ({ taskTitle, taskDescription }) => {
+      addTask({ title: taskTitle, description: taskDescription });
       handleClose();
     },
   });

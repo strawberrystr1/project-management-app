@@ -1,8 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
+import { useTypedSelector } from '../hooks/redux';
 import routes from '../utils/constants/routes';
 
 const Root = () => {
-  const isLogged = true; // replace this for state variable
+  const { isLogged } = useTypedSelector((state) => state.user);
 
   return (
     <Routes>

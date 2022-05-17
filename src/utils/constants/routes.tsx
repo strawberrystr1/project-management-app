@@ -6,6 +6,7 @@ import { SignInPage, SignUpPage } from '../../pages/authentication_page';
 import Boards from '../../pages/boards_page';
 import Board from '../../pages/board_page';
 import TaskPopup from '../../components/TaskPopup';
+import Settings from '../../pages/user_settings';
 
 const routes: IRouterRoutes = {
   public: [
@@ -44,8 +45,8 @@ const routes: IRouterRoutes = {
       element: <NotFound />,
     },
     {
-      path: '/task',
-      element: <TaskPopup />,
+      path: '/user/settings',
+      element: <Settings />,
     },
   ],
 };

@@ -12,6 +12,7 @@ import jwt from 'jwt-decode';
 import { useTypedDispatch } from './hooks/redux';
 import { setToken } from './store/reducers/userSlice';
 import Loader from './components/Loader';
+import { readToken } from './utils/functions';
 
 function App() {
   const dispatch = useTypedDispatch();
@@ -20,11 +21,11 @@ function App() {
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
   const checkToken = async () => {
     try {
-      const token = localStorage.getItem('token-rss');
+      const token = readToken();
       if (token) {
-        const { userId } = jwt<{ userId: string }>(token);
-        const res = await getUser(userId).unwrap();
-        dispatch(setToken({ id: res.id, isLogged: true }));
+        const { id } = jwt<{ id: string }>(token);
+        const res = await getUser(id).unwrap();
+        dispatch(setToken({ id: res._id, isLogged: true }));
       }
     } catch (error) {
       console.log(error);
