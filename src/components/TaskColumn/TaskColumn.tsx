@@ -1,5 +1,4 @@
 import { Box, Divider, Typography } from '@mui/material';
-import { ITask } from '../../interfaces/apiInterfaces';
 import styles from './style.module.scss';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from '@react-forked/dnd';
 
