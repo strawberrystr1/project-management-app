@@ -12,9 +12,7 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
   const { t } = useTranslation();
   const [createBoard, { isLoading }] = useCreateBoardMutation();
   const [isDisable, setIsDisable] = useState(false);
-  //todo owner ??? from state?
-  // const { userId } = useTypedSelector((state) => state.user);
-  // console.log('userId', userId);
+  const { userId } = useTypedSelector((state) => state.user);
 
   const formik = useFormik({
     initialValues: {
@@ -25,7 +23,7 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
       setIsDisable(true);
       await createBoard({
         title: values.boardName,
-        owner: '627bacb62e3447fd8b1a79c5', //todo random owner
+        owner: userId,
         users: [],
       }).unwrap();
       handleClose();

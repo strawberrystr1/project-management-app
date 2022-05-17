@@ -12,8 +12,10 @@ import { getNewOrder } from '../../utils/functions';
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
-import { setBoard } from '../../store/reducers/boardSlice';
+import { setBoard, updateColumnTasks } from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
+import { useSetTasksMutation } from '../../store/services/tasksService';
+import { ITask } from '../../interfaces/apiInterfaces';
 
 const Board = () => {
   const { boardId = '' } = useParams();
@@ -37,6 +39,7 @@ const Board = () => {
   const disactivateEdit = () => setEditId('');
 
   const [addColumn, { isLoading }] = useAddColumnMutation();
+  const [setTasks] = useSetTasksMutation(); //todo
 
   const addColumnCallback = (title: string) => {
     const newColumn = { order: getNewOrder(board.columns || []), boardId, title };
@@ -51,8 +54,28 @@ const Board = () => {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-    // todo
+    // const allTasks = board.columns.map((column) => column.tasks).flat();
+    const columnFrom = board.columns.find((column) => column._id === source.droppableId)?.tasks;
+    console.log('columnFrom', columnFrom);
 
+    if (!columnFrom) return;
+    const copyColumnFrom = [...columnFrom];
+    // если колонки одинаковые, то работаем только с columnFrom
+    if (destination.droppableId === source.droppableId) {
+      // debugger;
+      const removedItem = copyColumnFrom.splice(source.index, 1); //deleting item
+      copyColumnFrom.splice(destination.index, 0, removedItem[0]); //deleting item
+      // todo map change order to current column
+      dispatch(updateColumnTasks({ columnId: source.droppableId, tasks: copyColumnFrom }));
+      // todo add api method
+      return;
+    }
+    // если колонки разные, то работаем с columnFrom и с columnTo
+    const columnTo = board.columns.find((column) => column._id === destination.droppableId)?.tasks;
+    // todo
+    console.log('board', board);
+    console.log('columnTo', columnTo);
+    // todo
     console.log('source.droppableId', source.droppableId);
     console.log('destination.droppableId', destination.droppableId);
     console.log('********');

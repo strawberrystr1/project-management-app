@@ -87,3 +87,8 @@ export interface IUpdateColumn {
 }
 
 export type ICreateTask = Omit<ITask, '_id'>;
+
+export interface IUpdateColumnTasks {
+  columnId: string;
+  tasks: ITask[];
+}

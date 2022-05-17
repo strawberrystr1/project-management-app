@@ -14,3 +14,13 @@ export const getSubstring = (string: string): string => {
   const subString = string.substring(0, lastIndex);
   return stringLength > lastIndex ? `${subString}...` : subString;
 };
+
+// export function correctArr > (_arr, _param) {
+/*
+      коррекция  элементов массива по паре индекса
+      *    _arr -- массив требующий коррекции
+      *   _param -- пара [n1,n2] -- индексы массива для взаимной  перестановки
+  */
+//   _arr[_param[1]] = _arr.splice(_param[0], 1, _arr[_param[1]])[0];
+// }
+// correctArr(arr, [4, 1]);
