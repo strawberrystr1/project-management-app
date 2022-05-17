@@ -2,6 +2,7 @@ import {
   IChangePasswordRequest,
   IRequestBasic,
   IUserResponse,
+  User,
 } from '../../interfaces/apiInterfaces';
 import { IInitialFormValues } from '../../interfaces/formInterfaces';
 import { readToken } from '../../utils/functions';
@@ -50,6 +51,14 @@ const getApi = api.injectEndpoints({
         },
       }),
     }),
+    getUsers: build.query<User[], void>({
+      query: () => ({
+        url: 'users',
+        headers: {
+          Authorization: `Bearer ${readToken()}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -59,4 +68,5 @@ export const {
   useGetUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useGetUsersQuery,
 } = getApi;
