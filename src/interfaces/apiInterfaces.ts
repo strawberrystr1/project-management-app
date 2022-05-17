@@ -7,14 +7,13 @@ export interface IAPIError {
 }
 
 export interface IUserResponse {
-  id: string;
+  _id: string;
   login: string;
   name: string;
 }
 
 export interface IRequestBasic {
   id: string;
-  token: string;
 }
 
 interface IUserData {

@@ -46,12 +46,12 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
       await signInUser(signInData)
         .unwrap()
         .then((res: { token: string }) => {
-          const { userId } = jwt<{ userId: string }>(res.token);
-          dispatch(setToken({ isLogged: true, id: userId }));
+          const { id } = jwt<{ id: string }>(res.token);
+          dispatch(setToken({ isLogged: true, id }));
           localStorage.setItem('token-rss', res.token);
         });
       setIsSnackBarOpen(true);
-      setTimeout(() => navigate('/home'), 1000); // change for board page when it will be ready
+      setTimeout(() => navigate('/boards'), 1000);
     } catch (e) {
       const { message } = (e as IAPIError).data;
       setErrorMessage(message);

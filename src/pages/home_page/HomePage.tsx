@@ -35,6 +35,18 @@ const Home = () => {
           </Button>
         </Box>
       )}
+      {isLogged && (
+        <Box className={styles['btns-wrapper']}>
+          <Button
+            onClick={() => navigate('/boards')}
+            variant="contained"
+            size="large"
+            className={`${styles.btn} ${styles.override}`}
+          >
+            {t('welcome_page.board_btn')}
+          </Button>
+        </Box>
+      )}
       <Box className={styles['info-wrapper']}>
         <Typography paragraph fontSize={22} className={styles['info-text']}>
           {t('welcome_page.about')}
