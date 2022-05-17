@@ -2,14 +2,14 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IInitialFormValues } from '../interfaces/formInterfaces';
+import { CreateTask, IInitialFormValues } from '../interfaces/formInterfaces';
 import { taskFields } from '../utils/constants/formFields';
 import DialogControls from './layouts/DialogControls';
 import UserPicker from './UserPicker';
 
 type Props = {
   handleClose: () => void;
-  addTask: ({ title, description }: IInitialFormValues) => void;
+  addTask: ({ title, description, users }: CreateTask) => void;
 };
 
 const CreateTaskForm = ({ handleClose, addTask }: Props) => {
@@ -25,7 +25,7 @@ const CreateTaskForm = ({ handleClose, addTask }: Props) => {
   const formik = useFormik({
     initialValues,
     onSubmit: ({ taskTitle, taskDescription }) => {
-      addTask({ title: taskTitle, description: taskDescription });
+      addTask({ title: taskTitle, description: taskDescription, users });
       handleClose();
     },
   });
