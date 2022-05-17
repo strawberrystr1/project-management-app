@@ -25,7 +25,6 @@ const BoardCard = ({ board }: { board: IBoard }) => {
       >
         <CardActionArea
           onClick={() => {
-            console.log('open card', board['_id']);
             navigate(`/boards/${board['_id']}`);
           }}
         >

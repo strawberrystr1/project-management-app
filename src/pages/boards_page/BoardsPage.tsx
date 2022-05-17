@@ -9,7 +9,6 @@ import { useGetBoardsQuery } from '../../store/services/boardsService';
 const Boards = () => {
   const { data: boards } = useGetBoardsQuery();
   // IBoard[]
-  console.log('boards', boards);
 
   return (
     <>

@@ -64,7 +64,15 @@ const getApi = api.injectEndpoints({
         },
       }),
     }),
+    getBoard: build.mutation<IBoard, string>({
+      query: (id) => ({
+        url: `boards/${id}`,
+        headers: {
+          Authorization: `Bearer ${readToken()}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetBoardsQuery, useCreateBoardMutation, useDeleteBoardMutation, useUpdateBoardMutation, useGetBoardByIdQuery } = getApi;
+export const { useGetBoardsQuery, useCreateBoardMutation, useDeleteBoardMutation, useUpdateBoardMutation, useGetBoardByIdQuery, useGetBoardMutation } = getApi;

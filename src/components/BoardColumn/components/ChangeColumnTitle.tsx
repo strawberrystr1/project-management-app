@@ -4,6 +4,8 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useRef } from 'react';
 import { useUpdateColumnMutation } from '../../../store/services/columnsService';
 import styles from './style.module.scss';
+import { useTypedDispatch } from '../../../hooks/redux';
+import { changeColumn } from '../../../store/reducers/boardSlice';
 
 type Props = {
   currentTitle: string;
@@ -15,13 +17,13 @@ type Props = {
 
 const ChangeColumnTitle = ({ currentTitle, disactivateEdit, boardId, columnId, order }: Props) => {
   const textarea = useRef<HTMLInputElement>();
+  const dispatch = useTypedDispatch();
   const [updateColumn] = useUpdateColumnMutation();
   const onConfirm = () => {
-    textarea.current &&
-      updateColumn({
-        paths: { boardId, columnId },
-        body: { order, title: textarea.current.value },
-      });
+    const title = textarea.current ? textarea.current.value : '';
+    const data = { columnId, body: { order, title, boardId } };
+    dispatch(changeColumn(data));
+    updateColumn(data);
     disactivateEdit();
   };
   return (
