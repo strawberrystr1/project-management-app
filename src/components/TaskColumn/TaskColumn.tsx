@@ -2,9 +2,15 @@ import { Box, Divider, Typography } from '@mui/material';
 import styles from './style.module.scss';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from '@react-forked/dnd';
 
-type Props = { _id: string; title: string; order: number; index: number };
+type Props = {
+  _id: string;
+  title: string;
+  order: number;
+  toggleTaskOpen: () => void;
+  index: number;
+};
 
-const TaskColumn = ({ _id, title, order, index }: Props) => {
+const TaskColumn = ({ _id, title, order, toggleTaskOpen, index }: Props) => {
   return (
     <Draggable draggableId={_id} index={index}>
       {(draggableProvided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
@@ -18,7 +24,7 @@ const TaskColumn = ({ _id, title, order, index }: Props) => {
             order,
           }}
           className={styles['task-container']}
-          onClick={() => console.log('open Cards')}
+          onClick={toggleTaskOpen}
         >
           <Typography className={styles['task-title']}>{title}</Typography>
           <Divider style={{ order }} orientation="horizontal" flexItem />

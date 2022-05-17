@@ -60,6 +60,9 @@
     },
     "delete_profile": {
       "title": "Are you sure you want to delete account ?"
+    },
+    "delete_task": {
+      "title": "Are you sure you want to delete task ?"
     }
   },
   "buttons": {
@@ -96,5 +99,12 @@
   "boards": {
     "boardDescriptionNoColumns": "No columns yet",
     "boardDescription": "Columns - {{count}}"
+  },
+  "task_popup": {
+    "column": "in the column",
+    "author": "Task created by:",
+    "users": "Users asigned to this task:",
+    "desc": "Description:",
+    "delete": "Delete task"
   }
 }

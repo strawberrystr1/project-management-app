@@ -16,6 +16,10 @@ export interface IRequestBasic {
   id: string;
 }
 
+export interface ISingleColumnRequest extends IRequestBasic {
+  columnId: string;
+}
+
 interface IUserData {
   name: string;
   login: string;
@@ -85,10 +89,8 @@ export interface IUpdateColumn {
   columnId: string;
   body: ICreateColumn;
 }
-
-export type ICreateTask = Omit<ITask, '_id'>;
-
 export interface IUpdateColumnTasks {
   columnId: string;
   tasks: ITask[];
 }
+export type ICreateTask = Omit<ITask, '_id' | 'toggleTaskOpen'>;

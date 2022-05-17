@@ -60,6 +60,9 @@
     },
     "delete_profile": {
       "title": "Вы уверены что хотите удалить аккаунт ?"
+    },
+    "delete_task": {
+      "title": "Вы уверены что хотите удалить задание ?"
     }
   },
   "buttons": {
@@ -96,5 +99,12 @@
   "boards": {
     "boardDescriptionNoColumns": "Еще нет колонок",
     "boardDescription": "Колонок - {{count}}"
+  },
+  "task_popup": {
+    "column": "в колонке",
+    "author": "Задание создал:",
+    "users": "Пользователи ответственные за задание:",
+    "desc": "Описание:",
+    "delete": "Удалить задание"
   }
 }
