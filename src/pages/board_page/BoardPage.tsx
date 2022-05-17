@@ -13,6 +13,8 @@ import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
 import { setBoard } from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
+import TaskPopup from '../../components/TaskPopup';
+import { ITask } from '../../interfaces/apiInterfaces';
 
 const Board = () => {
   const { boardId = '' } = useParams();
@@ -36,6 +38,18 @@ const Board = () => {
   const disactivateEdit = () => setEditId('');
 
   const [addColumn, { isLoading }] = useAddColumnMutation();
+  const [isTaskOpen, setIsTaskOpen] = useState(false);
+  const [popupTaskData, setPopupTaskData] = useState<ITask>();
+  const [popupColumnTitle, setPopupColumnTitle] = useState('');
+
+  const toggleTaskOpen = () => {
+    setIsTaskOpen((prev) => !prev);
+  };
+
+  const setTaskForPopup = (task: ITask, title: string) => {
+    setPopupTaskData(task);
+    setPopupColumnTitle(title);
+  };
 
   const addColumnCallback = (title: string) => {
     const newColumn = { order: getNewOrder(board.columns || []), boardId, title };
@@ -59,6 +73,8 @@ const Board = () => {
                 activateEdit={activateEdit}
                 disactivateEdit={disactivateEdit}
                 updateBoard={updateBoard}
+                toggleTaskOpen={toggleTaskOpen}
+                setTaskForPopup={setTaskForPopup}
               />
             ))}
         </Stack>
@@ -83,6 +99,14 @@ const Board = () => {
           />
         )}
       </Stack>
+      {popupTaskData && (
+        <TaskPopup
+          columnTitle={popupColumnTitle}
+          task={popupTaskData}
+          open={isTaskOpen}
+          handleClose={toggleTaskOpen}
+        />
+      )}
     </Box>
   );
 };

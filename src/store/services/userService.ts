@@ -9,9 +9,9 @@ import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getUser: build.mutation<IUserResponse, IRequestBasic>({
-      query: (body) => ({
-        url: `users/${body.id}`,
+    getUser: build.mutation<IUserResponse, string>({
+      query: (id) => ({
+        url: `users/${id}`,
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },

@@ -2,6 +2,7 @@ import {
   IRequestBasic,
   IDeleteColumn,
   IUpdateColumn,
+  ISingleColumnRequest,
   IColumn,
   ICreateColumn,
 } from '../../interfaces/apiInterfaces';

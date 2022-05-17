@@ -28,7 +28,7 @@ const Settings = () => {
   const navigate = useNavigate();
 
   const fetchUser = async () => {
-    await getUser({ id: userId }).unwrap();
+    await getUser(userId).unwrap();
   };
 
   const deleteProfile = async () => {

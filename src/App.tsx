@@ -24,7 +24,7 @@ function App() {
       const token = readToken();
       if (token) {
         const { id } = jwt<{ id: string }>(token);
-        const res = await getUser({ id }).unwrap();
+        const res = await getUser(id).unwrap();
         dispatch(setToken({ id: res._id, isLogged: true }));
       }
     } catch (error) {
