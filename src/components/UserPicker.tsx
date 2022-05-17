@@ -7,6 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { useGetUsersQuery } from '../store/services/userService';
 import { LinearProgress } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -25,42 +26,42 @@ type Props = {
 };
 
 const UserPicker = ({ users, setUsers }: Props) => {
+  const { t } = useTranslation();
   const { data = [], isLoading } = useGetUsersQuery();
   const handleChange = ({ target: { value } }: SelectChangeEvent<typeof users>) => {
     setUsers(typeof value === 'string' ? value.split(',') : value);
   };
   return (
     <Box mt={1} mb={1}>
-      {isLoading ? (
-        <LinearProgress color="secondary" />
-      ) : (
-        <FormControl sx={{ mt: 1, mb: 1, width: 320 }}>
-          <InputLabel htmlFor="users-picker-label">Users</InputLabel>
-          <Select
-            labelId="users-picker-label"
-            id="users-picker"
-            multiple
-            variant="standard"
-            value={users}
-            onChange={handleChange}
-            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((value) => (
-                  <Chip key={value} label={data.find(({ _id }) => _id === value)?.name} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {data.map(({ _id, name }) => (
+      <FormControl sx={{ mt: 1, mb: 1, width: 320 }}>
+        <InputLabel htmlFor="users-picker-label">{t('forms.new_task.users')}</InputLabel>
+        <Select
+          labelId="users-picker-label"
+          id="users-picker"
+          multiple
+          value={users}
+          onChange={handleChange}
+          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={data.find(({ _id }) => _id === value)?.name} />
+              ))}
+            </Box>
+          )}
+          MenuProps={MenuProps}
+        >
+          {isLoading ? (
+            <LinearProgress color="secondary" />
+          ) : (
+            data.map(({ _id, name }) => (
               <MenuItem key={_id + name} value={_id}>
                 {name}
               </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
+            ))
+          )}
+        </Select>
+      </FormControl>
     </Box>
   );
 };
