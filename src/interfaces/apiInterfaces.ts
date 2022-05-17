@@ -90,4 +90,4 @@ export interface IUpdateColumn {
   body: ICreateColumn;
 }
 
-export type ICreateTask = Omit<ITask, '_id'>;
+export type ICreateTask = Omit<ITask, '_id' | 'toggleTaskOpen'>;

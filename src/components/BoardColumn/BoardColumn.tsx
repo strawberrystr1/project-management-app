@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
-import { IColumn } from '../../interfaces/apiInterfaces';
+import { IColumn, ITask } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation } from '../../store/services/tasksService';
@@ -19,6 +19,8 @@ interface Props extends IColumn {
   activateEdit: (id: string) => void;
   disactivateEdit: () => void;
   updateBoard: () => void;
+  toggleTaskOpen: () => void;
+  setTaskForPopup: (task: ITask, title: string) => void;
 }
 
 const BoardColumn = ({
@@ -31,6 +33,8 @@ const BoardColumn = ({
   activateEdit,
   disactivateEdit,
   updateBoard,
+  toggleTaskOpen,
+  setTaskForPopup,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -74,7 +78,14 @@ const BoardColumn = ({
         </Box>
         <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
           {tasks.map((task) => (
-            <TaskColumn key={task._id} _id={task._id} order={task.order} title={task.title} />
+            <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
+              <TaskColumn
+                _id={task._id}
+                order={task.order}
+                title={task.title}
+                toggleTaskOpen={toggleTaskOpen}
+              />
+            </Box>
           ))}
         </Stack>
 

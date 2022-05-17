@@ -8,11 +8,13 @@ import {
   TextField,
 } from '@mui/material';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import DialogControls from '../../layouts/DialogControls';
 import styles from '../style.module.scss';
 
 const TaskDescription: React.FC<{ description: string }> = ({ description }) => {
   const [input, setInput] = useState(false);
-
+  const { t } = useTranslation();
   const handleClick = () => setInput((prev) => !prev);
 
   const handleChange = () => {
@@ -22,7 +24,7 @@ const TaskDescription: React.FC<{ description: string }> = ({ description }) => 
 
   return (
     <DialogContent sx={{ padding: '15px 0' }}>
-      <DialogTitle sx={{ padding: '0' }}>Description:</DialogTitle>
+      <DialogTitle sx={{ padding: '0' }}>{t('task_popup.desc')}</DialogTitle>
       <Box className={styles.description}>
         {!input && <DialogContentText>{description}</DialogContentText>}
         {input && (
@@ -36,19 +38,10 @@ const TaskDescription: React.FC<{ description: string }> = ({ description }) => 
         )}
         {!input && (
           <Button size="small" variant="contained" onClick={handleClick}>
-            Change
+            {t('settings.change_btn')}
           </Button>
         )}
-        {input && (
-          <DialogActions className={styles.description_btns}>
-            <Button size="small" variant="contained" onClick={handleChange}>
-              Save
-            </Button>
-            <Button color="error" size="small" variant="contained" onClick={handleClick}>
-              Cancel
-            </Button>
-          </DialogActions>
-        )}
+        {input && <DialogControls onConfirm={handleChange} onCancel={handleClick} />}
       </Box>
     </DialogContent>
   );

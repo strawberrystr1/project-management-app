@@ -21,3 +21,16 @@
   right: 5px;
   top: 10px;
 }
+
+.users {
+  display: flex;
+}
+
+.delete {
+  align-self: flex-start;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+}

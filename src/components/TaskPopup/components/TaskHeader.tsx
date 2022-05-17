@@ -1,17 +1,22 @@
-import { DialogTitle, DialogContentText, DialogContent, Avatar } from '@mui/material';
+import { DialogTitle, DialogContentText, DialogContent, Avatar, Box } from '@mui/material';
 import { useEffect } from 'react';
 import { useTypedSelector } from '../../../hooks/redux';
 import { useGetUserMutation } from '../../../store/services/userService';
-import { stringAvatar } from '../../../utils/functions';
+import { UserAvatar } from './UserAvatar';
+import styles from '../style.module.scss';
+import { useTranslation } from 'react-i18next';
 
-const TaskHeader: React.FC<{ title: string; column: string; user: string; board: string }> = ({
-  title,
-  board,
-  column,
-}) => {
+type Props = {
+  title: string;
+  users: string[];
+  columnTitle: string;
+  userId: string;
+};
+
+const TaskHeader = ({ title, users, columnTitle, userId }: Props) => {
   const [getUser, { data }] = useGetUserMutation();
-  const { userId } = useTypedSelector((state) => state.user);
-
+  const fakeUsers = ['Ans', 'fdsf sdf']; // change for real users
+  const { t } = useTranslation();
   const fetchUser = async () => {
     await getUser(userId);
   };
@@ -23,17 +28,17 @@ const TaskHeader: React.FC<{ title: string; column: string; user: string; board:
   return (
     <DialogContent sx={{ padding: '0' }}>
       <DialogTitle sx={{ padding: '0', fontSize: '24px' }}>{title}</DialogTitle>
-      {/* {columnData && <DialogContentText>in the column - {columnData.title}</DialogContentText>} */}
-      <DialogContentText sx={{ paddingTop: '10px' }}>User asigned to this task:</DialogContentText>
-      <Avatar
-        sx={{
-          width: 30,
-          height: 30,
-          fontSize: '1em',
-        }}
-      >
-        {data && stringAvatar(data.name)}
-      </Avatar>
+      <DialogContentText>
+        {t('task_popup.column')} - {columnTitle}
+      </DialogContentText>
+      <DialogContentText sx={{ paddingTop: '10px' }}>{t('task_popup.author')}</DialogContentText>
+      {data && <UserAvatar name={data.name} />}
+      <DialogContentText sx={{ paddingTop: '10px' }}>{t('task_popup.users')}</DialogContentText>
+      <Box className={styles.users}>
+        {fakeUsers.map((item) => (
+          <UserAvatar name={item} key={item} />
+        ))}
+      </Box>
     </DialogContent>
   );
 };
