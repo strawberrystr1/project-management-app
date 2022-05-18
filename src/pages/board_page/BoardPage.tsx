@@ -152,6 +152,7 @@ const Board = () => {
       }
     }
   };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable direction="horizontal" droppableId="list" type="list">

@@ -63,7 +63,6 @@ const BoardColumn = ({
     <Draggable draggableId={_id} index={index}>
       {(provider) => (
         <Box
-          style={{ order }}
           className={styles['column-container']}
           {...provider.draggableProps}
           ref={provider.innerRef}
