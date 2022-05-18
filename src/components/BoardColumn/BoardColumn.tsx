@@ -10,7 +10,7 @@ import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation } from '../../store/services/tasksService';
 import TaskColumn from '../TaskColumn';
 import { getNewOrder } from '../../utils/functions';
-import { IInitialFormValues } from '../../interfaces/formInterfaces';
+import { CreateTask } from '../../interfaces/formInterfaces';
 import { useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
 
@@ -41,15 +41,13 @@ const BoardColumn = ({
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
 
-  const addTaskCallback = ({ title, description }: IInitialFormValues) => {
+  const addTaskCallback = (props: CreateTask) => {
     addTask({
-      title,
-      description,
+      ...props,
       order: getNewOrder(tasks),
       userId,
       boardId,
       columnId: _id,
-      users: [],
     })
       .unwrap()
       .then(updateBoard);

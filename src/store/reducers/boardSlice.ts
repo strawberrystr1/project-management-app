@@ -31,9 +31,10 @@ export const boardSlice = createSlice({
       const index = state.board.columns.findIndex((item) => item._id === action.payload);
       state.board.columns.splice(index, 1);
     },
+    resetBoard: () => initialState,
   },
 });
 
-export const { setBoard, changeColumn, removeColumn } = boardSlice.actions;
+export const { setBoard, changeColumn, removeColumn, resetBoard } = boardSlice.actions;
 
 export default boardSlice.reducer;

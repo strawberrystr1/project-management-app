@@ -11,14 +11,14 @@ import { getNewOrder } from '../../utils/functions';
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
-import { setBoard } from '../../store/reducers/boardSlice';
+import { setBoard, resetBoard } from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
 import TaskPopup from '../../components/TaskPopup';
 import { ITask } from '../../interfaces/apiInterfaces';
 
 const Board = () => {
   const { boardId = '' } = useParams();
-  const [getBoard] = useGetBoardMutation();
+  const [getBoard, { isLoading }] = useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
 
@@ -31,13 +31,18 @@ const Board = () => {
   };
 
   useEffect(updateBoard, [boardId]);
+  useEffect(() => {
+    return () => {
+      dispatch(resetBoard());
+    };
+  }, []);
 
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
   const activateEdit = (id: string) => setEditId(id);
   const disactivateEdit = () => setEditId('');
 
-  const [addColumn, { isLoading }] = useAddColumnMutation();
+  const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [isTaskOpen, setIsTaskOpen] = useState(false);
   const [popupTaskData, setPopupTaskData] = useState<ITask>();
   const [popupColumnTitle, setPopupColumnTitle] = useState('');
@@ -52,11 +57,13 @@ const Board = () => {
   };
 
   const addColumnCallback = (title: string) => {
-    const newColumn = { order: getNewOrder(board.columns || []), boardId, title };
+    const newColumn = { order: getNewOrder(board.columns), boardId, title };
     addColumn(newColumn).unwrap().then(updateBoard);
   };
 
-  return (
+  return isLoading || isLoadingColumn ? (
+    <Loader />
+  ) : (
     <Box className={styles['board-wrapper']}>
       <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
         <Stack direction={'row'} spacing={1}>
@@ -78,26 +85,23 @@ const Board = () => {
               />
             ))}
         </Stack>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <DialogButton
-            type="new_column"
-            btn={(handleOpenDialog, type) => (
-              <Button
-                onClick={handleOpenDialog}
-                className={styles['new-column-btn']}
-                color="info"
-                endIcon={<Add />}
-              >
-                {t(`buttons.${type}`)}
-              </Button>
-            )}
-            form={(handleCloseDialog) => (
-              <CreateColumnForm handleClose={handleCloseDialog} addColumn={addColumnCallback} />
-            )}
-          />
-        )}
+
+        <DialogButton
+          type="new_column"
+          btn={(handleOpenDialog, type) => (
+            <Button
+              onClick={handleOpenDialog}
+              className={styles['new-column-btn']}
+              color="info"
+              endIcon={<Add />}
+            >
+              {t(`buttons.${type}`)}
+            </Button>
+          )}
+          form={(handleCloseDialog) => (
+            <CreateColumnForm handleClose={handleCloseDialog} addColumn={addColumnCallback} />
+          )}
+        />
       </Stack>
       {popupTaskData && (
         <TaskPopup
