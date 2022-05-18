@@ -3,6 +3,7 @@
     "about_project": "",
     "sup_btn": "Sign Up",
     "sin_btn": "Sign In",
+    "board_btn": "Go to Main Page",
     "team": "Our team",
     "about": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi provident nisi, ipsum repellat deserunt ipsam id quod laudantium illum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, rem ducimus! Cupiditate quam recusandae dolor aut dolores distinctio labore deleniti minima. Quaerat enim consectetur voluptate nobis, laboriosam inventore iure ipsam?",
     "info": {
@@ -59,6 +60,9 @@
     },
     "delete_profile": {
       "title": "Are you sure you want to delete account ?"
+    },
+    "delete_task": {
+      "title": "Are you sure you want to delete task ?"
     }
   },
   "buttons": {
@@ -95,5 +99,12 @@
   "boards": {
     "boardDescriptionNoColumns": "No columns yet",
     "boardDescription": "Columns - {{count}}"
+  },
+  "task_popup": {
+    "column": "in the column",
+    "author": "Task created by:",
+    "users": "Users asigned to this task:",
+    "desc": "Description:",
+    "delete": "Delete task"
   }
 }

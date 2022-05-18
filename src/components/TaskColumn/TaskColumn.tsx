@@ -1,13 +1,17 @@
 import { Box, Divider, Typography } from '@mui/material';
-import { ITaskResponse } from '../../interfaces/apiInterfaces';
 import styles from './style.module.scss';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from '@react-forked/dnd';
 
-type Props = ITaskResponse;
+type Props = {
+  _id: string;
+  title: string;
+  toggleTaskOpen: () => void;
+  index: number;
+};
 
-const TaskColumn = ({ id, title, order, index }: Props) => {
+const TaskColumn = ({ _id, title, toggleTaskOpen, index }: Props) => {
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable draggableId={_id} index={index}>
       {(draggableProvided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <Box
           ref={draggableProvided.innerRef}
@@ -16,13 +20,12 @@ const TaskColumn = ({ id, title, order, index }: Props) => {
           style={{
             ...draggableProvided.draggableProps.style,
             // backgroundColor: snapshot.isDragging ? 'red' : null,
-            order,
           }}
           className={styles['task-container']}
-          onClick={() => console.log('open Cards')}
+          onClick={toggleTaskOpen}
         >
           <Typography className={styles['task-title']}>{title}</Typography>
-          <Divider style={{ order }} orientation="horizontal" flexItem />
+          <Divider orientation="horizontal" flexItem />
         </Box>
       )}
     </Draggable>

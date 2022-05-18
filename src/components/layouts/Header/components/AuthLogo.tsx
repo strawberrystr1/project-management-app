@@ -53,7 +53,7 @@ const AuthLogo = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      await getUser({ id: userId }).unwrap();
+      await getUser(userId).unwrap();
     };
 
     fetchUser();

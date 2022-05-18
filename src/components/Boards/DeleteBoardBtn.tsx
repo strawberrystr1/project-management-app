@@ -34,7 +34,7 @@ const DeleteBoardBtn = ({ board }: { board: IBoard }) => {
       form={(handleClose) => (
         <DialogControls
           onConfirm={() => {
-            handleDeleteBoard(board.id);
+            handleDeleteBoard(board['_id']);
             handleClose();
           }}
           onCancel={handleClose}

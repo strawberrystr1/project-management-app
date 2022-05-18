@@ -28,18 +28,16 @@ const Settings = () => {
   const navigate = useNavigate();
 
   const fetchUser = async () => {
-    const token = readToken();
-    await getUser({ id: userId }).unwrap();
+    await getUser(userId).unwrap();
   };
 
   const deleteProfile = async () => {
-    const token = readToken();
     const body = {
       id: userId,
     };
     await deleteUser(body).unwrap();
-    dispatch(logOut());
     navigate('/home');
+    setTimeout(() => dispatch(logOut()), 100);
   };
 
   useEffect(() => {

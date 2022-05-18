@@ -1,0 +1,36 @@
+.wrapper {
+  padding: 10px 20px;
+}
+
+.description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_btns {
+    width: 20%;
+    display: flex;
+    justify-content: space-between !important;
+  }
+}
+
+.close {
+  min-width: 20px !important;
+  height: 20px;
+  position: absolute !important;
+  right: 5px;
+  top: 10px;
+}
+
+.users {
+  display: flex;
+}
+
+.delete {
+  align-self: flex-start;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+}

@@ -9,9 +9,9 @@ import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getUser: build.mutation<IUserResponse, Omit<IRequestBasic, 'token'>>({
-      query: (body) => ({
-        url: `users/${body.id}`,
+    getUser: build.mutation<IUserResponse, string>({
+      query: (id) => ({
+        url: `users/${id}`,
         headers: {
           Authorization: `Bearer ${readToken()}`,
         },
@@ -19,19 +19,19 @@ const getApi = api.injectEndpoints({
     }),
     createUser: build.mutation({
       query: (body: IInitialFormValues) => ({
-        url: 'signup',
+        url: 'auth/signup',
         method: 'POST',
         body,
       }),
     }),
     signIn: build.mutation({
       query: (body: Omit<IInitialFormValues, 'name'>) => ({
-        url: 'signin',
+        url: 'auth/signin',
         method: 'POST',
         body,
       }),
     }),
-    updateUser: build.mutation<IUserResponse, Omit<IChangePasswordRequest, 'token'>>({
+    updateUser: build.mutation<IUserResponse, IChangePasswordRequest>({
       query: (body) => ({
         url: `users/${body.id}`,
         method: 'PUT',
@@ -41,7 +41,7 @@ const getApi = api.injectEndpoints({
         },
       }),
     }),
-    deleteUser: build.mutation<unknown, Omit<IRequestBasic, 'token'>>({
+    deleteUser: build.mutation<unknown, IRequestBasic>({
       query: (body) => ({
         url: `users/${body.id}`,
         method: 'DELETE',

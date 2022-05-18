@@ -1,5 +1,11 @@
 .task-container {
   padding: .2rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(185, 176, 176, 0.404);
+    border-radius: 5px;
+  }
 }
 
 .task-title {

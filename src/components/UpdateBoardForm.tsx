@@ -17,7 +17,7 @@ const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; boar
     },
     onSubmit: async (values) => {
       if (values.boardName.trim().length === 0) return;
-      await updateBoard({ id: board.id, title: values.boardName }).unwrap();
+      await updateBoard({ ...board, title: values.boardName }).unwrap();
 
       handleClose();
       navigate('/boards');
