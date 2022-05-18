@@ -1,6 +1,11 @@
 import { Box, Divider, Typography } from '@mui/material';
 import styles from './style.module.scss';
-import { Draggable, DraggableProvided, DraggableStateSnapshot } from '@react-forked/dnd';
+import {
+  Draggable,
+  DraggableProvided,
+  DraggableRubric,
+  DraggableStateSnapshot,
+} from '@react-forked/dnd';
 
 type Props = {
   _id: string;
@@ -12,7 +17,11 @@ type Props = {
 const TaskColumn = ({ _id, title, toggleTaskOpen, index }: Props) => {
   return (
     <Draggable draggableId={_id} index={index}>
-      {(draggableProvided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+      {(
+        draggableProvided: DraggableProvided,
+        snapshot: DraggableStateSnapshot,
+        rubic: DraggableRubric
+      ) => (
         <Box
           ref={draggableProvided.innerRef}
           {...draggableProvided.draggableProps}

@@ -6,7 +6,13 @@ import BoardColumn from '../../components/BoardColumn';
 import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
 import styles from './style.module.scss';
-import { DragDropContext, DropResult, ResponderProvided } from '@react-forked/dnd';
+import {
+  DragDropContext,
+  Droppable,
+  DroppableProvided,
+  DropResult,
+  ResponderProvided,
+} from '@react-forked/dnd';
 import { useAddColumnMutation } from '../../store/services/columnsService';
 import { getNewOrder } from '../../utils/functions';
 import { useEffect, useState } from 'react';
@@ -72,129 +78,179 @@ const Board = () => {
         users: task.users,
       };
     });
-    console.log('updatedTasks', updatedTasks);
-
     setTasks(updatedTasks);
   };
 
   const onDragEnd = (result: DropResult, provided?: ResponderProvided) => {
-    const { source, destination, draggableId } = result;
+    const { source, destination, draggableId, type } = result;
     if (!destination) {
       return;
     }
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
+    console.log('type', type);
     const columnFrom = board.columns.find((column) => column._id === source.droppableId)?.tasks;
-
-    if (!columnFrom) return;
-    const copyColumnFrom = [...columnFrom];
-    // если колонки одинаковые, то работаем только с columnFrom
-    if (destination.droppableId === source.droppableId) {
-      const removedItem = copyColumnFrom.splice(source.index, 1); //deleted item
-      copyColumnFrom.splice(destination.index, 0, removedItem[0]);
-      const orderedColumnFrom = copyColumnFrom.map((task, index) => ({ ...task, order: index }));
-      // update state
-      dispatch(
-        updateColumnTasks({
-          columnId: source.droppableId,
-          tasks: orderedColumnFrom,
-        })
-      );
-      // update api
-      setUpdatedTasksToApi(orderedColumnFrom);
-      return;
-    }
-    //todo если колонки разные, то работаем с columnFrom и с columnTo
     const columnTo = board.columns.find((column) => column._id === destination.droppableId)?.tasks;
-    if (!columnTo) return;
-    const copyColumnTo = [...columnTo];
-    if (destination.droppableId !== source.droppableId) {
-      const removedItem = copyColumnFrom.splice(source.index, 1); //deleted item
-      copyColumnTo.splice(destination.index, 0, removedItem[0]);
-      const orderedColumnTo = copyColumnTo.map((task, index) => ({
-        ...task,
-        columnId: destination.droppableId,
-        order: index,
-      }));
-      // update state
-      dispatch(
-        updateColumnTasks({
-          columnId: source.droppableId,
-          tasks: copyColumnFrom,
-        })
-      );
-      dispatch(
-        updateColumnTasks({
-          columnId: destination.droppableId,
-          tasks: orderedColumnTo,
-        })
-      );
-      // update api
-      setUpdatedTasksToApi([...orderedColumnTo, ...copyColumnFrom]);
-      return;
-    }
-    // todo
-    console.log('board', board);
-    console.log('columnTo', columnTo);
-    // todo
-    console.log('source.droppableId', source.droppableId);
-    console.log('destination.droppableId', destination.droppableId);
-    console.log('********');
+    if (type === 'tasks') {
+      // если колонки одинаковые, то работаем только с columnFrom
+      if (columnFrom && destination.droppableId === source.droppableId) {
+        const copyColumnFrom = [...columnFrom];
+        const removedItem = copyColumnFrom.splice(source.index, 1); //deleted item
+        copyColumnFrom.splice(destination.index, 0, removedItem[0]);
+        const orderedColumnFrom = copyColumnFrom.map((task, index) => ({ ...task, order: index }));
+        // update state
+        dispatch(
+          updateColumnTasks({
+            columnId: source.droppableId,
+            tasks: orderedColumnFrom,
+          })
+        );
+        // update api
+        setUpdatedTasksToApi(orderedColumnFrom);
+        return;
+      }
+      //todo если колонки разные, то работаем с columnFrom и с columnTo
 
-    console.log('source.index', source.index);
-    console.log('destination.index', destination.index);
+      if (columnFrom && columnTo && destination.droppableId !== source.droppableId) {
+        const copyColumnFrom = [...columnFrom];
+        const copyColumnTo = [...columnTo];
+        const [removedItem] = copyColumnFrom.splice(source.index, 1); //deleted item
+        copyColumnTo.splice(destination.index, 0, removedItem);
+        const orderedColumnTo = copyColumnTo.map((task, index) => ({
+          ...task,
+          columnId: destination.droppableId,
+          order: index,
+        }));
+        // update state
+        dispatch(
+          updateColumnTasks({
+            columnId: source.droppableId,
+            tasks: copyColumnFrom,
+          })
+        );
+        dispatch(
+          updateColumnTasks({
+            columnId: destination.droppableId,
+            tasks: orderedColumnTo,
+          })
+        );
+        // update api
+        setUpdatedTasksToApi([...orderedColumnTo, ...copyColumnFrom]);
+        return;
+      }
+    }
   };
+
+  /*
+              <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
+              <Droppable droppableId={_id} type="tasks" direction="vertical">
+                {(droppableProvided: DroppableProvided) => (
+                  <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
+                    {sortedTasks.map((task, index) => (
+                      <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
+                        <TaskColumn
+                          _id={task._id}
+                          title={task.title}
+                          toggleTaskOpen={toggleTaskOpen}
+                          index={index}
+                        />
+                      </Box>
+                    ))}
+                    {droppableProvided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </Stack>
+  */
+
+  /*
+             <Droppable droppableId="all-lists" direction="horizontal" type="list">
+          {provided => (
+            <ListsContainer
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {listOrder.map((listID, index) => {
+                const list = lists[listID];
+                if (list) {
+                  const listCards = list.cards.map(cardID => cards[cardID]);
+
+                  return (
+                    <TrelloList
+                      listID={list.id}
+                      key={list.id}
+                      title={list.title}
+                      cards={listCards}
+                      index={index}
+                    />
+                  );
+                }
+              })}
+              {provided.placeholder}
+              <TrelloCreate list />
+            </ListsContainer>
+          )}
+        </Droppable>
+            */
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Box className={styles['board-wrapper']}>
-        <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
-          <Stack direction={'row'} spacing={1}>
-            {loadingBoards ? (
-              <Loader />
-            ) : (
-              board.columns &&
-              board.columns.map(({ _id, order, title, tasks }, index) => (
-                <BoardColumn
-                  key={_id}
-                  _id={_id}
-                  index={index}
-                  order={order}
-                  boardId={boardId}
-                  title={title}
-                  tasks={tasks}
-                  editId={editId}
-                  activateEdit={activateEdit}
-                  disactivateEdit={disactivateEdit}
-                  updateBoard={updateBoard}
-                  toggleTaskOpen={toggleTaskOpen}
-                  setTaskForPopup={setTaskForPopup}
-                />
-              ))
+        {loadingBoards && isLoading ? (
+          <Loader />
+        ) : (
+          <Droppable droppableId="columns" type="columns" direction="horizontal">
+            {(droppableProvided: DroppableProvided) => (
+              <Stack
+                direction={'row'}
+                spacing={1}
+                className={styles['board']}
+                mt={2}
+                mb={2}
+                ref={droppableProvided.innerRef}
+                {...droppableProvided.droppableProps}
+              >
+                {board.columns &&
+                  board.columns.map(({ _id, order, title, tasks }, index) => (
+                    <BoardColumn
+                      key={_id}
+                      _id={_id}
+                      index={index}
+                      order={order}
+                      boardId={boardId}
+                      title={title}
+                      tasks={tasks}
+                      editId={editId}
+                      activateEdit={activateEdit}
+                      disactivateEdit={disactivateEdit}
+                      updateBoard={updateBoard}
+                      toggleTaskOpen={toggleTaskOpen}
+                      setTaskForPopup={setTaskForPopup}
+                    />
+                  ))}
+                {droppableProvided.placeholder}
+              </Stack>
             )}
-          </Stack>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <DialogButton
-              type="new_column"
-              btn={(handleOpenDialog, type) => (
-                <Button
-                  onClick={handleOpenDialog}
-                  className={styles['new-column-btn']}
-                  color="info"
-                  endIcon={<Add />}
-                >
-                  {t(`buttons.${type}`)}
-                </Button>
-              )}
-              form={(handleCloseDialog) => (
-                <CreateColumnForm handleClose={handleCloseDialog} addColumn={addColumnCallback} />
-              )}
-            />
+          </Droppable>
+        )}
+        <DialogButton
+          type="new_column"
+          btn={(handleOpenDialog, type) => (
+            <Button
+              onClick={handleOpenDialog}
+              className={styles['new-column-btn']}
+              color="info"
+              endIcon={<Add />}
+            >
+              {t(`buttons.${type}`)}
+            </Button>
           )}
-        </Stack>
+          form={(handleCloseDialog) => (
+            <CreateColumnForm handleClose={handleCloseDialog} addColumn={addColumnCallback} />
+          )}
+        />
+
         {popupTaskData && (
           <TaskPopup
             columnTitle={popupColumnTitle}
