@@ -6,7 +6,7 @@ import BoardColumn from '../../components/BoardColumn';
 import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
 import styles from './style.module.scss';
-import { DragDropContext, DropResult, ResponderProvided } from '@react-forked/dnd';
+import { DragDropContext, Droppable, DropResult, ResponderProvided } from '@react-forked/dnd';
 import { useAddColumnMutation } from '../../store/services/columnsService';
 import { getNewOrder } from '../../utils/functions';
 import { useEffect, useState } from 'react';
@@ -148,62 +148,74 @@ const Board = () => {
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Box className={styles['board-wrapper']}>
-        <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
-          <Stack direction={'row'} spacing={1}>
-            {loadingBoards ? (
-              <Loader />
-            ) : (
-              board.columns &&
-              board.columns.map(({ _id, order, title, tasks }, index) => (
-                <BoardColumn
-                  key={_id}
-                  _id={_id}
-                  index={index}
-                  order={order}
-                  boardId={boardId}
-                  title={title}
-                  tasks={tasks}
-                  editId={editId}
-                  activateEdit={activateEdit}
-                  disactivateEdit={disactivateEdit}
-                  updateBoard={updateBoard}
-                  toggleTaskOpen={toggleTaskOpen}
-                  setTaskForPopup={setTaskForPopup}
+      <Droppable direction="horizontal" droppableId="list" type="list">
+        {(provider) => (
+          <Box
+            className={styles['board-wrapper']}
+            {...provider.droppableProps}
+            ref={provider.innerRef}
+          >
+            <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
+              <Stack direction={'row'} spacing={1}>
+                {loadingBoards ? (
+                  <Loader />
+                ) : (
+                  board.columns &&
+                  board.columns.map(({ _id, order, title, tasks }, index) => (
+                    <BoardColumn
+                      key={_id}
+                      _id={_id}
+                      index={index}
+                      order={order}
+                      boardId={boardId}
+                      title={title}
+                      tasks={tasks}
+                      editId={editId}
+                      activateEdit={activateEdit}
+                      disactivateEdit={disactivateEdit}
+                      updateBoard={updateBoard}
+                      toggleTaskOpen={toggleTaskOpen}
+                      setTaskForPopup={setTaskForPopup}
+                    />
+                  ))
+                )}
+                {provider.placeholder}
+              </Stack>
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <DialogButton
+                  type="new_column"
+                  btn={(handleOpenDialog, type) => (
+                    <Button
+                      onClick={handleOpenDialog}
+                      className={styles['new-column-btn']}
+                      color="info"
+                      endIcon={<Add />}
+                    >
+                      {t(`buttons.${type}`)}
+                    </Button>
+                  )}
+                  form={(handleCloseDialog) => (
+                    <CreateColumnForm
+                      handleClose={handleCloseDialog}
+                      addColumn={addColumnCallback}
+                    />
+                  )}
                 />
-              ))
+              )}
+            </Stack>
+            {popupTaskData && (
+              <TaskPopup
+                columnTitle={popupColumnTitle}
+                task={popupTaskData}
+                open={isTaskOpen}
+                handleClose={toggleTaskOpen}
+              />
             )}
-          </Stack>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <DialogButton
-              type="new_column"
-              btn={(handleOpenDialog, type) => (
-                <Button
-                  onClick={handleOpenDialog}
-                  className={styles['new-column-btn']}
-                  color="info"
-                  endIcon={<Add />}
-                >
-                  {t(`buttons.${type}`)}
-                </Button>
-              )}
-              form={(handleCloseDialog) => (
-                <CreateColumnForm handleClose={handleCloseDialog} addColumn={addColumnCallback} />
-              )}
-            />
-          )}
-        </Stack>
-        {popupTaskData && (
-          <TaskPopup
-            columnTitle={popupColumnTitle}
-            task={popupTaskData}
-            open={isTaskOpen}
-            handleClose={toggleTaskOpen}
-          />
+          </Box>
         )}
-      </Box>
+      </Droppable>
     </DragDropContext>
   );
 };

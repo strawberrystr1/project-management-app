@@ -14,7 +14,7 @@ import { IInitialFormValues } from '../../interfaces/formInterfaces';
 import { useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
 
-import { Droppable, DroppableProvided } from '@react-forked/dnd';
+import { Draggable, Droppable, DroppableProvided } from '@react-forked/dnd';
 interface Props extends IColumn {
   editId: string;
   index: number;
@@ -60,68 +60,78 @@ const BoardColumn = ({
   };
 
   return (
-    <Box style={{ order }} className={styles['column-container']}>
-      <Paper elevation={2} className={styles['column-wrapper']}>
-        <Box className={styles['title-container']}>
-          {editId === _id ? (
-            <ChangeColumnTitle
-              currentTitle={title}
-              disactivateEdit={disactivateEdit}
-              boardId={boardId}
-              columnId={_id}
-              order={order}
-            />
-          ) : (
-            <ColumnTitle
-              currentTitle={title}
-              activateEdit={() => activateEdit(_id)}
-              boardId={boardId}
-              columnId={_id}
-            />
-          )}
-        </Box>
-        <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
-          <Droppable droppableId={_id} direction="vertical">
-            {(droppableProvided: DroppableProvided) => (
-              <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
-                {sortedTasks.map((task, index) => (
-                  <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
-                    <TaskColumn
-                      _id={task._id}
-                      title={task.title}
-                      toggleTaskOpen={toggleTaskOpen}
-                      index={index}
-                    />
-                  </Box>
-                ))}
-                {droppableProvided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </Stack>
+    <Draggable draggableId={_id} index={index}>
+      {(provider) => (
+        <Box
+          style={{ order }}
+          className={styles['column-container']}
+          {...provider.draggableProps}
+          ref={provider.innerRef}
+          {...provider.dragHandleProps}
+        >
+          <Paper elevation={2} className={styles['column-wrapper']}>
+            <Box className={styles['title-container']}>
+              {editId === _id ? (
+                <ChangeColumnTitle
+                  currentTitle={title}
+                  disactivateEdit={disactivateEdit}
+                  boardId={boardId}
+                  columnId={_id}
+                  order={order}
+                />
+              ) : (
+                <ColumnTitle
+                  currentTitle={title}
+                  activateEdit={() => activateEdit(_id)}
+                  boardId={boardId}
+                  columnId={_id}
+                />
+              )}
+            </Box>
+            <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
+              <Droppable droppableId={_id} direction="vertical">
+                {(droppableProvided: DroppableProvided) => (
+                  <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
+                    {sortedTasks.map((task, index) => (
+                      <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
+                        <TaskColumn
+                          _id={task._id}
+                          title={task.title}
+                          toggleTaskOpen={toggleTaskOpen}
+                          index={index}
+                        />
+                      </Box>
+                    ))}
+                    {droppableProvided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </Stack>
 
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <DialogButton
-            type="new_task"
-            btn={(handleOpenDialog, type) => (
-              <Button
-                onClick={handleOpenDialog}
-                className={styles['new-task-btn']}
-                color="warning"
-                endIcon={<Add />}
-              >
-                {t(`buttons.${type}`)}
-              </Button>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <DialogButton
+                type="new_task"
+                btn={(handleOpenDialog, type) => (
+                  <Button
+                    onClick={handleOpenDialog}
+                    className={styles['new-task-btn']}
+                    color="warning"
+                    endIcon={<Add />}
+                  >
+                    {t(`buttons.${type}`)}
+                  </Button>
+                )}
+                form={(handleCloseDialog) => (
+                  <CreateTaskForm handleClose={handleCloseDialog} addTask={addTaskCallback} />
+                )}
+              />
             )}
-            form={(handleCloseDialog) => (
-              <CreateTaskForm handleClose={handleCloseDialog} addTask={addTaskCallback} />
-            )}
-          />
-        )}
-      </Paper>
-    </Box>
+          </Paper>
+        </Box>
+      )}
+    </Draggable>
   );
 };
 
