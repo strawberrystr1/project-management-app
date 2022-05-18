@@ -1,11 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  IBoard,
-  IColumn,
-  ITask,
-  IUpdateColumn,
-  IUpdateColumnTasks,
-} from '../../interfaces/apiInterfaces';
+import { IBoard, IColumn, IUpdateColumn, IUpdateColumnTasks } from '../../interfaces/apiInterfaces';
 
 type BoardState = {
   board: IBoard;
@@ -26,11 +20,12 @@ export const boardSlice = createSlice({
   initialState,
   reducers: {
     setBoard(state, action: PayloadAction<IBoard>) {
-      // state.board = action.payload;
-      const columns = action.payload.columns.map((column) => {
-        const unsortedTasks = [...column.tasks];
-        return { ...column, tasks: unsortedTasks.sort((a, b) => a.order - b.order) };
-      });
+      const columns = action.payload.columns
+        .map((column) => {
+          const unsortedTasks = [...column.tasks];
+          return { ...column, tasks: unsortedTasks.sort((a, b) => a.order - b.order) };
+        })
+        .sort((a, b) => a.order - b.order);
       state.board = { ...action.payload, columns };
     },
     changeColumn(state, action: PayloadAction<IUpdateColumn>) {
@@ -55,9 +50,18 @@ export const boardSlice = createSlice({
           });
       }
     },
+    updateColumns(state, action: PayloadAction<IColumn[]>) {
+      const columns = action.payload;
+      state.board.columns = columns
+        .sort((a, b) => a.order - b.order)
+        .map((task, index) => {
+          return { ...task, order: index };
+        });
+    },
   },
 });
 
-export const { setBoard, changeColumn, removeColumn, updateColumnTasks } = boardSlice.actions;
+export const { setBoard, changeColumn, removeColumn, updateColumnTasks, updateColumns } =
+  boardSlice.actions;
 
 export default boardSlice.reducer;

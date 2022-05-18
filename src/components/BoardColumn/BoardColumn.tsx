@@ -14,14 +14,7 @@ import { IInitialFormValues } from '../../interfaces/formInterfaces';
 import { useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
 
-import {
-  Draggable,
-  DraggableProvided,
-  DraggableRubric,
-  DraggableStateSnapshot,
-  Droppable,
-  DroppableProvided,
-} from '@react-forked/dnd';
+import { Draggable, Droppable, DroppableProvided } from '@react-forked/dnd';
 interface Props extends IColumn {
   editId: string;
   index: number;
@@ -68,23 +61,15 @@ const BoardColumn = ({
 
   return (
     <Draggable draggableId={_id} index={index}>
-      {(draggableProvided: DraggableProvided) => (
+      {(provider) => (
         <Box
-          ref={draggableProvided.innerRef}
-          {...draggableProvided.draggableProps}
-          {...draggableProvided.dragHandleProps}
-          style={{
-            ...draggableProvided.draggableProps.style,
-            // backgroundColor: snapshot.isDragging ? 'red' : null,
-            order,
-          }}
+          style={{ order }}
           className={styles['column-container']}
+          {...provider.draggableProps}
+          ref={provider.innerRef}
+          {...provider.dragHandleProps}
         >
-          <Paper
-            elevation={2}
-            className={styles['column-wrapper']}
-            sx={{ border: '2px solid red' }}
-          >
+          <Paper elevation={2} className={styles['column-wrapper']}>
             <Box className={styles['title-container']}>
               {editId === _id ? (
                 <ChangeColumnTitle
@@ -104,7 +89,7 @@ const BoardColumn = ({
               )}
             </Box>
             <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
-              <Droppable droppableId={_id} type="tasks" direction="vertical">
+              <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (
                   <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
                     {sortedTasks.map((task, index) => (
