@@ -5,7 +5,6 @@ import {
   ITask,
   IUpdateColumn,
   IUpdateColumnTasks,
-  IUpdateColumnTasks1,
 } from '../../interfaces/apiInterfaces';
 
 type BoardState = {
@@ -43,31 +42,22 @@ export const boardSlice = createSlice({
       const index = state.board.columns.findIndex((item) => item._id === action.payload);
       state.board.columns.splice(index, 1);
     },
-    updateColumnTasks1(state, action: PayloadAction<IUpdateColumnTasks1>) {
+    updateColumnTasks(state, action: PayloadAction<IUpdateColumnTasks>) {
       const findColumn = (column: IColumn) => {
         return column._id === action.payload.columnId;
       };
       const column = state.board.columns.find(findColumn);
       if (column) {
-        column.tasks = action.payload.tasks.sort((a, b) => a.order - b.order);
+        column.tasks = action.payload.tasks
+          .sort((a, b) => a.order - b.order)
+          .map((task, index) => {
+            return { ...task, order: index };
+          });
       }
     },
-    // updateColumnTasks(state, action: PayloadAction<IUpdateColumnTasks>) {
-    //   const { columnIdSource, columnIdDestination, indexSource, indexDestination } = action.payload;
-    //   const columnFrom = state.board.columns.find((column) => column._id === columnIdSource);
-
-    //   if (!columnFrom) return;
-    //   const columnFromTasks = columnFrom.tasks;
-    //   // если колонки одинаковые, то работаем только с columnFromTasks
-    //   if (columnIdDestination === columnIdSource) {
-    //     const removedItem = columnFromTasks.splice(indexSource, 1); //deleting item
-    //     columnFromTasks.splice(indexDestination, 0, removedItem[0]); //replacing deleting item
-    //     columnFrom.tasks = columnFromTasks;
-    //   }
-    // },
   },
 });
 
-export const { setBoard, changeColumn, removeColumn, updateColumnTasks1 } = boardSlice.actions;
+export const { setBoard, changeColumn, removeColumn, updateColumnTasks } = boardSlice.actions;
 
 export default boardSlice.reducer;

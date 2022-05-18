@@ -88,7 +88,6 @@ const BoardColumn = ({
                   <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
                     <TaskColumn
                       _id={task._id}
-                      order={task.order}
                       title={task.title}
                       toggleTaskOpen={toggleTaskOpen}
                       index={index}

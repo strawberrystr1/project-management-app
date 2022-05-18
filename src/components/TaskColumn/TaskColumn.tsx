@@ -5,12 +5,11 @@ import { Draggable, DraggableProvided, DraggableStateSnapshot } from '@react-for
 type Props = {
   _id: string;
   title: string;
-  order: number;
   toggleTaskOpen: () => void;
   index: number;
 };
 
-const TaskColumn = ({ _id, title, order, toggleTaskOpen, index }: Props) => {
+const TaskColumn = ({ _id, title, toggleTaskOpen, index }: Props) => {
   return (
     <Draggable draggableId={_id} index={index}>
       {(draggableProvided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
@@ -21,13 +20,12 @@ const TaskColumn = ({ _id, title, order, toggleTaskOpen, index }: Props) => {
           style={{
             ...draggableProvided.draggableProps.style,
             // backgroundColor: snapshot.isDragging ? 'red' : null,
-            order,
           }}
           className={styles['task-container']}
           onClick={toggleTaskOpen}
         >
           <Typography className={styles['task-title']}>{title}</Typography>
-          <Divider style={{ order }} orientation="horizontal" flexItem />
+          <Divider orientation="horizontal" flexItem />
         </Box>
       )}
     </Draggable>

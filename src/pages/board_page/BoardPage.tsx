@@ -12,7 +12,7 @@ import { getNewOrder } from '../../utils/functions';
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
-import { setBoard, updateColumnTasks1 } from '../../store/reducers/boardSlice';
+import { setBoard, updateColumnTasks } from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
 import TaskPopup from '../../components/TaskPopup';
@@ -33,8 +33,6 @@ const Board = () => {
   };
 
   useEffect(updateBoard, [boardId]);
-
-  console.log('board', board);
 
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
@@ -61,6 +59,24 @@ const Board = () => {
     addColumn(newColumn).unwrap().then(updateBoard);
   };
 
+  const setUpdatedTasksToApi = (tasks: ITask[]) => {
+    const updatedTasks = tasks.map((task) => {
+      return {
+        _id: task._id,
+        title: task.title,
+        order: task.order,
+        description: task.description,
+        userId: task.userId,
+        boardId: task.boardId,
+        columnId: task.columnId,
+        users: task.users,
+      };
+    });
+    console.log('updatedTasks', updatedTasks);
+
+    setTasks(updatedTasks);
+  };
+
   const onDragEnd = (result: DropResult, provided?: ResponderProvided) => {
     const { source, destination, draggableId } = result;
     if (!destination) {
@@ -69,54 +85,55 @@ const Board = () => {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-    // const allTasks = board.columns.map((column) => column.tasks).flat();
     const columnFrom = board.columns.find((column) => column._id === source.droppableId)?.tasks;
-    console.log('columnFrom', columnFrom);
 
     if (!columnFrom) return;
     const copyColumnFrom = [...columnFrom];
     // если колонки одинаковые, то работаем только с columnFrom
     if (destination.droppableId === source.droppableId) {
-      // debugger;
-      const removedItem = copyColumnFrom.splice(source.index, 1); //deleting item
-      copyColumnFrom.splice(destination.index, 0, removedItem[0]); //deleting item
-      // todo map change order to current column
-      // dispatch(updateColumnTasks1({ columnId: source.droppableId, tasks: copyColumnFrom }));
-
-      // rerender
-      const apiCopyColumnFrom = copyColumnFrom.map((task, index) => {
-        return {
-          _id: task._id,
-          title: task.title,
-          order: index,
-          description: task.description,
-          userId: task.userId,
-          boardId: task.boardId,
-          columnId: task.columnId,
-          users: task.users,
-        };
-      });
-
+      const removedItem = copyColumnFrom.splice(source.index, 1); //deleted item
+      copyColumnFrom.splice(destination.index, 0, removedItem[0]);
+      const orderedColumnFrom = copyColumnFrom.map((task, index) => ({ ...task, order: index }));
+      // update state
       dispatch(
-        updateColumnTasks1({
+        updateColumnTasks({
           columnId: source.droppableId,
-          tasks: apiCopyColumnFrom,
+          tasks: orderedColumnFrom,
         })
       );
-
-      // console.log('apiCopyColumnFrom', apiCopyColumnFrom);
-      setTasks(apiCopyColumnFrom);
-      // {
-      //   columnIdSource: source.droppableId,
-      //   columnIdDestination: destination.droppableId,
-      //   indexSource: source.index,
-      //   indexDestination: destination.index,
-      //          }
-      // todo add api method
-      // return;
+      // update api
+      setUpdatedTasksToApi(orderedColumnFrom);
+      return;
     }
-    // если колонки разные, то работаем с columnFrom и с columnTo
+    //todo если колонки разные, то работаем с columnFrom и с columnTo
     const columnTo = board.columns.find((column) => column._id === destination.droppableId)?.tasks;
+    if (!columnTo) return;
+    const copyColumnTo = [...columnTo];
+    if (destination.droppableId !== source.droppableId) {
+      const removedItem = copyColumnFrom.splice(source.index, 1); //deleted item
+      copyColumnTo.splice(destination.index, 0, removedItem[0]);
+      const orderedColumnTo = copyColumnTo.map((task, index) => ({
+        ...task,
+        columnId: destination.droppableId,
+        order: index,
+      }));
+      // update state
+      dispatch(
+        updateColumnTasks({
+          columnId: source.droppableId,
+          tasks: copyColumnFrom,
+        })
+      );
+      dispatch(
+        updateColumnTasks({
+          columnId: destination.droppableId,
+          tasks: orderedColumnTo,
+        })
+      );
+      // update api
+      setUpdatedTasksToApi([...orderedColumnTo, ...copyColumnFrom]);
+      return;
+    }
     // todo
     console.log('board', board);
     console.log('columnTo', columnTo);
