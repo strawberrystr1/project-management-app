@@ -2,17 +2,8 @@
   height: 60px;
 }
 
-.footer {
-  &.override {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-  }
-}
-
 .logo {
-  width: 150px;
+  width: 100px;
   height: 30px;
 }
 
@@ -24,8 +15,9 @@
 
 .links_wrapper {
   display: flex;
-  width: 50%;
+  max-width: 70%;
   justify-content: space-between;
+  column-gap: 10px;
 }
 
 .git_logo {
@@ -34,34 +26,20 @@
   margin-right: 10px;
 }
 
-@media (max-width: 770px) {
+@media (max-width: 900px) {
+  .links_wrapper {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 600px) {
   .footerWrapper {
     height: 150px;
   }
 
-  .footer {
-    &.override {
-      flex-direction: column;
-    }
-  }
-
-  .logo {
-    order: 1;
-  }
-
-  .year {
-    order: 2;
-  }
-
   .links_wrapper {
-    order: 3;
-    width: 100%;
-  }
-
-  .link {
-    & p {
-      font-size: 16px;
-    }
+    max-width: 100%;
+    column-gap: 10px;
   }
 
   .git_logo {
