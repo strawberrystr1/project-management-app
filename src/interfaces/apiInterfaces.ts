@@ -97,3 +97,8 @@ export type User = {
   name: string;
   login: string;
 };
+
+export type CreateFile = {
+  taskId: string;
+  file: File;
+};

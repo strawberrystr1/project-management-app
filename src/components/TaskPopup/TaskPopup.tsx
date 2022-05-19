@@ -8,6 +8,7 @@ import DialogButton from '../layouts/DialogButton';
 import { LoadingButton } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
 import DialogControls from '../layouts/DialogControls';
+import ImageUpload from '../ImageUpload';
 
 interface Props {
   open: boolean;
@@ -33,6 +34,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
           columnTitle={columnTitle}
         />
         <TaskDescription description={task.description} />
+        <ImageUpload taskId={task._id}></ImageUpload>
         <DialogButton
           type="delete_task"
           message=" "
