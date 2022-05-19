@@ -12,8 +12,12 @@ import { getNewOrder, makeOrderedArrayWithReplace } from '../../utils/functions'
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
-import { setBoard, updateColumns, updateColumnTasks } from '../../store/reducers/boardSlice';
-import { setBoard, resetBoard } from '../../store/reducers/boardSlice';
+import {
+  setBoard,
+  updateColumns,
+  updateColumnTasks,
+  resetBoard,
+} from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
 import TaskPopup from '../../components/TaskPopup';
@@ -194,7 +198,7 @@ const Board = () => {
             ref={provider.innerRef}
           >
             <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
-              {loadingBoards || isLoading ? (
+              {loadingBoards || isLoadingColumn ? (
                 <Loader />
               ) : (
                 board.columns &&
@@ -217,7 +221,7 @@ const Board = () => {
                 ))
               )}
               {provider.placeholder}
-              {loadingBoards || isLoading ? (
+              {loadingBoards || isLoadingColumn ? (
                 <Loader />
               ) : (
                 <DialogButton
