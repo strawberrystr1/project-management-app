@@ -58,11 +58,17 @@ export const boardSlice = createSlice({
           return { ...task, order: index };
         });
     },
-      resetBoard: () => initialState,
+    resetBoard: () => initialState,
   },
 });
 
-export const { setBoard, changeColumn, removeColumn, updateColumnTasks, updateColumns, resetBoard } =
-  boardSlice.actions;
+export const {
+  setBoard,
+  changeColumn,
+  removeColumn,
+  updateColumnTasks,
+  updateColumns,
+  resetBoard,
+} = boardSlice.actions;
 
 export default boardSlice.reducer;

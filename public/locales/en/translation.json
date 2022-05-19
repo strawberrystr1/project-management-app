@@ -12,8 +12,10 @@
       "2": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse, explicabo."
     }
   },
-  "example": {
-    "header": "Localization example"
+  "not_found": {
+    "title": "Whoops!",
+    "subtitle": "This page got lost in conversation",
+    "paragraph": "Not to worry. You will be redirected to homepage in "
   },
   "forms": {
     "new_board": {
