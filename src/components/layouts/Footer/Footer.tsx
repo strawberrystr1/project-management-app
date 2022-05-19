@@ -21,7 +21,7 @@ const Footer = () => {
           spacing={{ xs: 1, md: 2 }}
         >
           <Stack direction="row" alignItems="center">
-            <a href="https://rs.school/react/">
+            <a target="_blank" href="https://rs.school/react/" rel="noreferrer">
               <img className={styles.logo} src="../assets/rs_school_js.svg" alt="school logo" />
             </a>
             <Typography display={{ xs: 'block', sm: 'none' }} fontSize="20" fontWeight={600}>
@@ -30,7 +30,13 @@ const Footer = () => {
           </Stack>
           <Box className={styles.links_wrapper}>
             {teamInfo.map((item) => (
-              <a href={item.github} key={item.name} className={styles.link}>
+              <a
+                target="_blank"
+                href={item.github}
+                key={item.name}
+                className={styles.link}
+                rel="noreferrer"
+              >
                 <img src={github} alt="github logo" className={styles.git_logo} />
                 <Typography
                   color="white"
