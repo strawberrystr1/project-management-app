@@ -8,7 +8,7 @@ import DialogButton from '../../components/layouts/DialogButton';
 import styles from './style.module.scss';
 import { DragDropContext, Droppable, DropResult } from '@react-forked/dnd';
 import { useAddColumnMutation, useUpdateColumnMutation } from '../../store/services/columnsService';
-import { getNewOrder } from '../../utils/functions';
+import { getNewOrder, makeOrderedArrayWithReplace } from '../../utils/functions';
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
@@ -76,80 +76,105 @@ const Board = () => {
     setTasks(updatedTasks);
   };
 
+  const onDragColumns = (sourceIndex: number, destinationIndex: number) => {
+    const orderedColumns = makeOrderedArrayWithReplace(
+      board.columns,
+      sourceIndex,
+      destinationIndex
+    );
+    dispatch(updateColumns(orderedColumns));
+    orderedColumns.forEach((column) =>
+      updateColumnsApi({
+        body: {
+          title: column.title,
+          boardId: boardId,
+          order: column.order,
+        },
+        columnId: column._id,
+      })
+    );
+  };
+
+  const onDragTaskBetweenColumns = (
+    columnFrom: ITask[],
+    columnTo: ITask[],
+    sourceIndex: number,
+    destinationIndex: number,
+    sourceDroppableId: string,
+    destinationDroppableId: string
+  ) => {
+    const copyColumnFrom = [...columnFrom];
+    const copyColumnTo = [...columnTo];
+    const [removedItem] = copyColumnFrom.splice(sourceIndex, 1);
+    copyColumnTo.splice(destinationIndex, 0, removedItem);
+    const orderedColumnTo = copyColumnTo.map((task, index) => ({
+      ...task,
+      columnId: destinationDroppableId,
+      order: index,
+    }));
+    dispatch(
+      updateColumnTasks({
+        columnId: sourceDroppableId,
+        tasks: copyColumnFrom,
+      })
+    );
+    dispatch(
+      updateColumnTasks({
+        columnId: destinationDroppableId,
+        tasks: orderedColumnTo,
+      })
+    );
+    setUpdatedTasksToApi([...orderedColumnTo, ...copyColumnFrom]);
+  };
+
+  const onDragTaskInsideColumn = (
+    columnFrom: ITask[],
+    sourceIndex: number,
+    destinationIndex: number,
+    sourceDroppableId: string
+  ) => {
+    const orderedColumnFrom = makeOrderedArrayWithReplace(
+      columnFrom,
+      sourceIndex,
+      destinationIndex
+    );
+    dispatch(
+      updateColumnTasks({
+        columnId: sourceDroppableId,
+        tasks: orderedColumnFrom,
+      })
+    );
+    setUpdatedTasksToApi(orderedColumnFrom);
+  };
+
   const onDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
-    if (!destination) {
-      return;
-    }
-    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId && destination.index === source.index)
+    ) {
       return;
     }
     if (type === 'list') {
-      const columns = [...board.columns];
-      const [removedItem] = columns.splice(source.index, 1); //deleted item
-      columns.splice(destination.index, 0, removedItem);
-      const orderedColumns = columns.map((column, index) => ({ ...column, order: index }));
-      // update state
-      dispatch(updateColumns(orderedColumns));
-      // update api
-      orderedColumns.forEach((column) =>
-        updateColumnsApi({
-          body: {
-            title: column.title,
-            boardId: boardId,
-            order: column.order,
-          },
-          columnId: column._id,
-        })
-      );
+      onDragColumns(source.index, destination.index);
       return;
     }
     const columnFrom = board.columns.find((column) => column._id === source.droppableId)?.tasks;
     const columnTo = board.columns.find((column) => column._id === destination.droppableId)?.tasks;
-    if (type === 'tasks') {
-      if (columnFrom && destination.droppableId === source.droppableId) {
-        const copyColumnFrom = [...columnFrom];
-        const [removedItem] = copyColumnFrom.splice(source.index, 1); //deleted item
-        copyColumnFrom.splice(destination.index, 0, removedItem);
-        const orderedColumnFrom = copyColumnFrom.map((task, index) => ({ ...task, order: index }));
-        // update state
-        dispatch(
-          updateColumnTasks({
-            columnId: source.droppableId,
-            tasks: orderedColumnFrom,
-          })
-        );
-        // update api
-        setUpdatedTasksToApi(orderedColumnFrom);
-        return;
-      }
-      if (columnFrom && columnTo && destination.droppableId !== source.droppableId) {
-        const copyColumnFrom = [...columnFrom];
-        const copyColumnTo = [...columnTo];
-        const [removedItem] = copyColumnFrom.splice(source.index, 1); //deleted item
-        copyColumnTo.splice(destination.index, 0, removedItem);
-        const orderedColumnTo = copyColumnTo.map((task, index) => ({
-          ...task,
-          columnId: destination.droppableId,
-          order: index,
-        }));
-        // update state
-        dispatch(
-          updateColumnTasks({
-            columnId: source.droppableId,
-            tasks: copyColumnFrom,
-          })
-        );
-        dispatch(
-          updateColumnTasks({
-            columnId: destination.droppableId,
-            tasks: orderedColumnTo,
-          })
-        );
-        // update api
-        setUpdatedTasksToApi([...orderedColumnTo, ...copyColumnFrom]);
-        return;
-      }
+    if (columnFrom && destination.droppableId === source.droppableId) {
+      onDragTaskInsideColumn(columnFrom, source.index, destination.index, source.droppableId);
+      return;
+    }
+    if (columnFrom && columnTo && destination.droppableId !== source.droppableId) {
+      onDragTaskBetweenColumns(
+        columnFrom,
+        columnTo,
+        source.index,
+        destination.index,
+        source.droppableId,
+        destination.droppableId
+      );
+      return;
     }
   };
 
@@ -163,32 +188,30 @@ const Board = () => {
             ref={provider.innerRef}
           >
             <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
-              <Stack direction={'row'} spacing={1}>
-                {loadingBoards ? (
-                  <Loader />
-                ) : (
-                  board.columns &&
-                  board.columns.map(({ _id, order, title, tasks }, index) => (
-                    <BoardColumn
-                      key={_id}
-                      _id={_id}
-                      index={index}
-                      order={order}
-                      boardId={boardId}
-                      title={title}
-                      tasks={tasks}
-                      editId={editId}
-                      activateEdit={activateEdit}
-                      disactivateEdit={disactivateEdit}
-                      updateBoard={updateBoard}
-                      toggleTaskOpen={toggleTaskOpen}
-                      setTaskForPopup={setTaskForPopup}
-                    />
-                  ))
-                )}
-                {provider.placeholder}
-              </Stack>
-              {isLoading ? (
+              {loadingBoards || isLoading ? (
+                <Loader />
+              ) : (
+                board.columns &&
+                board.columns.map(({ _id, order, title, tasks }, index) => (
+                  <BoardColumn
+                    key={_id}
+                    _id={_id}
+                    index={index}
+                    order={order}
+                    boardId={boardId}
+                    title={title}
+                    tasks={tasks}
+                    editId={editId}
+                    activateEdit={activateEdit}
+                    disactivateEdit={disactivateEdit}
+                    updateBoard={updateBoard}
+                    toggleTaskOpen={toggleTaskOpen}
+                    setTaskForPopup={setTaskForPopup}
+                  />
+                ))
+              )}
+              {provider.placeholder}
+              {loadingBoards || isLoading ? (
                 <Loader />
               ) : (
                 <DialogButton

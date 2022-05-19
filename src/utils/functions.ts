@@ -14,3 +14,14 @@ export const getSubstring = (string: string): string => {
   const subString = string.substring(0, lastIndex);
   return stringLength > lastIndex ? `${subString}...` : subString;
 };
+
+export function makeOrderedArrayWithReplace<T>(
+  array: T[],
+  sourceIndex: number,
+  destIndex: number
+): T[] {
+  const modifiedArray = [...array];
+  const [removedItem] = modifiedArray.splice(sourceIndex, 1);
+  modifiedArray.splice(destIndex, 0, removedItem);
+  return modifiedArray.map((item, index) => ({ ...item, order: index }));
+}
