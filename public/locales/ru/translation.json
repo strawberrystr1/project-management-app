@@ -30,7 +30,8 @@
       "title": "Создать новую задачу",
       "description": "Введите название и описание новой задачи",
       "taskTitle": "Название",
-      "taskDescription": "Описание"
+      "taskDescription": "Описание",
+      "users": "Участники"
     },
     "delete_column": {
       "title": "Удалить колонку",

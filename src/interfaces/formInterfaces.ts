@@ -13,3 +13,9 @@ export interface IDialogButtonProps {
   className?: string;
   message?: string;
 }
+
+export type CreateTask = {
+  title: string;
+  description: string;
+  users: string[];
+};

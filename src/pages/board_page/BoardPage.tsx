@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
 import { setBoard, updateColumns, updateColumnTasks } from '../../store/reducers/boardSlice';
+import { setBoard, resetBoard } from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
 import TaskPopup from '../../components/TaskPopup';
@@ -28,7 +29,7 @@ const Board = () => {
   const activateEdit = (id: string) => setEditId(id);
   const disactivateEdit = () => setEditId('');
 
-  const [addColumn, { isLoading }] = useAddColumnMutation();
+  const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [updateColumnsApi] = useUpdateColumnMutation();
   const [setTasks] = useSetTasksMutation();
 
@@ -45,6 +46,11 @@ const Board = () => {
   };
 
   useEffect(updateBoard, [boardId]);
+  useEffect(() => {
+    return () => {
+      dispatch(resetBoard());
+    };
+  }, []);
 
   const toggleTaskOpen = () => {
     setIsTaskOpen((prev) => !prev);
@@ -56,7 +62,7 @@ const Board = () => {
   };
 
   const addColumnCallback = (title: string) => {
-    const newColumn = { order: getNewOrder(board.columns || []), boardId, title };
+    const newColumn = { order: getNewOrder(board.columns), boardId, title };
     addColumn(newColumn).unwrap().then(updateBoard);
   };
 

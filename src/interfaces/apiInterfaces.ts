@@ -96,3 +96,9 @@ export interface IUpdateColumnTasks {
 }
 
 export type ICreateTask = Omit<ITask, '_id' | 'toggleTaskOpen'>;
+
+export type User = {
+  _id: string;
+  name: string;
+  login: string;
+};
