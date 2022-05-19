@@ -57,8 +57,9 @@ export interface ITask {
   boardId: string;
   columnId: string;
   users: string[];
+  files?: unknown[];
+  points?: unknown[];
 }
-
 export interface IFile {
   filename: string;
   fileSize: number;
@@ -88,6 +89,10 @@ export interface IDeleteColumn {
 export interface IUpdateColumn {
   columnId: string;
   body: ICreateColumn;
+}
+export interface IUpdateColumnTasks {
+  columnId: string;
+  tasks: ITask[];
 }
 
 export type ICreateTask = Omit<ITask, '_id' | 'toggleTaskOpen'>;

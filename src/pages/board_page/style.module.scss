@@ -9,9 +9,13 @@
 }
 
 .board-wrapper {
-  height: 100%;
+  height: calc(100vh - (64px + 48px)); // todo update after merge footer
   display: flex;
   overflow: auto;
+
+  @media (max-width: 770px){
+    height: calc(100vh - (106px + 64px)); // todo update after merge footer
+  };
 
   &::-webkit-scrollbar {
     width: 5px;
