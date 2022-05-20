@@ -9,7 +9,7 @@ import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation } from '../../store/services/tasksService';
 import TaskColumn from '../TaskColumn';
-import { getNewOrder } from '../../utils/functions';
+import { addThemeScroll, getNewOrder } from '../../utils/functions';
 import { CreateTask } from '../../interfaces/formInterfaces';
 import { useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
@@ -40,7 +40,7 @@ const BoardColumn = ({
   setTaskForPopup,
 }: Props) => {
   const { t } = useTranslation();
-
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
@@ -61,7 +61,7 @@ const BoardColumn = ({
     <Draggable draggableId={_id} index={index}>
       {(provider) => (
         <Box
-          className={styles['column-container']}
+          className={addThemeScroll(isDarkTheme, [styles['column-container']])}
           {...provider.draggableProps}
           ref={provider.innerRef}
           {...provider.dragHandleProps}
@@ -85,7 +85,12 @@ const BoardColumn = ({
                 />
               )}
             </Box>
-            <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
+            <Stack
+              direction={'column'}
+              spacing={1}
+              className={addThemeScroll(isDarkTheme, [styles['column']])}
+              // className={`${styles['column']}`}
+            >
               <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (
                   <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>

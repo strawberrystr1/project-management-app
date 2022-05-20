@@ -8,7 +8,7 @@ import DialogButton from '../../components/layouts/DialogButton';
 import styles from './style.module.scss';
 import { DragDropContext, Droppable, DropResult } from '@react-forked/dnd';
 import { useAddColumnMutation, useUpdateColumnMutation } from '../../store/services/columnsService';
-import { getNewOrder, makeOrderedArrayWithReplace } from '../../utils/functions';
+import { addThemeScroll, getNewOrder, makeOrderedArrayWithReplace } from '../../utils/functions';
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
@@ -25,6 +25,7 @@ import { ITask } from '../../interfaces/apiInterfaces';
 
 const Board = () => {
   const { boardId = '' } = useParams();
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
   const [getBoard, { isLoading: loadingBoards }] = useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
@@ -193,7 +194,7 @@ const Board = () => {
       <Droppable direction="horizontal" droppableId="list" type="list">
         {(provider) => (
           <Box
-            className={styles['board-wrapper']}
+            className={addThemeScroll(isDarkTheme, [styles['board-wrapper']])}
             {...provider.droppableProps}
             ref={provider.innerRef}
           >
