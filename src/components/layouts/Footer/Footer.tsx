@@ -52,6 +52,7 @@ const Footer = () => {
             fontSize={{ xs: 20, md: 30 }}
             display={{ xs: 'none', sm: 'block' }}
             fontWeight={600}
+            color="white"
           >
             2022
           </Typography>

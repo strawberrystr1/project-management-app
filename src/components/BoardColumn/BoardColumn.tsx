@@ -89,7 +89,6 @@ const BoardColumn = ({
               direction={'column'}
               spacing={1}
               className={addThemeScroll(isDarkTheme, [styles['column']])}
-              // className={`${styles['column']}`}
             >
               <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (
