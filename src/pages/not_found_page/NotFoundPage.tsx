@@ -38,14 +38,13 @@ const NotFound = () => {
         <Typography variant="h3" sx={{ color: (theme) => theme.palette.warning.main }} gutterBottom>
           {t('not_found.subtitle')}
         </Typography>
-        <Typography variant="h6" align="center" sx={{ color: (theme) => theme.palette.info.main }}>
+        <Typography variant="h6" sx={{ color: (theme) => theme.palette.info.main }}>
           {t('not_found.paragraph')}
           <Typography
             variant="inherit"
             sx={{
               color: (theme) => theme.palette.error.main,
               display: 'inline',
-              textAlign: 'left',
               fontSize: '1.1em',
             }}
           >
