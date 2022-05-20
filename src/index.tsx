@@ -11,13 +11,11 @@ import Loader from './components/Loader';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Suspense fallback={<CircularProgress />}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Suspense>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <Suspense fallback={<CircularProgress />}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Suspense>
+  </Provider>
 );
