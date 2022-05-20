@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
-import { IColumn, ITask } from '../../interfaces/apiInterfaces';
+import { IColumn, IFullTask, ITask } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation } from '../../store/services/tasksService';
@@ -20,7 +20,7 @@ interface Props extends IColumn {
   disactivateEdit: () => void;
   updateBoard: () => void;
   toggleTaskOpen: () => void;
-  setTaskForPopup: (task: ITask, title: string) => void;
+  setTaskForPopup: (task: IFullTask, title: string) => void;
 }
 
 const BoardColumn = ({
@@ -52,7 +52,6 @@ const BoardColumn = ({
       .unwrap()
       .then(updateBoard);
   };
-
   return (
     <Box style={{ order }} className={styles['column-container']}>
       <Paper elevation={2} className={styles['column-wrapper']}>
@@ -80,7 +79,7 @@ const BoardColumn = ({
               <TaskColumn
                 _id={task._id}
                 order={task.order}
-                title={task.title}
+                title={task.title.split('<!>')[0]}
                 toggleTaskOpen={toggleTaskOpen}
               />
             </Box>

@@ -33,4 +33,28 @@
 .dialog {
   display: flex;
   flex-direction: column;
+  padding-top: 0 !important;
+}
+
+.colorWrapper {
+  padding: 10px 0;
+}
+
+.colors {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+
+  &Item {
+    width: 70px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0.5px solid black;
+    cursor: pointer;
+    margin-right: 5px;
+
+    &:hover {
+      border: 1px solid white;
+    }
+  }
 }

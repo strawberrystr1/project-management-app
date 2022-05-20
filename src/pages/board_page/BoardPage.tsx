@@ -14,7 +14,7 @@ import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
 import { setBoard, resetBoard } from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
 import TaskPopup from '../../components/TaskPopup';
-import { ITask } from '../../interfaces/apiInterfaces';
+import { IFullTask } from '../../interfaces/apiInterfaces';
 
 const Board = () => {
   const { boardId = '' } = useParams();
@@ -44,14 +44,25 @@ const Board = () => {
 
   const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [isTaskOpen, setIsTaskOpen] = useState(false);
-  const [popupTaskData, setPopupTaskData] = useState<ITask>();
+  const [popupTaskData, setPopupTaskData] = useState<IFullTask>();
   const [popupColumnTitle, setPopupColumnTitle] = useState('');
+
+  useEffect(() => {
+    if (popupTaskData) {
+      const id = popupTaskData._id;
+      const column = board.columns.find((item) => item.tasks.find((el) => el._id === id));
+      if (column) {
+        const task = column.tasks.find((task) => task._id === id);
+        setPopupTaskData(task);
+      }
+    }
+  }, [board]);
 
   const toggleTaskOpen = () => {
     setIsTaskOpen((prev) => !prev);
   };
 
-  const setTaskForPopup = (task: ITask, title: string) => {
+  const setTaskForPopup = (task: IFullTask, title: string) => {
     setPopupTaskData(task);
     setPopupColumnTitle(title);
   };
