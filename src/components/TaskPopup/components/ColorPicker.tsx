@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import styles from '../style.module.scss';
 import { colors } from '../../../utils/constants/colors';
 import { IUpdateTaskFromPopup } from '../../../interfaces/apiInterfaces';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   handleUpdate: (data: IUpdateTaskFromPopup) => void;
@@ -9,13 +10,15 @@ type Props = {
 };
 
 export const ColorPicker = ({ handleUpdate, title }: Props) => {
+  const { t } = useTranslation();
+
   const changeColor = (color: string) => {
     handleUpdate({ title: `${title.split(' <!> ')[0]} <!> ${color}` });
   };
 
   return (
     <Box className={styles.colorWrapper}>
-      <Typography>You can choose a cover for this task:</Typography>
+      <Typography>{t('task_popup.color')}</Typography>
       <Box className={styles.colors}>
         {colors.map((color) => (
           <Box
