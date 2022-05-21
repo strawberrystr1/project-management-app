@@ -9,9 +9,12 @@ const Input = styled('input')({
   display: 'none',
 });
 
-type Props = { taskId: string };
+type Props = {
+  taskId: string;
+  boardId: string;
+};
 
-const ImageUpload = ({ taskId }: Props) => {
+const ImageUpload = ({ taskId, boardId }: Props) => {
   const [file, setFile] = useState<File | null>(null);
   const handleChange = (files: FileList | null) => {
     files && setFile(files[0]);
@@ -20,8 +23,11 @@ const ImageUpload = ({ taskId }: Props) => {
   const [uploadFile] = useCreateFileMutation();
 
   const uploadFileCallback = () => {
-    console.log(file);
-    file && uploadFile({ file, taskId });
+    const formData = new FormData();
+    formData.append('taskId', taskId);
+    formData.append('boardId', boardId);
+    formData.append('file', file as File);
+    file && uploadFile(formData).unwrap().finally();
   };
 
   return (

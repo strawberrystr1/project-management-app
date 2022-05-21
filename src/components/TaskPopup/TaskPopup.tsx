@@ -34,7 +34,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
           columnTitle={columnTitle}
         />
         <TaskDescription description={task.description} />
-        <ImageUpload taskId={task._id}></ImageUpload>
+        <ImageUpload taskId={task._id} boardId={task.boardId}></ImageUpload>
         <DialogButton
           type="delete_task"
           message=" "

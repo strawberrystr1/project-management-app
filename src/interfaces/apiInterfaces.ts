@@ -105,5 +105,6 @@ export type User = {
 
 export type CreateFile = {
   taskId: string;
+  boardId: string;
   file: File;
 };

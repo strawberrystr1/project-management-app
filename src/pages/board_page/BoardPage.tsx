@@ -165,18 +165,20 @@ const Board = () => {
     ) {
       return;
     }
-    if (type === 'list') {
-      onDragColumns(source.index, destination.index);
-      return;
-    }
+    if (type === 'list') return onDragColumns(source.index, destination.index);
+
     const columnFrom = board.columns.find((column) => column._id === source.droppableId)?.tasks;
     const columnTo = board.columns.find((column) => column._id === destination.droppableId)?.tasks;
-    if (columnFrom && destination.droppableId === source.droppableId) {
-      onDragTaskInsideColumn(columnFrom, source.index, destination.index, source.droppableId);
-      return;
-    }
-    if (columnFrom && columnTo && destination.droppableId !== source.droppableId) {
-      onDragTaskBetweenColumns(
+    if (columnFrom && destination.droppableId === source.droppableId)
+      return onDragTaskInsideColumn(
+        columnFrom,
+        source.index,
+        destination.index,
+        source.droppableId
+      );
+
+    if (columnFrom && columnTo && destination.droppableId !== source.droppableId)
+      return onDragTaskBetweenColumns(
         columnFrom,
         columnTo,
         source.index,
@@ -184,8 +186,6 @@ const Board = () => {
         source.droppableId,
         destination.droppableId
       );
-      return;
-    }
   };
 
   return (
