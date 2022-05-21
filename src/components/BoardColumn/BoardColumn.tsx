@@ -79,7 +79,7 @@ const BoardColumn = ({
               <TaskColumn
                 _id={task._id}
                 order={task.order}
-                title={task.title.split('<!>')[0]}
+                title={task.title}
                 toggleTaskOpen={toggleTaskOpen}
               />
             </Box>

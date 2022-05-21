@@ -13,7 +13,11 @@ export const ColorPicker = ({ handleUpdate, title }: Props) => {
   const { t } = useTranslation();
 
   const changeColor = (color: string) => {
-    handleUpdate({ title: `${title.split(' <!> ')[0]} <!> ${color}` });
+    if (color !== '') {
+      handleUpdate({ title: `${title.split(' <!> ')[0]} <!> ${color}` });
+    } else {
+      handleUpdate({ title: `${title.split(' <!> ')[0]}` });
+    }
   };
 
   return (

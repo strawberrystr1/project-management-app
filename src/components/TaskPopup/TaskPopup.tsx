@@ -125,7 +125,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
         />
       </DialogContent>
       <Button onClick={handleClose} className={styles.close}>
-        <CloseIcon />
+        <CloseIcon sx={{ color: 'black' }} />
       </Button>
     </Dialog>
   );
