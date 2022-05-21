@@ -1,13 +1,9 @@
-import { Box, Divider, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitch from '../../components/layouts/Header/components/LanguageSwitch';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
-import {
-  useGetUserMutation,
-  useUpdateUserMutation,
-  useDeleteUserMutation,
-} from '../../store/services/userService';
+import { useGetUserMutation, useDeleteUserMutation } from '../../store/services/userService';
 import styles from './style.module.scss';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { logOut } from '../../store/reducers/userSlice';
@@ -17,15 +13,20 @@ import SettingsFormItem from '../../components/SettingsItem/SettingsFormItem';
 import { IUserResponse } from '../../interfaces/apiInterfaces';
 import DialogButton from '../../components/layouts/DialogButton';
 import DialogControls from '../../components/layouts/DialogControls';
-import { readToken } from '../../utils/functions';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const Settings = () => {
-  const [getUser, { data }] = useGetUserMutation();
-  const [deleteUser, { isLoading: deleteLoading }] = useDeleteUserMutation();
+  const [getUser, { data, isError, error }] = useGetUserMutation();
+  const [deleteUser, { isLoading: deleteLoading, isError: isErrorDelete, error: errorDelete }] =
+    useDeleteUserMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  useErrorHandler(isError, error);
+  useErrorHandler(isErrorDelete, errorDelete);
 
   const fetchUser = async () => {
     await getUser(userId).unwrap();
@@ -36,6 +37,7 @@ const Settings = () => {
       id: userId,
     };
     await deleteUser(body).unwrap();
+    dispatch(openSuccessSnack(t('snack_message.delete_user')));
     navigate('/home');
     setTimeout(() => dispatch(logOut()), 100);
   };

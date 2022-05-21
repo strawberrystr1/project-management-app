@@ -3,16 +3,21 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useTypedSelector } from '../hooks/redux';
+import { useTypedDispatch, useTypedSelector } from '../hooks/redux';
+import { useErrorHandler } from '../hooks/useErrorHandler';
+import { openSuccessSnack } from '../store/reducers/snackSlice';
 import { useCreateBoardMutation } from '../store/services/boardsService';
 import DialogControls from './layouts/DialogControls';
 
 const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [createBoard, { isLoading }] = useCreateBoardMutation();
+  const [createBoard, { isLoading, isError, error }] = useCreateBoardMutation();
   const [isDisable, setIsDisable] = useState(false);
   const { userId } = useTypedSelector((state) => state.user);
+  const dispatch = useTypedDispatch();
+
+  useErrorHandler(isError, error);
 
   const formik = useFormik({
     initialValues: {
@@ -27,6 +32,7 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
         users: [],
       }).unwrap();
       handleClose();
+      dispatch(openSuccessSnack(t('snack_message.create_board')));
       navigate('/boards');
     },
   });

@@ -9,6 +9,9 @@ import { IUserResponse } from '../../interfaces/apiInterfaces';
 import DialogButton from '../layouts/DialogButton';
 import DialogControls from '../layouts/DialogControls';
 import { readToken } from '../../utils/functions';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useTypedDispatch } from '../../hooks/redux';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 interface IProps {
   userId: string;
@@ -19,7 +22,10 @@ interface IProps {
 
 const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) => {
   const { t } = useTranslation();
-  const [updateUser, { isLoading }] = useUpdateUserMutation();
+  const [updateUser, { isLoading, isError, error }] = useUpdateUserMutation();
+  const dispatch = useTypedDispatch();
+
+  useErrorHandler(isError, error);
 
   const handleSubmit = async () => {
     const token = readToken();
@@ -33,6 +39,7 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
       },
     };
     await updateUser(body).unwrap();
+    dispatch(openSuccessSnack(t('snack_message.update_user')));
     formik.resetForm();
   };
 

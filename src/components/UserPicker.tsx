@@ -8,6 +8,7 @@ import Chip from '@mui/material/Chip';
 import { useGetUsersQuery } from '../store/services/userService';
 import { LinearProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useErrorHandler } from '../hooks/useErrorHandler';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,10 +28,13 @@ type Props = {
 
 const UserPicker = ({ users, setUsers }: Props) => {
   const { t } = useTranslation();
-  const { data = [], isLoading } = useGetUsersQuery();
+  const { data = [], isLoading, isError, error } = useGetUsersQuery();
   const handleChange = ({ target: { value } }: SelectChangeEvent<typeof users>) => {
     setUsers(typeof value === 'string' ? value.split(',') : value);
   };
+
+  useErrorHandler(isError, error);
+
   return (
     <Box mt={1} mb={1}>
       <FormControl sx={{ mt: 1, mb: 1, width: '100%' }}>

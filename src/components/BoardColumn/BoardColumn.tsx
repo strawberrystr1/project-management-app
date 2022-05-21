@@ -11,10 +11,12 @@ import { useAddTaskMutation } from '../../store/services/tasksService';
 import TaskColumn from '../TaskColumn';
 import { addThemeScroll, getNewOrder } from '../../utils/functions';
 import { CreateTask } from '../../interfaces/formInterfaces';
-import { useTypedSelector } from '../../hooks/redux';
+import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
 
 import { Draggable, Droppable, DroppableProvided } from '@react-forked/dnd';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 interface Props extends IColumn {
   editId: string;
   index: number;
@@ -40,10 +42,13 @@ const BoardColumn = ({
   setTaskForPopup,
 }: Props) => {
   const { t } = useTranslation();
+  const dispatch = useTypedDispatch();
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
-  const [addTask, { isLoading }] = useAddTaskMutation();
+  const [addTask, { isLoading, isError, error }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
+
+  useErrorHandler(isError, error);
 
   const addTaskCallback = (props: CreateTask) => {
     addTask({
@@ -55,6 +60,7 @@ const BoardColumn = ({
     })
       .unwrap()
       .then(updateBoard);
+    dispatch(openSuccessSnack(t('snack_message.add_task')));
   };
   return (
     <Draggable draggableId={_id} index={index}>

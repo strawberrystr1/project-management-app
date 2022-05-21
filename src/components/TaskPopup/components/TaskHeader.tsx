@@ -9,14 +9,14 @@ import {
   Divider,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useTypedSelector } from '../../../hooks/redux';
-import { useGetUserMutation, useGetUsersQuery } from '../../../store/services/userService';
+import { useGetUsersQuery } from '../../../store/services/userService';
 import { UserAvatar } from './UserAvatar';
 import styles from '../style.module.scss';
 import { useTranslation } from 'react-i18next';
 import { IUpdateTaskFromPopup, User } from '../../../interfaces/apiInterfaces';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import { useErrorHandler } from '../../../hooks/useErrorHandler';
 
 type Props = {
   title: string;
@@ -33,7 +33,9 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
   const [inputValue, setInputValue] = useState('');
   const [usersData, setUsersData] = useState<string[][]>([]);
   const { t } = useTranslation();
-  const { data, isLoading } = useGetUsersQuery();
+  const { data, isLoading, isError, error } = useGetUsersQuery();
+
+  useErrorHandler(isError, error);
 
   useEffect(() => {
     if (data) {

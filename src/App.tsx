@@ -13,6 +13,8 @@ import { useTypedDispatch } from './hooks/redux';
 import { setToken } from './store/reducers/userSlice';
 import Loader from './components/Loader';
 import { readToken } from './utils/functions';
+import { openErrorSnack } from './store/reducers/snackSlice';
+import { IAPIError } from './interfaces/apiInterfaces';
 
 function App() {
   const dispatch = useTypedDispatch();
@@ -28,7 +30,8 @@ function App() {
         dispatch(setToken({ id: res._id, isLogged: true }));
       }
     } catch (error) {
-      console.log(error);
+      const { message } = (error as IAPIError).data;
+      dispatch(openErrorSnack(message));
     } finally {
       setLoad(false);
     }

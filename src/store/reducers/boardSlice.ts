@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IBoard, IColumn, IUpdateColumn, IUpdateColumnTasks, IUpdateTaskStore } from '../../interfaces/apiInterfaces';
+import {
+  IBoard,
+  IColumn,
+  IUpdateColumn,
+  IUpdateColumnTasks,
+  IUpdateTaskStore,
+} from '../../interfaces/apiInterfaces';
 
 type BoardState = {
   board: IBoard;

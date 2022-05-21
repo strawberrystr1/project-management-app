@@ -22,25 +22,34 @@ import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
 import TaskPopup from '../../components/TaskPopup';
 import { IFullTask } from '../../interfaces/apiInterfaces';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const Board = () => {
   const { boardId = '' } = useParams();
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
-  const [getBoard, { isLoading: loadingBoards }] = useGetBoardMutation();
+  const [getBoard, { isLoading: loadingBoards, isError: isGetBoardError, error: getBoardError }] =
+    useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
   const activateEdit = (id: string) => setEditId(id);
   const disactivateEdit = () => setEditId('');
-
-  const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
+  const [
+    addColumn,
+    { isLoading: isLoadingColumn, isError: isAddColumnError, error: addColumnError },
+  ] = useAddColumnMutation();
   const [updateColumnsApi] = useUpdateColumnMutation();
-  const [setTasks] = useSetTasksMutation();
+  const [setTasks, { isError: isSetTasksError, error: setTasksError }] = useSetTasksMutation();
 
   const [isTaskOpen, setIsTaskOpen] = useState(false);
   const [popupTaskData, setPopupTaskData] = useState<IFullTask>();
   const [popupColumnTitle, setPopupColumnTitle] = useState('');
+
+  useErrorHandler(isAddColumnError, addColumnError);
+  useErrorHandler(isSetTasksError, setTasksError);
+  useErrorHandler(isGetBoardError, getBoardError);
 
   const updateBoard = () => {
     getBoard(boardId)
@@ -79,6 +88,7 @@ const Board = () => {
   const addColumnCallback = (title: string) => {
     const newColumn = { order: getNewOrder(board.columns), boardId, title };
     addColumn(newColumn).unwrap().then(updateBoard);
+    dispatch(openSuccessSnack(t('snack_message.add_column')));
   };
 
   const setUpdatedTasksToApi = (tasks: IFullTask[]) => {
