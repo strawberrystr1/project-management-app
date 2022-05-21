@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IBoard, IColumn, IUpdateColumn, IUpdateColumnTasks } from '../../interfaces/apiInterfaces';
+import { IBoard, IColumn, IUpdateColumn, IUpdateColumnTasks, IUpdateTaskStore } from '../../interfaces/apiInterfaces';
 
 type BoardState = {
   board: IBoard;
@@ -59,6 +59,22 @@ export const boardSlice = createSlice({
         });
     },
     resetBoard: () => initialState,
+    removeTask(state, action: PayloadAction<string[]>) {
+      const columnIndex = state.board.columns.findIndex((item) => item._id === action.payload[0]);
+      const indexTask = state.board.columns[columnIndex].tasks.findIndex(
+        (item) => item._id === action.payload[1]
+      );
+      state.board.columns[columnIndex].tasks.splice(indexTask, 1);
+    },
+    editTask: (state, action: PayloadAction<IUpdateTaskStore>) => {
+      const columnIndex = state.board.columns.findIndex(
+        (item) => item._id === action.payload.columnId
+      );
+      const indexTask = state.board.columns[columnIndex].tasks.findIndex(
+        (item) => item._id === action.payload.taskId
+      );
+      state.board.columns[columnIndex].tasks[indexTask] = action.payload.body;
+    },
   },
 });
 
@@ -69,6 +85,8 @@ export const {
   updateColumnTasks,
   updateColumns,
   resetBoard,
+  removeTask,
+  editTask,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

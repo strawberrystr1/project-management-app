@@ -108,6 +108,8 @@
     "author": "Task created by:",
     "users": "Users asigned to this task:",
     "desc": "Description:",
-    "delete": "Delete task"
+    "delete": "Delete task",
+    "asigned": "No asigned users",
+    "color": "You can choose a cover for this task:"
   }
 }
