@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 import { IUpdateTaskFromPopup, User } from '../../../interfaces/apiInterfaces';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-import { useErrorHandler } from '../../../hooks/useErrorHandler';
 
 type Props = {
   title: string;

@@ -10,15 +10,17 @@ const authChecker: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
       api.dispatch(logOut);
       window.history.pushState({}, '', '/home');
       api.dispatch(openErrorSnack(action.payload.data.message));
+    } else if (action.payload.status === 409) {
+      api.dispatch(openErrorSnack(action.payload.data.message));
+    } else {
+      let message = '';
+      if ('error' in action.payload) {
+        message = action.payload.error;
+      } else if ('message' in action.payload) {
+        message = action.payload.message ? action.payload.message : '';
+      }
+      api.dispatch(openErrorSnack(message));
     }
-
-    let message = '';
-    if ('error' in action.payload) {
-      message = action.payload.error;
-    } else if ('message' in action.payload) {
-      message = action.payload.message ? action.payload.message : '';
-    }
-    api.dispatch(openErrorSnack(message));
   }
   return next(action);
 };
