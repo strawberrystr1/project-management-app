@@ -92,7 +92,7 @@ export interface IUpdateColumn {
 }
 export interface IUpdateColumnTasks {
   columnId: string;
-  tasks: ITask[];
+  tasks: IFullTask[];
 }
 
 export type ICreateTask = Omit<ITask, '_id' | 'toggleTaskOpen'>;

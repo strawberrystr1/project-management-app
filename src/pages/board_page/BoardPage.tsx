@@ -81,7 +81,7 @@ const Board = () => {
     addColumn(newColumn).unwrap().then(updateBoard);
   };
 
-  const setUpdatedTasksToApi = (tasks: ITask[]) => {
+  const setUpdatedTasksToApi = (tasks: IFullTask[]) => {
     const updatedTasks = tasks.map((task) => {
       return {
         _id: task._id,
@@ -117,8 +117,8 @@ const Board = () => {
   };
 
   const onDragTaskBetweenColumns = (
-    columnFrom: ITask[],
-    columnTo: ITask[],
+    columnFrom: IFullTask[],
+    columnTo: IFullTask[],
     sourceIndex: number,
     destinationIndex: number,
     sourceDroppableId: string,
@@ -149,7 +149,7 @@ const Board = () => {
   };
 
   const onDragTaskInsideColumn = (
-    columnFrom: ITask[],
+    columnFrom: IFullTask[],
     sourceIndex: number,
     destinationIndex: number,
     sourceDroppableId: string
