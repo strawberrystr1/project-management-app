@@ -11,6 +11,10 @@ const validationSchema = yup.object({
     .max(15, 'Login must be 15 characters or less'),
   password: yup
     .string()
+    .trim()
+    .test('password', `Password mustn't contain the whitespaces`, (value) => {
+      return !/\s/.test(value as string);
+    })
     .required('Password is required')
     .test(
       'password',
