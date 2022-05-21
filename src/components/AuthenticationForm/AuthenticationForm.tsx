@@ -1,4 +1,4 @@
-import { Avatar, Snackbar, TextField, Typography, Alert } from '@mui/material';
+import { Avatar, TextField, Typography } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styles from './style.module.scss';
@@ -14,6 +14,7 @@ import { useTypedDispatch } from '../../hooks/redux';
 import { setToken } from '../../store/reducers/userSlice';
 import { useTranslation } from 'react-i18next';
 import jwt from 'jwt-decode';
+import { openErrorSnack, openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const { pathname } = useLocation();
@@ -22,8 +23,6 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const [signInUser, { isLoading }] = useSignInMutation({
     fixedCacheKey: 'user-data',
   });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
@@ -50,11 +49,11 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
           dispatch(setToken({ isLogged: true, id }));
           localStorage.setItem('token-rss', res.token);
         });
-      setIsSnackBarOpen(true);
+      dispatch(openSuccessSnack(t('forms.auth.success')));
       setTimeout(() => navigate('/boards'), 1000);
     } catch (e) {
       const { message } = (e as IAPIError).data;
-      setErrorMessage(message);
+      dispatch(openErrorSnack(message));
     }
   };
 
@@ -63,13 +62,6 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
     validationSchema: login ? validationSchema : validationSchema.omit(['name']),
     onSubmit: handleSubmit,
   });
-
-  const handleClose = () => {
-    setTimeout(() => {
-      setIsSnackBarOpen(false);
-      setErrorMessage('');
-    }, 500);
-  };
 
   return (
     <form className={styles.boxWrapper} onSubmit={formik.handleSubmit}>
@@ -111,16 +103,6 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
           {login ? t('forms.auth.change_btn_sup') : t('forms.auth.change_btn_sin')}
         </Link>
       </Box>
-      <Snackbar open={isSnackBarOpen} autoHideDuration={1000} onClose={handleClose}>
-        <Alert severity="success" sx={{ width: '100%' }}>
-          {t('forms.auth.success')}
-        </Alert>
-      </Snackbar>
-      <Snackbar open={!!errorMessage} autoHideDuration={3000} onClose={handleClose}>
-        <Alert severity="error" sx={{ width: '100%' }}>
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </form>
   );
 };

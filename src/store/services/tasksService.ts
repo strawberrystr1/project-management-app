@@ -45,14 +45,23 @@ const getApi = api.injectEndpoints({
           Authorization: `Bearer ${readToken()}`,
         },
         body: body.body,
+      })
+    }),
+    setTasks: build.mutation({
+      query: (body: ITask[]) => ({
+        url: `tasksSet`,
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${readToken()}`,
+        },
+        body: {
+          tasks: body,
+        },
       }),
     }),
   }),
 });
 
-export const {
-  useGetTasksQuery,
-  useAddTaskMutation,
+export const { useGetTasksQuery, useAddTaskMutation, useSetTasksMutation,
   useDeleteTaskMutation,
-  useUpdateTaskMutation,
-} = getApi;
+  useUpdateTaskMutation, } = getApi;
