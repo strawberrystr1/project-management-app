@@ -1,5 +1,5 @@
 .footerWrapper {
-  height: 60px;
+  padding: 5px 0;
 }
 
 .logo {
@@ -28,14 +28,11 @@
 
 @media (max-width: 900px) {
   .links_wrapper {
-    max-width: 50%;
+    max-width: 60%;
   }
 }
 
 @media (max-width: 600px) {
-  .footerWrapper {
-    height: 150px;
-  }
 
   .links_wrapper {
     max-width: 100%;

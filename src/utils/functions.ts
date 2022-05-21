@@ -25,3 +25,12 @@ export function makeOrderedArrayWithReplace<T>(
   modifiedArray.splice(destIndex, 0, removedItem);
   return modifiedArray.map((item, index) => ({ ...item, order: index }));
 }
+
+export const addThemeScroll = (themeMode: boolean, classes: string[]): string => {
+  if (themeMode) {
+    classes.push('scrollbar-dark');
+  } else {
+    classes.push('scrollbar-light');
+  }
+  return classes.join(' ');
+};
