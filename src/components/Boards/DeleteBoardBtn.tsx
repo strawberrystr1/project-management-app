@@ -6,19 +6,18 @@ import { getSubstring } from '../../utils/functions';
 import { useTranslation } from 'react-i18next';
 import { useDeleteBoardMutation } from '../../store/services/boardsService';
 import DialogControls from '../layouts/DialogControls';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { useTypedDispatch } from '../../hooks/redux';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const DeleteBoardBtn = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
-  const [deleteBoard, { isError, error }] = useDeleteBoardMutation();
+  const [deleteBoard] = useDeleteBoardMutation();
   const dispatch = useTypedDispatch();
 
-  useErrorHandler(isError, error);
-
   const handleDeleteBoard = async (id: string) => {
-    await deleteBoard(id).unwrap();
+    await deleteBoard(id)
+      .unwrap()
+      .catch((e) => console.log(e));
     dispatch(openSuccessSnack(t('snack_message.delete_board')));
   };
 

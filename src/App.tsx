@@ -13,14 +13,13 @@ import { useTypedDispatch } from './hooks/redux';
 import { setToken } from './store/reducers/userSlice';
 import Loader from './components/Loader';
 import { readToken } from './utils/functions';
-import { openErrorSnack } from './store/reducers/snackSlice';
-import { IAPIError } from './interfaces/apiInterfaces';
 
 function App() {
   const dispatch = useTypedDispatch();
-  const [getUser, { data }] = useGetUserMutation();
+  const [getUser] = useGetUserMutation();
   const [load, setLoad] = useState(true);
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
+
   const checkToken = async () => {
     try {
       const token = readToken();
@@ -30,8 +29,6 @@ function App() {
         dispatch(setToken({ id: res._id, isLogged: true }));
       }
     } catch (error) {
-      const { message } = (error as IAPIError).data;
-      dispatch(openErrorSnack(message));
     } finally {
       setLoad(false);
     }

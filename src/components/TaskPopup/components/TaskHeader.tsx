@@ -33,9 +33,7 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
   const [inputValue, setInputValue] = useState('');
   const [usersData, setUsersData] = useState<string[][]>([]);
   const { t } = useTranslation();
-  const { data, isLoading, isError, error } = useGetUsersQuery();
-
-  useErrorHandler(isError, error);
+  const { data, isLoading } = useGetUsersQuery();
 
   useEffect(() => {
     if (data) {

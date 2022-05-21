@@ -8,15 +8,12 @@ import { useGetBoardsQuery } from '../../store/services/boardsService';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { IBoard } from '../../interfaces/apiInterfaces';
 import { Box } from '@mui/system';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 const Boards = () => {
-  const { data, isError: isGetBoardsError, error: getBoardsError } = useGetBoardsQuery();
+  const { data } = useGetBoardsQuery();
   const [boards, setBoards] = useState<IBoard[]>([]);
   const [search, setSearch] = useState(() => localStorage.getItem('searchBoards-rss') || '');
   const [focused, setFocused] = useState(false);
-
-  useErrorHandler(isGetBoardsError, getBoardsError);
 
   const filterBoards = (data: IBoard[] | undefined, value: string) => {
     data &&

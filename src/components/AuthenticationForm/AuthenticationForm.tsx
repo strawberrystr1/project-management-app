@@ -9,12 +9,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import validationSchema from '../../utils/helpers/validationSchema';
 import { IFromField, IInitialFormValues } from '../../interfaces/formInterfaces';
 import { useCreateUserMutation, useSignInMutation } from '../../store/services/userService';
-import { IAPIError } from '../../interfaces/apiInterfaces';
 import { useTypedDispatch } from '../../hooks/redux';
 import { setToken } from '../../store/reducers/userSlice';
 import { useTranslation } from 'react-i18next';
 import jwt from 'jwt-decode';
-import { openErrorSnack, openSuccessSnack } from '../../store/reducers/snackSlice';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const { pathname } = useLocation();
@@ -51,10 +50,7 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
         });
       dispatch(openSuccessSnack(t('forms.auth.success')));
       setTimeout(() => navigate('/boards'), 1000);
-    } catch (e) {
-      const { message } = (e as IAPIError).data;
-      dispatch(openErrorSnack(message));
-    }
+    } catch (e) {}
   };
 
   const formik = useFormik({

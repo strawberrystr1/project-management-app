@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useTypedDispatch } from '../hooks/redux';
-import { useErrorHandler } from '../hooks/useErrorHandler';
 import { IBoard } from '../interfaces/apiInterfaces';
 import { openSuccessSnack } from '../store/reducers/snackSlice';
 import { useUpdateBoardMutation } from '../store/services/boardsService';
@@ -12,10 +11,8 @@ import DialogControls from './layouts/DialogControls';
 const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; board: IBoard }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [updateBoard, { isError, error }] = useUpdateBoardMutation();
+  const [updateBoard] = useUpdateBoardMutation();
   const dispatch = useTypedDispatch();
-
-  useErrorHandler(isError, error);
 
   const formik = useFormik({
     initialValues: {
@@ -23,7 +20,9 @@ const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; boar
     },
     onSubmit: async (values) => {
       if (values.boardName.trim().length === 0) return;
-      await updateBoard({ ...board, title: values.boardName }).unwrap();
+      await updateBoard({ ...board, title: values.boardName })
+        .unwrap()
+        .catch((e) => console.log(e));
       dispatch(openSuccessSnack(t('snack_message.update_board')));
       handleClose();
       navigate('/boards');

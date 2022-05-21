@@ -9,16 +9,13 @@ import { useGetBoardByIdQuery } from '../../store/services/boardsService';
 import Loader from '../Loader';
 import { useTypedSelector } from '../../hooks/redux';
 import { addThemeScroll } from '../../utils/functions';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 const BoardCard = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
-  const { data, isLoading, isError, error } = useGetBoardByIdQuery(board['_id']);
+  const { data, isLoading } = useGetBoardByIdQuery(board['_id']);
   const columnsLength = data?.columns ? data?.columns.length : 0;
-
-  useErrorHandler(isError, error);
 
   return (
     <Grid item xs={2} sm={4} md={4} key={board['_id']}>

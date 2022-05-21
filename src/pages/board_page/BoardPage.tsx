@@ -22,41 +22,33 @@ import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
 import TaskPopup from '../../components/TaskPopup';
 import { IFullTask } from '../../interfaces/apiInterfaces';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const Board = () => {
   const { boardId = '' } = useParams();
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
-  const [getBoard, { isLoading: loadingBoards, isError: isGetBoardError, error: getBoardError }] =
-    useGetBoardMutation();
+  const [getBoard, { isLoading: loadingBoards }] = useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
   const activateEdit = (id: string) => setEditId(id);
   const disactivateEdit = () => setEditId('');
-  const [
-    addColumn,
-    { isLoading: isLoadingColumn, isError: isAddColumnError, error: addColumnError },
-  ] = useAddColumnMutation();
+  const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [updateColumnsApi] = useUpdateColumnMutation();
-  const [setTasks, { isError: isSetTasksError, error: setTasksError }] = useSetTasksMutation();
+  const [setTasks] = useSetTasksMutation();
 
   const [isTaskOpen, setIsTaskOpen] = useState(false);
   const [popupTaskData, setPopupTaskData] = useState<IFullTask>();
   const [popupColumnTitle, setPopupColumnTitle] = useState('');
-
-  useErrorHandler(isAddColumnError, addColumnError);
-  useErrorHandler(isSetTasksError, setTasksError);
-  useErrorHandler(isGetBoardError, getBoardError);
 
   const updateBoard = () => {
     getBoard(boardId)
       .unwrap()
       .then((data) => {
         dispatch(setBoard(data));
-      });
+      })
+      .catch((e) => console.log(e));
   };
 
   useEffect(updateBoard, [boardId]);
@@ -87,7 +79,10 @@ const Board = () => {
 
   const addColumnCallback = (title: string) => {
     const newColumn = { order: getNewOrder(board.columns), boardId, title };
-    addColumn(newColumn).unwrap().then(updateBoard);
+    addColumn(newColumn)
+      .unwrap()
+      .then(updateBoard)
+      .catch((e) => console.log(e));
     dispatch(openSuccessSnack(t('snack_message.add_column')));
   };
 
@@ -104,7 +99,9 @@ const Board = () => {
         users: task.users,
       };
     });
-    setTasks(updatedTasks);
+    setTasks(updatedTasks)
+      .unwrap()
+      .catch((e) => console.log(e));
   };
 
   const onDragColumns = (sourceIndex: number, destinationIndex: number) => {
@@ -123,6 +120,8 @@ const Board = () => {
         },
         columnId: column._id,
       })
+        .unwrap()
+        .catch((e) => console.log(e))
     );
   };
 

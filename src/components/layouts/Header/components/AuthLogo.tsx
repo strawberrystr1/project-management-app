@@ -17,17 +17,14 @@ import { useTypedDispatch, useTypedSelector } from '../../../../hooks/redux';
 import { logOut } from '../../../../store/reducers/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useGetUserMutation } from '../../../../store/services/userService';
-import { useErrorHandler } from '../../../../hooks/useErrorHandler';
 
 const AuthLogo = () => {
   const { t } = useTranslation();
   const trigger = useScrollTrigger({ disableHysteresis: true });
   const dispatch = useTypedDispatch();
   const navigate = useNavigate();
-  const [getUser, { data, isError, error }] = useGetUserMutation();
+  const [getUser, { data }] = useGetUserMutation();
   const { userId } = useTypedSelector((state) => state.user);
-
-  useErrorHandler(isError, error);
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,7 +53,9 @@ const AuthLogo = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      await getUser(userId).unwrap();
+      await getUser(userId)
+        .unwrap()
+        .catch((e) => console.log(e));
     };
 
     fetchUser();

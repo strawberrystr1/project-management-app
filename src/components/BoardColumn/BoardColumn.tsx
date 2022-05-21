@@ -13,9 +13,7 @@ import { addThemeScroll, getNewOrder } from '../../utils/functions';
 import { CreateTask } from '../../interfaces/formInterfaces';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
-
 import { Draggable, Droppable, DroppableProvided } from '@react-forked/dnd';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
 interface Props extends IColumn {
   editId: string;
@@ -44,11 +42,9 @@ const BoardColumn = ({
   const { t } = useTranslation();
   const dispatch = useTypedDispatch();
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
-  const [addTask, { isLoading, isError, error }] = useAddTaskMutation();
+  const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
-
-  useErrorHandler(isError, error);
 
   const addTaskCallback = (props: CreateTask) => {
     addTask({
@@ -59,7 +55,8 @@ const BoardColumn = ({
       columnId: _id,
     })
       .unwrap()
-      .then(updateBoard);
+      .then(updateBoard)
+      .catch((e) => console.log(e));
     dispatch(openSuccessSnack(t('snack_message.add_task')));
   };
   return (

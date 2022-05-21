@@ -6,7 +6,6 @@ import { useDeleteColumnMutation } from '../../../store/services/columnsService'
 import styles from './style.module.scss';
 import { useTypedDispatch } from '../../../hooks/redux';
 import { removeColumn } from '../../../store/reducers/boardSlice';
-import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import { openSuccessSnack } from '../../../store/reducers/snackSlice';
 import { useTranslation } from 'react-i18next';
 
@@ -19,16 +18,15 @@ type Props = {
 
 const ColumnTitle = ({ currentTitle, activateEdit, boardId, columnId }: Props) => {
   const { t } = useTranslation();
-  const [deleteColumn, { isError: isDeleteColumnError, error: deleteColumnError }] =
-    useDeleteColumnMutation();
+  const [deleteColumn] = useDeleteColumnMutation();
   const dispatch = useTypedDispatch();
   const deleteColumnCallback = () => {
     dispatch(removeColumn(columnId));
-    deleteColumn({ boardId, columnId });
+    deleteColumn({ boardId, columnId })
+      .unwrap()
+      .catch((e) => console.log(e));
     dispatch(openSuccessSnack(t('snack_message.delete_column')));
   };
-
-  useErrorHandler(isDeleteColumnError, deleteColumnError);
 
   return (
     <>

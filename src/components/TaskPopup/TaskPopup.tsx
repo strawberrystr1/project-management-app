@@ -19,7 +19,6 @@ import { editTask, removeTask } from '../../store/reducers/boardSlice';
 import UserPicker from '../UserPicker';
 import { ColorPicker } from './components/ColorPicker';
 import { useEffect, useState } from 'react';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 interface Props {
@@ -31,14 +30,10 @@ interface Props {
 
 const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const { t } = useTranslation();
-  const [deleteTask, { isLoading, isError: isDeleteError, error: deleteError }] =
-    useDeleteTaskMutation();
+  const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const dispatch = useTypedDispatch();
-  const [updateTask, { isError: isUpdateError, error: updateError }] = useUpdateTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
   const [color, setColor] = useState('');
-
-  useErrorHandler(isDeleteError, deleteError);
-  useErrorHandler(isUpdateError, updateError);
 
   useEffect(() => {
     const splited = task.title.split('<!>');
@@ -56,7 +51,9 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   };
 
   const deleteTaskHandler = () => {
-    deleteTask(taskData);
+    deleteTask(taskData)
+      .unwrap()
+      .catch((e) => console.log(e));
     dispatch(openSuccessSnack(t('snack_message.delete_task')));
     handleClose();
     dispatch(removeTask([task.columnId, task._id]));
@@ -75,7 +72,9 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
         ...newData,
       },
     };
-    updateTask(body);
+    updateTask(body)
+      .unwrap()
+      .catch((e) => console.log(e));
     dispatch(editTask({ ...taskData, body: { ...task, ...newData } }));
     dispatch(openSuccessSnack(t('snack_message.update_task')));
   };

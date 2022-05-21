@@ -13,30 +13,29 @@ import SettingsFormItem from '../../components/SettingsItem/SettingsFormItem';
 import { IUserResponse } from '../../interfaces/apiInterfaces';
 import DialogButton from '../../components/layouts/DialogButton';
 import DialogControls from '../../components/layouts/DialogControls';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const Settings = () => {
-  const [getUser, { data, isError, error }] = useGetUserMutation();
-  const [deleteUser, { isLoading: deleteLoading, isError: isErrorDelete, error: errorDelete }] =
-    useDeleteUserMutation();
+  const [getUser, { data }] = useGetUserMutation();
+  const [deleteUser, { isLoading: deleteLoading }] = useDeleteUserMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  useErrorHandler(isError, error);
-  useErrorHandler(isErrorDelete, errorDelete);
-
   const fetchUser = async () => {
-    await getUser(userId).unwrap();
+    await getUser(userId)
+      .unwrap()
+      .catch((e) => console.log(e));
   };
 
   const deleteProfile = async () => {
     const body = {
       id: userId,
     };
-    await deleteUser(body).unwrap();
+    await deleteUser(body)
+      .unwrap()
+      .catch((e) => console.log(e));
     dispatch(openSuccessSnack(t('snack_message.delete_user')));
     navigate('/home');
     setTimeout(() => dispatch(logOut()), 100);
