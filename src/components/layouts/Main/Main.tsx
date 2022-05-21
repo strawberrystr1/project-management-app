@@ -1,5 +1,6 @@
 import { Container } from '@mui/material';
 import React from 'react';
+import SnackPopup from '../../SnackPopup';
 import styles from './style.module.scss';
 
 const Main: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -8,6 +9,7 @@ const Main: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Container maxWidth="xl" className={styles['main-wrapper']}>
         {children}
       </Container>
+      <SnackPopup />
     </Container>
   );
 };

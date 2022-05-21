@@ -4,12 +4,14 @@ import userReducer from './reducers/userSlice';
 import authChecker from './middleware';
 import settingsSlice from './reducers/settingsSlice';
 import boardSlice from './reducers/boardSlice';
+import snackSlice from './reducers/snackSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
   [api.reducerPath]: api.reducer,
   settings: settingsSlice,
   board: boardSlice,
+  snack: snackSlice,
 });
 
 export const store = configureStore({
