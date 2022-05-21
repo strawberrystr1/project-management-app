@@ -37,15 +37,15 @@ const TaskDescription = ({ description, handleChange, color }: Props) => {
   };
 
   return (
-    <DialogContent sx={{ padding: '15px 0' }}>
+    <DialogContent sx={{ padding: '15px 0', minHeight: '94px' }}>
       <DialogTitle sx={{ padding: '0' }}>{t('task_popup.desc')}</DialogTitle>
       <Box className={styles.description}>
-        {!input && <DialogContentText>{description}</DialogContentText>}
+        {!input && <DialogContentText>{description.split(' <!> ')[0]}</DialogContentText>}
         {input && (
           <TextField
             variant="filled"
             multiline
-            defaultValue={description}
+            defaultValue={description.split(' <!> ')[0]}
             onChange={handleInput}
             rows={4}
             sx={{ width: '60%' }}
