@@ -108,6 +108,26 @@
     "author": "Task created by:",
     "users": "Users asigned to this task:",
     "desc": "Description:",
-    "delete": "Delete task"
+    "delete": "Delete task",
+    "asigned": "No asigned users",
+    "color": "You can choose a cover for this task:",
+    "upload": "Upload image"
+  },
+  "snack_message": {
+    "delete_user": "Successfully removed",
+    "update_user": "Successfully updated",
+    "add_task": "Task added",
+    "delete_task": "Task removed",
+    "update_task": "Task updated",
+    "add_column": "Column added",
+    "delete_column": "Column removed",
+    "update_column": "Column updated",
+    "create_board": "Board created",
+    "delete_board": "Board removed",
+    "update_board": "Board updated",
+    "file": {
+      "create_file": "File uploaded",
+      "delete_file": "File removed"
+    }
   }
 }

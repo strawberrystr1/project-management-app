@@ -1,13 +1,9 @@
-import { Box, Divider, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitch from '../../components/layouts/Header/components/LanguageSwitch';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
-import {
-  useGetUserMutation,
-  useUpdateUserMutation,
-  useDeleteUserMutation,
-} from '../../store/services/userService';
+import { useGetUserMutation, useDeleteUserMutation } from '../../store/services/userService';
 import styles from './style.module.scss';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { logOut } from '../../store/reducers/userSlice';
@@ -17,7 +13,7 @@ import SettingsFormItem from '../../components/SettingsItem/SettingsFormItem';
 import { IUserResponse } from '../../interfaces/apiInterfaces';
 import DialogButton from '../../components/layouts/DialogButton';
 import DialogControls from '../../components/layouts/DialogControls';
-import { readToken } from '../../utils/functions';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const Settings = () => {
   const [getUser, { data }] = useGetUserMutation();
@@ -28,14 +24,19 @@ const Settings = () => {
   const navigate = useNavigate();
 
   const fetchUser = async () => {
-    await getUser(userId).unwrap();
+    await getUser(userId)
+      .unwrap()
+      .catch((e) => e);
   };
 
   const deleteProfile = async () => {
     const body = {
       id: userId,
     };
-    await deleteUser(body).unwrap();
+    await deleteUser(body)
+      .unwrap()
+      .catch((e) => e);
+    dispatch(openSuccessSnack(t('snack_message.delete_user')));
     navigate('/home');
     setTimeout(() => dispatch(logOut()), 100);
   };

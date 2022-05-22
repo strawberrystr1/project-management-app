@@ -1,14 +1,14 @@
 import { Add } from '@mui/icons-material';
 import { Box, Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BoardColumn from '../../components/BoardColumn';
 import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
 import styles from './style.module.scss';
 import { DragDropContext, Droppable, DropResult } from '@react-forked/dnd';
 import { useAddColumnMutation, useUpdateColumnMutation } from '../../store/services/columnsService';
-import { getNewOrder, makeOrderedArrayWithReplace } from '../../utils/functions';
+import { addThemeScroll, getNewOrder, makeOrderedArrayWithReplace } from '../../utils/functions';
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
@@ -21,24 +21,26 @@ import {
 import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
 import TaskPopup from '../../components/TaskPopup';
-import { ITask } from '../../interfaces/apiInterfaces';
+import { IFullTask } from '../../interfaces/apiInterfaces';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const Board = () => {
   const { boardId = '' } = useParams();
-  const [getBoard, { isLoading: loadingBoards }] = useGetBoardMutation();
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+  const [getBoard, { isLoading: loadingBoards, isError: isBoardError }] = useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
   const activateEdit = (id: string) => setEditId(id);
   const disactivateEdit = () => setEditId('');
-
   const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [updateColumnsApi] = useUpdateColumnMutation();
   const [setTasks] = useSetTasksMutation();
+  const navigate = useNavigate();
 
   const [isTaskOpen, setIsTaskOpen] = useState(false);
-  const [popupTaskData, setPopupTaskData] = useState<ITask>();
+  const [popupTaskData, setPopupTaskData] = useState<IFullTask>();
   const [popupColumnTitle, setPopupColumnTitle] = useState('');
 
   const updateBoard = () => {
@@ -46,31 +48,54 @@ const Board = () => {
       .unwrap()
       .then((data) => {
         dispatch(setBoard(data));
-      });
+      })
+      .catch((e) => e);
   };
 
+  useEffect(() => {
+    if (isBoardError) {
+      navigate('*');
+    }
+  }, [isBoardError, navigate]);
+
   useEffect(updateBoard, [boardId]);
+
   useEffect(() => {
     return () => {
       dispatch(resetBoard());
     };
   }, []);
 
+  useEffect(() => {
+    if (popupTaskData) {
+      const id = popupTaskData._id;
+      const column = board.columns.find((item) => item.tasks.find((el) => el._id === id));
+      if (column) {
+        const task = column.tasks.find((task) => task._id === id);
+        setPopupTaskData(task);
+      }
+    }
+  }, [board]);
+
   const toggleTaskOpen = () => {
     setIsTaskOpen((prev) => !prev);
   };
 
-  const setTaskForPopup = (task: ITask, title: string) => {
+  const setTaskForPopup = (task: IFullTask, title: string) => {
     setPopupTaskData(task);
     setPopupColumnTitle(title);
   };
 
   const addColumnCallback = (title: string) => {
     const newColumn = { order: getNewOrder(board.columns), boardId, title };
-    addColumn(newColumn).unwrap().then(updateBoard);
+    addColumn(newColumn)
+      .unwrap()
+      .then(updateBoard)
+      .catch((e) => e);
+    dispatch(openSuccessSnack(t('snack_message.add_column')));
   };
 
-  const setUpdatedTasksToApi = (tasks: ITask[]) => {
+  const setUpdatedTasksToApi = (tasks: IFullTask[]) => {
     const updatedTasks = tasks.map((task) => {
       return {
         _id: task._id,
@@ -83,7 +108,9 @@ const Board = () => {
         users: task.users,
       };
     });
-    setTasks(updatedTasks);
+    setTasks(updatedTasks)
+      .unwrap()
+      .catch((e) => e);
   };
 
   const onDragColumns = (sourceIndex: number, destinationIndex: number) => {
@@ -102,12 +129,14 @@ const Board = () => {
         },
         columnId: column._id,
       })
+        .unwrap()
+        .catch((e) => e)
     );
   };
 
   const onDragTaskBetweenColumns = (
-    columnFrom: ITask[],
-    columnTo: ITask[],
+    columnFrom: IFullTask[],
+    columnTo: IFullTask[],
     sourceIndex: number,
     destinationIndex: number,
     sourceDroppableId: string,
@@ -138,7 +167,7 @@ const Board = () => {
   };
 
   const onDragTaskInsideColumn = (
-    columnFrom: ITask[],
+    columnFrom: IFullTask[],
     sourceIndex: number,
     destinationIndex: number,
     sourceDroppableId: string
@@ -193,7 +222,7 @@ const Board = () => {
       <Droppable direction="horizontal" droppableId="list" type="list">
         {(provider) => (
           <Box
-            className={styles['board-wrapper']}
+            className={addThemeScroll(isDarkTheme, [styles['board-wrapper']])}
             {...provider.droppableProps}
             ref={provider.innerRef}
           >

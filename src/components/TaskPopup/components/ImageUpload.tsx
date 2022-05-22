@@ -6,6 +6,8 @@ import { Box, Button } from '@mui/material';
 import { useCreateFileMutation } from '../../../store/services/fileService';
 import { SaveOutlined } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { useTypedDispatch } from '../../../hooks/redux';
+import { openSuccessSnack } from '../../../store/reducers/snackSlice';
 
 const Input = styled('input')({
   display: 'none',
@@ -23,6 +25,7 @@ const ImageUpload = ({ taskId, boardId }: Props) => {
   };
 
   const [uploadFile] = useCreateFileMutation();
+  const dispatch = useTypedDispatch();
   const { t } = useTranslation();
 
   const uploadFileCallback = () => {
@@ -30,11 +33,14 @@ const ImageUpload = ({ taskId, boardId }: Props) => {
     formData.append('taskId', taskId);
     formData.append('boardId', boardId);
     formData.append('file', file as File);
-    uploadFile(formData);
+    uploadFile(formData)
+      .unwrap()
+      .then(() => dispatch(openSuccessSnack(t('snack_message.file.create_file'))))
+      .catch((e) => e);
   };
 
   return (
-    <Box sx={{ textAlign: 'center' }}>
+    <Box sx={{ alignSelf: 'center' }}>
       <label htmlFor="icon-button-file">
         <Input
           accept="image/*"
@@ -48,7 +54,7 @@ const ImageUpload = ({ taskId, boardId }: Props) => {
           color="secondary"
           startIcon={<PublishIcon color="info" />}
         >
-          {file ? file.name : t('upload')}
+          {file ? file.name : t('task_popup.upload')}
         </Button>
       </label>
       <IconButton color="success" onClick={uploadFileCallback}>

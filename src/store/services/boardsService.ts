@@ -33,7 +33,7 @@ const getApi = api.injectEndpoints({
     }),
     updateBoard: build.mutation<unknown, ICreateBoard>({
       query: (body) => ({
-        url: `boards/${body["_id"]}`,
+        url: `boards/${body['_id']}`,
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${readToken()}`,
@@ -75,4 +75,11 @@ const getApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetBoardsQuery, useCreateBoardMutation, useDeleteBoardMutation, useUpdateBoardMutation, useGetBoardByIdQuery, useGetBoardMutation } = getApi;
+export const {
+  useGetBoardsQuery,
+  useCreateBoardMutation,
+  useDeleteBoardMutation,
+  useUpdateBoardMutation,
+  useGetBoardByIdQuery,
+  useGetBoardMutation,
+} = getApi;

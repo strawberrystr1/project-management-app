@@ -31,13 +31,13 @@ export interface IChangePasswordRequest extends IRequestBasic {
 export interface ICreateBoard {
   title: string;
   owner: string;
-  users?: string[]; //todo change?
+  users?: string[];
   _id?: string;
 }
 export interface IBoard {
   owner: string;
   title: string;
-  users: string[]; //todo change?
+  users: string[];
   _id: string;
   columns: IColumn[];
 }
@@ -46,7 +46,7 @@ export interface IColumn {
   title: string;
   order: number;
   boardId: string;
-  tasks: ITask[];
+  tasks: IFullTask[];
 }
 export interface ITask {
   _id: string;
@@ -95,7 +95,7 @@ export interface IUpdateColumn {
 }
 export interface IUpdateColumnTasks {
   columnId: string;
-  tasks: ITask[];
+  tasks: IFullTask[];
 }
 
 export type ICreateTask = Omit<ITask, '_id' | 'toggleTaskOpen'>;
@@ -105,3 +105,27 @@ export type User = {
   name: string;
   login: string;
 };
+
+export interface IActionTaskData {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+}
+export interface IFullTask extends ITask {
+  files: string[];
+  points: string[];
+  _id: string;
+}
+export interface IUpdateTaskStore extends IActionTaskData {
+  body: IFullTask;
+}
+
+export interface IUpdateTask extends IActionTaskData {
+  body: Omit<ITask, '_id' | 'points' | 'files'>;
+}
+
+export interface IUpdateTaskFromPopup {
+  description?: string;
+  title?: string;
+  users?: string[];
+}

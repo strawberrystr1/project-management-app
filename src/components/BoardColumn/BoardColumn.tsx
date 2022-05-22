@@ -4,17 +4,17 @@ import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
-import { IColumn, ITask } from '../../interfaces/apiInterfaces';
+import { IColumn, IFullTask, ITask } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation } from '../../store/services/tasksService';
 import TaskColumn from '../TaskColumn';
-import { getNewOrder } from '../../utils/functions';
+import { addThemeScroll, getNewOrder } from '../../utils/functions';
 import { CreateTask } from '../../interfaces/formInterfaces';
-import { useTypedSelector } from '../../hooks/redux';
+import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
-
 import { Draggable, Droppable, DroppableProvided } from '@react-forked/dnd';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 interface Props extends IColumn {
   editId: string;
   index: number;
@@ -22,7 +22,7 @@ interface Props extends IColumn {
   disactivateEdit: () => void;
   updateBoard: () => void;
   toggleTaskOpen: () => void;
-  setTaskForPopup: (task: ITask, title: string) => void;
+  setTaskForPopup: (task: IFullTask, title: string) => void;
 }
 
 const BoardColumn = ({
@@ -40,7 +40,8 @@ const BoardColumn = ({
   setTaskForPopup,
 }: Props) => {
   const { t } = useTranslation();
-
+  const dispatch = useTypedDispatch();
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
@@ -54,14 +55,15 @@ const BoardColumn = ({
       columnId: _id,
     })
       .unwrap()
-      .then(updateBoard);
+      .then(updateBoard)
+      .catch((e) => e);
+    dispatch(openSuccessSnack(t('snack_message.add_task')));
   };
-
   return (
     <Draggable draggableId={_id} index={index}>
       {(provider) => (
         <Box
-          className={styles['column-container']}
+          className={addThemeScroll(isDarkTheme, [styles['column-container']])}
           {...provider.draggableProps}
           ref={provider.innerRef}
           {...provider.dragHandleProps}
@@ -85,7 +87,11 @@ const BoardColumn = ({
                 />
               )}
             </Box>
-            <Stack direction={'column'} spacing={1} className={`${styles['column']}`}>
+            <Stack
+              direction={'column'}
+              spacing={1}
+              className={addThemeScroll(isDarkTheme, [styles['column']])}
+            >
               <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (
                   <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>

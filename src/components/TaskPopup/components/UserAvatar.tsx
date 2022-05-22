@@ -1,7 +1,9 @@
 import { Avatar, Tooltip } from '@mui/material';
 import { stringAvatar } from '../../../utils/functions';
 
-export const UserAvatar = ({ name }: { name: string }) => {
+type Props = { name: string; removeUser?: (name: string) => void };
+
+export const UserAvatar = ({ name, removeUser }: Props) => {
   return (
     <Tooltip title={name}>
       <Avatar
@@ -10,7 +12,9 @@ export const UserAvatar = ({ name }: { name: string }) => {
           height: 30,
           fontSize: '1em',
           marginRight: '5px',
+          ':hover': { cursor: removeUser ? 'pointer' : 'initial' },
         }}
+        onClick={() => removeUser && removeUser(name)}
       >
         {stringAvatar(name)}
       </Avatar>

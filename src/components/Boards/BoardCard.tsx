@@ -7,12 +7,14 @@ import DeleteBoardBtn from './DeleteBoardBtn';
 import styles from './style.module.scss';
 import { useGetBoardByIdQuery } from '../../store/services/boardsService';
 import Loader from '../Loader';
+import { useTypedSelector } from '../../hooks/redux';
+import { addThemeScroll } from '../../utils/functions';
 
 const BoardCard = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data, isLoading } = useGetBoardByIdQuery(board['_id']); //todo getting all columns from each board
-
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+  const { data, isLoading } = useGetBoardByIdQuery(board['_id']);
   const columnsLength = data?.columns ? data?.columns.length : 0;
 
   return (
@@ -21,7 +23,7 @@ const BoardCard = ({ board }: { board: IBoard }) => {
         <Loader />
       ) : (
         <Card
-          className={styles['card-item']}
+          className={addThemeScroll(isDarkTheme, [styles['card-item']])}
           sx={{ maxWidth: 345, position: 'relative', maxHeight: 100, overflow: 'auto' }}
         >
           <CardActionArea

@@ -10,6 +10,7 @@ type Props = {
 };
 
 const TaskColumn = ({ _id, title, toggleTaskOpen, index }: Props) => {
+  const splited = title.split('<!>');
   return (
     <Draggable draggableId={_id} index={index}>
       {(draggableProvided: DraggableProvided) => (
@@ -23,7 +24,25 @@ const TaskColumn = ({ _id, title, toggleTaskOpen, index }: Props) => {
           className={styles['task-container']}
           onClick={toggleTaskOpen}
         >
-          <Typography className={styles['task-title']}>{title}</Typography>
+          <Typography
+            className={styles['task-title']}
+            sx={{
+              paddingLeft: splited[1] ? '15px' : '0',
+              position: 'relative',
+              ':before': splited[1] && {
+                content: '" "',
+                width: '4px',
+                height: '90%',
+                background: splited[1],
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                borderRadius: '4px',
+              },
+            }}
+          >
+            {splited[0]}
+          </Typography>
           <Divider orientation="horizontal" flexItem />
         </Box>
       )}

@@ -6,6 +6,8 @@ import { useUpdateColumnMutation } from '../../../store/services/columnsService'
 import styles from './style.module.scss';
 import { useTypedDispatch } from '../../../hooks/redux';
 import { changeColumn } from '../../../store/reducers/boardSlice';
+import { useTranslation } from 'react-i18next';
+import { openSuccessSnack } from '../../../store/reducers/snackSlice';
 
 type Props = {
   currentTitle: string;
@@ -16,16 +18,22 @@ type Props = {
 };
 
 const ChangeColumnTitle = ({ currentTitle, disactivateEdit, boardId, columnId, order }: Props) => {
+  const { t } = useTranslation();
   const textarea = useRef<HTMLInputElement>();
   const dispatch = useTypedDispatch();
   const [updateColumn] = useUpdateColumnMutation();
+
   const onConfirm = () => {
     const title = textarea.current ? textarea.current.value : '';
     const data = { columnId, body: { order, title, boardId } };
     dispatch(changeColumn(data));
-    updateColumn(data);
+    updateColumn(data)
+      .unwrap()
+      .catch((e) => e);
     disactivateEdit();
+    dispatch(openSuccessSnack(t('snack_message.update_column')));
   };
+
   return (
     <>
       <Input

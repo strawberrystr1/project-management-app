@@ -2,7 +2,9 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useTypedDispatch } from '../hooks/redux';
 import { IBoard } from '../interfaces/apiInterfaces';
+import { openSuccessSnack } from '../store/reducers/snackSlice';
 import { useUpdateBoardMutation } from '../store/services/boardsService';
 import DialogControls from './layouts/DialogControls';
 
@@ -10,6 +12,7 @@ const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; boar
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [updateBoard] = useUpdateBoardMutation();
+  const dispatch = useTypedDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -17,8 +20,10 @@ const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; boar
     },
     onSubmit: async (values) => {
       if (values.boardName.trim().length === 0) return;
-      await updateBoard({ ...board, title: values.boardName }).unwrap();
-
+      await updateBoard({ ...board, title: values.boardName })
+        .unwrap()
+        .catch((e) => e);
+      dispatch(openSuccessSnack(t('snack_message.update_board')));
       handleClose();
       navigate('/boards');
     },

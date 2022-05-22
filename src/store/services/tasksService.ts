@@ -1,4 +1,10 @@
-import { ITask, IGetTasks, ICreateTask } from '../../interfaces/apiInterfaces';
+import {
+  ITask,
+  IGetTasks,
+  ICreateTask,
+  IActionTaskData,
+  IUpdateTask,
+} from '../../interfaces/apiInterfaces';
 import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
 
@@ -22,6 +28,25 @@ const getApi = api.injectEndpoints({
         body,
       }),
     }),
+    deleteTask: build.mutation({
+      query: (body: IActionTaskData) => ({
+        url: `boards/${body.boardId}/columns/${body.columnId}/tasks/${body.taskId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${readToken()}`,
+        },
+      }),
+    }),
+    updateTask: build.mutation({
+      query: (body: IUpdateTask) => ({
+        url: `boards/${body.boardId}/columns/${body.columnId}/tasks/${body.taskId}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${readToken()}`,
+        },
+        body: body.body,
+      }),
+    }),
     setTasks: build.mutation({
       query: (body: ITask[]) => ({
         url: `tasksSet`,
@@ -37,4 +62,10 @@ const getApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetTasksQuery, useAddTaskMutation, useSetTasksMutation } = getApi;
+export const {
+  useGetTasksQuery,
+  useAddTaskMutation,
+  useSetTasksMutation,
+  useDeleteTaskMutation,
+  useUpdateTaskMutation,
+} = getApi;
