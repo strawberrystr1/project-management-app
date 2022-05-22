@@ -11,6 +11,8 @@ import DialogControls from '../layouts/DialogControls';
 import { readToken } from '../../utils/functions';
 import { useTypedDispatch } from '../../hooks/redux';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
+import { useState } from 'react';
+import { validate } from '../../utils/helpers/validatePassword';
 
 interface IProps {
   userId: string;
@@ -23,6 +25,7 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
   const { t } = useTranslation();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const dispatch = useTypedDispatch();
+  const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = async () => {
     const token = readToken();
@@ -32,21 +35,26 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
       body: {
         name: data.name,
         login: data.login,
-        password: formik.values.password,
+        password: inputValue,
       },
     };
-    await updateUser(body)
+    const validity = validate(inputValue);
+    if (validity) {
+      setError(true);
+      setErrorMessage(validity);
+    } else {
+      setError(false);
+      setErrorMessage('');
+      await updateUser(body)
       .unwrap()
       .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.update_user')));
-    formik.resetForm();
+    }
   };
 
-  const formik = useFormik({
-    initialValues: { [fieldName]: '' },
-    validationSchema: validationSchema.omit(omit),
-    onSubmit: handleSubmit,
-  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
 
   return (
     <>
@@ -59,10 +67,11 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
             placeholder={t(`settings.placeholder_${fieldName}`)}
             id={fieldName}
             name={fieldName}
-            onChange={formik.handleChange}
-            error={formik.touched.password && !!formik.errors.password}
-            helperText={formik.touched.password && formik.errors.password}
-            value={formik.values.password}
+            onChange={handleChange}
+            error={error}
+            helperText={error && errorMessage}
+            value={inputValue}
+            sx={{ maxWidth: '240px' }}
           />
           <DialogButton
             type="change_password"

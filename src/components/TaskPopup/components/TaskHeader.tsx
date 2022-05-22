@@ -64,7 +64,7 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
   };
 
   return (
-    <DialogContent sx={{ padding: '0' }}>
+    <DialogContent sx={{ padding: '0', minHeight: '230px' }}>
       {!input && (
         <DialogTitle
           onClick={() => {
