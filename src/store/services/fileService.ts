@@ -1,9 +1,24 @@
-import { CreateFile, IFile } from '../../interfaces/apiInterfaces';
+import { IFile } from '../../interfaces/apiInterfaces';
 import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
   endpoints: (build) => ({
+    getFiles: build.query<IFile[], string>({
+      query: (taskId) => ({
+        url: `file/${taskId}`,
+        headers: {
+          Authorization: `Bearer ${readToken()}`,
+        },
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({ type: 'Files' as const, id: _id })),
+              { type: 'Files', id: 'LIST' },
+            ]
+          : [{ type: 'Files', id: 'LIST' }],
+    }),
     createFile: build.mutation({
       query: (body) => ({
         url: 'file',
@@ -14,20 +29,7 @@ const getApi = api.injectEndpoints({
         },
         body: body,
       }),
-    }),
-    getFiles: build.mutation({
-      query: (body) => ({
-        url: `file`,
-        params: {
-          ...body,
-        },
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${readToken()}`,
-          'Content-Type': 'application/json',
-        },
-      }),
+      invalidatesTags: [{ type: 'Files', id: 'LIST' }],
     }),
     deleteFile: build.mutation({
       query: (fileId: string) => ({
@@ -37,8 +39,9 @@ const getApi = api.injectEndpoints({
           Authorization: `Bearer ${readToken()}`,
         },
       }),
+      invalidatesTags: [{ type: 'Files', id: 'LIST' }],
     }),
   }),
 });
 
-export const { useCreateFileMutation, useGetFilesMutation, useDeleteFileMutation } = getApi;
+export const { useCreateFileMutation, useDeleteFileMutation, useGetFilesQuery } = getApi;

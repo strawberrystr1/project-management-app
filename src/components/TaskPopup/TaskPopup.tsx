@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogContent } from '@mui/material';
+import { Button, Dialog, DialogContent, Divider, Stack } from '@mui/material';
 import TaskDescription from './components/TaskDescription';
 import TaskHeader from './components/TaskHeader';
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,7 +8,9 @@ import DialogButton from '../layouts/DialogButton';
 import { LoadingButton } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
 import DialogControls from '../layouts/DialogControls';
-import ImageUpload from '../ImageUpload';
+import ImageUpload from './components/ImageUpload';
+import ImageList from './components/ImageList';
+import { themeOptionsDark } from '../../theme/theme';
 
 interface Props {
   open: boolean;
@@ -34,7 +36,16 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
           columnTitle={columnTitle}
         />
         <TaskDescription description={task.description} />
-        <ImageUpload taskId={task._id} boardId={task.boardId}></ImageUpload>
+        <Stack
+          direction={{ xs: 'column', lg: 'row' }}
+          m={1}
+          p={1}
+          divider={<Divider orientation="vertical" variant="middle" flexItem />}
+          sx={{ border: '2px dashed #868d92' }}
+        >
+          <ImageList taskId={task._id} />
+          <ImageUpload taskId={task._id} boardId={task.boardId}></ImageUpload>
+        </Stack>
         <DialogButton
           type="delete_task"
           message=" "

@@ -61,8 +61,11 @@ export interface ITask {
   points?: unknown[];
 }
 export interface IFile {
-  filename: string;
-  fileSize: number;
+  _id: string;
+  boardId: string;
+  name: string;
+  path: string;
+  taskId: string;
 }
 
 /* THIS CODE IS USED IN OLD METHODS */
@@ -101,10 +104,4 @@ export type User = {
   _id: string;
   name: string;
   login: string;
-};
-
-export type CreateFile = {
-  taskId: string;
-  boardId: string;
-  file: File;
 };

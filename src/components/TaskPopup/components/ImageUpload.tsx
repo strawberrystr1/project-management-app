@@ -2,8 +2,10 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import PublishIcon from '@mui/icons-material/Publish';
 import { useState } from 'react';
-import { Button } from '@mui/material';
-import { useCreateFileMutation } from '../store/services/fileService';
+import { Box, Button } from '@mui/material';
+import { useCreateFileMutation } from '../../../store/services/fileService';
+import { SaveOutlined } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const Input = styled('input')({
   display: 'none',
@@ -15,23 +17,24 @@ type Props = {
 };
 
 const ImageUpload = ({ taskId, boardId }: Props) => {
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File>();
   const handleChange = (files: FileList | null) => {
     files && setFile(files[0]);
   };
 
   const [uploadFile] = useCreateFileMutation();
+  const { t } = useTranslation();
 
   const uploadFileCallback = () => {
     const formData = new FormData();
     formData.append('taskId', taskId);
     formData.append('boardId', boardId);
     formData.append('file', file as File);
-    file && uploadFile(formData).unwrap().finally();
+    uploadFile(formData);
   };
 
   return (
-    <>
+    <Box sx={{ textAlign: 'center' }}>
       <label htmlFor="icon-button-file">
         <Input
           accept="image/*"
@@ -39,12 +42,19 @@ const ImageUpload = ({ taskId, boardId }: Props) => {
           type="file"
           onChange={({ target }) => handleChange(target.files)}
         />
-        <IconButton color="info" aria-label="upload picture" component="span">
-          <PublishIcon />
-        </IconButton>
+        <Button
+          variant="text"
+          component="span"
+          color="secondary"
+          startIcon={<PublishIcon color="info" />}
+        >
+          {file ? file.name : t('upload')}
+        </Button>
       </label>
-      <Button onClick={uploadFileCallback}>Add</Button>
-    </>
+      <IconButton color="success" onClick={uploadFileCallback}>
+        <SaveOutlined />
+      </IconButton>
+    </Box>
   );
 };
 
