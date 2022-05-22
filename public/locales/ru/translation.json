@@ -124,6 +124,10 @@
     "update_column": "Колонка обновлена",
     "create_board": "Доска создана",
     "delete_board": "Доска удалена",
-    "update_board": "Доска обновлена"
+    "update_board": "Доска обновлена",
+    "file": {
+      "create_file": "Файл загружен",
+      "delete_file": "Файл удален"
+    }
   }
 }
