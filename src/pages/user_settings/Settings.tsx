@@ -26,7 +26,7 @@ const Settings = () => {
   const fetchUser = async () => {
     await getUser(userId)
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
   };
 
   const deleteProfile = async () => {
@@ -35,7 +35,7 @@ const Settings = () => {
     };
     await deleteUser(body)
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.delete_user')));
     navigate('/home');
     setTimeout(() => dispatch(logOut()), 100);

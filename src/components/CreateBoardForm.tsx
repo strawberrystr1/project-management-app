@@ -29,7 +29,7 @@ const CreateBoardForm = ({ handleClose }: { handleClose: () => void }) => {
         users: [],
       })
         .unwrap()
-        .catch((e) => console.log(e));
+        .catch((e) => e);
       handleClose();
       dispatch(openSuccessSnack(t('snack_message.create_board')));
       navigate('/boards');

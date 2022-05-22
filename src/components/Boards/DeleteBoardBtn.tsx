@@ -17,7 +17,7 @@ const DeleteBoardBtn = ({ board }: { board: IBoard }) => {
   const handleDeleteBoard = async (id: string) => {
     await deleteBoard(id)
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.delete_board')));
   };
 

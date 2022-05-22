@@ -55,7 +55,7 @@ const AuthLogo = () => {
     const fetchUser = async () => {
       await getUser(userId)
         .unwrap()
-        .catch((e) => console.log(e));
+        .catch((e) => e);
     };
 
     fetchUser();

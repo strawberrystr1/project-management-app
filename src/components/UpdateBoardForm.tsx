@@ -22,7 +22,7 @@ const UpdateBoardForm = ({ handleClose, board }: { handleClose: () => void; boar
       if (values.boardName.trim().length === 0) return;
       await updateBoard({ ...board, title: values.boardName })
         .unwrap()
-        .catch((e) => console.log(e));
+        .catch((e) => e);
       dispatch(openSuccessSnack(t('snack_message.update_board')));
       handleClose();
       navigate('/boards');

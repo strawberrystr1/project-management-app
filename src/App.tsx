@@ -29,7 +29,6 @@ function App() {
         dispatch(setToken({ id: res._id, isLogged: true }));
       }
     } catch (error) {
-      console.log(error);
     } finally {
       setLoad(false);
     }

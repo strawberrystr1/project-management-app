@@ -29,7 +29,7 @@ const ChangeColumnTitle = ({ currentTitle, disactivateEdit, boardId, columnId, o
     dispatch(changeColumn(data));
     updateColumn(data)
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     disactivateEdit();
     dispatch(openSuccessSnack(t('snack_message.update_column')));
   };

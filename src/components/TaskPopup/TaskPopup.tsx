@@ -53,7 +53,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const deleteTaskHandler = () => {
     deleteTask(taskData)
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.delete_task')));
     handleClose();
     dispatch(removeTask([task.columnId, task._id]));
@@ -74,7 +74,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
     };
     updateTask(body)
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     dispatch(editTask({ ...taskData, body: { ...task, ...newData } }));
     dispatch(openSuccessSnack(t('snack_message.update_task')));
   };

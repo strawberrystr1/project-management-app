@@ -24,7 +24,7 @@ const ColumnTitle = ({ currentTitle, activateEdit, boardId, columnId }: Props) =
     dispatch(removeColumn(columnId));
     deleteColumn({ boardId, columnId })
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.delete_column')));
   };
 

@@ -56,7 +56,7 @@ const BoardColumn = ({
     })
       .unwrap()
       .then(updateBoard)
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.add_task')));
   };
   return (

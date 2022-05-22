@@ -49,7 +49,7 @@ const Board = () => {
       .then((data) => {
         dispatch(setBoard(data));
       })
-      .catch((e) => console.log(e));
+      .catch((e) => e);
   };
 
   useEffect(() => {
@@ -91,7 +91,7 @@ const Board = () => {
     addColumn(newColumn)
       .unwrap()
       .then(updateBoard)
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.add_column')));
   };
 
@@ -110,7 +110,7 @@ const Board = () => {
     });
     setTasks(updatedTasks)
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
   };
 
   const onDragColumns = (sourceIndex: number, destinationIndex: number) => {
@@ -130,7 +130,7 @@ const Board = () => {
         columnId: column._id,
       })
         .unwrap()
-        .catch((e) => console.log(e))
+        .catch((e) => e)
     );
   };
 

@@ -37,7 +37,7 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
     };
     await updateUser(body)
       .unwrap()
-      .catch((e) => console.log(e));
+      .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.update_user')));
     formik.resetForm();
   };
