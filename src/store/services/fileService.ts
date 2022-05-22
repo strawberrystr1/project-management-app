@@ -1,5 +1,4 @@
 import { IFile } from '../../interfaces/apiInterfaces';
-import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
@@ -7,9 +6,6 @@ const getApi = api.injectEndpoints({
     getFiles: build.query<IFile[], string>({
       query: (taskId) => ({
         url: `file/${taskId}`,
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
       providesTags: (result) =>
         result
@@ -25,7 +21,6 @@ const getApi = api.injectEndpoints({
         method: 'POST',
         headers: {
           Accept: 'multipart/form-data',
-          Authorization: `Bearer ${readToken()}`,
         },
         body: body,
       }),
@@ -35,9 +30,6 @@ const getApi = api.injectEndpoints({
       query: (fileId: string) => ({
         url: `file/${fileId}`,
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
       invalidatesTags: [{ type: 'Files', id: 'LIST' }],
     }),
