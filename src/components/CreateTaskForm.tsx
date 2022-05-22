@@ -2,7 +2,9 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTypedDispatch } from '../hooks/redux';
 import { CreateTask, IInitialFormValues } from '../interfaces/formInterfaces';
+import { openErrorSnack } from '../store/reducers/snackSlice';
 import { taskFields } from '../utils/constants/formFields';
 import DialogControls from './layouts/DialogControls';
 import UserPicker from './UserPicker';
@@ -13,6 +15,7 @@ type Props = {
 };
 
 const CreateTaskForm = ({ handleClose, addTask }: Props) => {
+  const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const initialValues = taskFields.reduce<IInitialFormValues>((acc, item) => {
     acc[item] = '';
@@ -25,8 +28,12 @@ const CreateTaskForm = ({ handleClose, addTask }: Props) => {
   const formik = useFormik({
     initialValues,
     onSubmit: ({ taskTitle, taskDescription }) => {
-      addTask({ title: taskTitle, description: taskDescription, users });
-      handleClose();
+      if (taskTitle.trim() || taskDescription.trim())
+        dispatch(openErrorSnack(t('snack_message.task.required_fields')));
+      else {
+        addTask({ title: taskTitle, description: taskDescription, users });
+        handleClose();
+      }
     },
   });
 
