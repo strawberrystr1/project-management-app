@@ -1,7 +1,7 @@
 import { Add } from '@mui/icons-material';
 import { Box, Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BoardColumn from '../../components/BoardColumn';
 import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
@@ -27,7 +27,7 @@ import { openSuccessSnack } from '../../store/reducers/snackSlice';
 const Board = () => {
   const { boardId = '' } = useParams();
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
-  const [getBoard, { isLoading: loadingBoards }] = useGetBoardMutation();
+  const [getBoard, { isLoading: loadingBoards, isError: isBoardError }] = useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
@@ -37,6 +37,7 @@ const Board = () => {
   const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [updateColumnsApi] = useUpdateColumnMutation();
   const [setTasks] = useSetTasksMutation();
+  const navigate = useNavigate();
 
   const [isTaskOpen, setIsTaskOpen] = useState(false);
   const [popupTaskData, setPopupTaskData] = useState<IFullTask>();
@@ -51,7 +52,14 @@ const Board = () => {
       .catch((e) => console.log(e));
   };
 
+  useEffect(() => {
+    if (isBoardError) {
+      navigate('*');
+    }
+  }, [isBoardError, navigate]);
+
   useEffect(updateBoard, [boardId]);
+
   useEffect(() => {
     return () => {
       dispatch(resetBoard());
@@ -68,6 +76,7 @@ const Board = () => {
       }
     }
   }, [board]);
+
   const toggleTaskOpen = () => {
     setIsTaskOpen((prev) => !prev);
   };
