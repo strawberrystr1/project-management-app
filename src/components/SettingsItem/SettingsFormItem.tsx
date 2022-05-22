@@ -1,8 +1,6 @@
 import { Box, Typography, Divider, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import styles from './style.module.scss';
-import { useFormik } from 'formik';
-import validationSchema from '../../utils/helpers/validationSchema';
 import { useUpdateUserMutation } from '../../store/services/userService';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IUserResponse } from '../../interfaces/apiInterfaces';
@@ -25,6 +23,8 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
   const { t } = useTranslation();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const dispatch = useTypedDispatch();
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = async () => {
@@ -46,9 +46,9 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
       setError(false);
       setErrorMessage('');
       await updateUser(body)
-      .unwrap()
-      .catch((e) => e);
-    dispatch(openSuccessSnack(t('snack_message.update_user')));
+        .unwrap()
+        .catch((e) => e);
+      dispatch(openSuccessSnack(t('snack_message.update_user')));
     }
   };
 
