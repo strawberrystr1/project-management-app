@@ -111,5 +111,18 @@
     "delete": "Delete task",
     "asigned": "No asigned users",
     "color": "You can choose a cover for this task:"
+  },
+  "snack_message": {
+    "delete_user": "Successfully deleted",
+    "update_user": "Successfully updated",
+    "add_task": "Task added",
+    "delete_task": "Task deleted",
+    "update_task": "Task updated",
+    "add_column": "Column added",
+    "delete_column": "Column deleted",
+    "update_column": "Column updated",
+    "create_board": "Board created",
+    "delete_board": "Board deleted",
+    "update_board": "Board updated"
   }
 }

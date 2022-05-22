@@ -1,7 +1,7 @@
 import { Add } from '@mui/icons-material';
 import { Box, Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BoardColumn from '../../components/BoardColumn';
 import CreateColumnForm from '../../components/CreateColumnForm';
 import DialogButton from '../../components/layouts/DialogButton';
@@ -22,21 +22,22 @@ import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
 import TaskPopup from '../../components/TaskPopup';
 import { IFullTask } from '../../interfaces/apiInterfaces';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 const Board = () => {
   const { boardId = '' } = useParams();
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
-  const [getBoard, { isLoading: loadingBoards }] = useGetBoardMutation();
+  const [getBoard, { isLoading: loadingBoards, isError: isBoardError }] = useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
   const activateEdit = (id: string) => setEditId(id);
   const disactivateEdit = () => setEditId('');
-
   const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [updateColumnsApi] = useUpdateColumnMutation();
   const [setTasks] = useSetTasksMutation();
+  const navigate = useNavigate();
 
   const [isTaskOpen, setIsTaskOpen] = useState(false);
   const [popupTaskData, setPopupTaskData] = useState<IFullTask>();
@@ -47,10 +48,18 @@ const Board = () => {
       .unwrap()
       .then((data) => {
         dispatch(setBoard(data));
-      });
+      })
+      .catch((e) => e);
   };
 
+  useEffect(() => {
+    if (isBoardError) {
+      navigate('*');
+    }
+  }, [isBoardError, navigate]);
+
   useEffect(updateBoard, [boardId]);
+
   useEffect(() => {
     return () => {
       dispatch(resetBoard());
@@ -67,6 +76,7 @@ const Board = () => {
       }
     }
   }, [board]);
+
   const toggleTaskOpen = () => {
     setIsTaskOpen((prev) => !prev);
   };
@@ -78,7 +88,11 @@ const Board = () => {
 
   const addColumnCallback = (title: string) => {
     const newColumn = { order: getNewOrder(board.columns), boardId, title };
-    addColumn(newColumn).unwrap().then(updateBoard);
+    addColumn(newColumn)
+      .unwrap()
+      .then(updateBoard)
+      .catch((e) => e);
+    dispatch(openSuccessSnack(t('snack_message.add_column')));
   };
 
   const setUpdatedTasksToApi = (tasks: IFullTask[]) => {
@@ -94,7 +108,9 @@ const Board = () => {
         users: task.users,
       };
     });
-    setTasks(updatedTasks);
+    setTasks(updatedTasks)
+      .unwrap()
+      .catch((e) => e);
   };
 
   const onDragColumns = (sourceIndex: number, destinationIndex: number) => {
@@ -113,6 +129,8 @@ const Board = () => {
         },
         columnId: column._id,
       })
+        .unwrap()
+        .catch((e) => e)
     );
   };
 

@@ -9,8 +9,7 @@ import {
   Divider,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useTypedSelector } from '../../../hooks/redux';
-import { useGetUserMutation, useGetUsersQuery } from '../../../store/services/userService';
+import { useGetUsersQuery } from '../../../store/services/userService';
 import { UserAvatar } from './UserAvatar';
 import styles from '../style.module.scss';
 import { useTranslation } from 'react-i18next';

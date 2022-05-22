@@ -31,6 +31,7 @@ const UserPicker = ({ users, setUsers }: Props) => {
   const handleChange = ({ target: { value } }: SelectChangeEvent<typeof users>) => {
     setUsers(typeof value === 'string' ? value.split(',') : value);
   };
+
   return (
     <Box mt={1} mb={1}>
       <FormControl sx={{ mt: 1, mb: 1, width: '100%' }}>

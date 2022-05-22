@@ -16,9 +16,10 @@ import { readToken } from './utils/functions';
 
 function App() {
   const dispatch = useTypedDispatch();
-  const [getUser, { data }] = useGetUserMutation();
+  const [getUser] = useGetUserMutation();
   const [load, setLoad] = useState(true);
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
+
   const checkToken = async () => {
     try {
       const token = readToken();
@@ -28,7 +29,6 @@ function App() {
         dispatch(setToken({ id: res._id, isLogged: true }));
       }
     } catch (error) {
-      console.log(error);
     } finally {
       setLoad(false);
     }

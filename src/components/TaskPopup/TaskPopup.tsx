@@ -19,6 +19,7 @@ import { editTask, removeTask } from '../../store/reducers/boardSlice';
 import UserPicker from '../UserPicker';
 import { ColorPicker } from './components/ColorPicker';
 import { useEffect, useState } from 'react';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 
 interface Props {
   open: boolean;
@@ -50,7 +51,10 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   };
 
   const deleteTaskHandler = () => {
-    deleteTask(taskData);
+    deleteTask(taskData)
+      .unwrap()
+      .catch((e) => e);
+    dispatch(openSuccessSnack(t('snack_message.delete_task')));
     handleClose();
     dispatch(removeTask([task.columnId, task._id]));
   };
@@ -68,8 +72,11 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
         ...newData,
       },
     };
-    updateTask(body);
+    updateTask(body)
+      .unwrap()
+      .catch((e) => e);
     dispatch(editTask({ ...taskData, body: { ...task, ...newData } }));
+    dispatch(openSuccessSnack(t('snack_message.update_task')));
   };
 
   const changeUsers = (users: string[]) => {

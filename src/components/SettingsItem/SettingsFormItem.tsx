@@ -9,6 +9,8 @@ import { IUserResponse } from '../../interfaces/apiInterfaces';
 import DialogButton from '../layouts/DialogButton';
 import DialogControls from '../layouts/DialogControls';
 import { readToken } from '../../utils/functions';
+import { useTypedDispatch } from '../../hooks/redux';
+import { openSuccessSnack } from '../../store/reducers/snackSlice';
 import { useState } from 'react';
 import { validate } from '../../utils/helpers/validatePassword';
 
@@ -22,9 +24,8 @@ interface IProps {
 const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) => {
   const { t } = useTranslation();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
+  const dispatch = useTypedDispatch();
   const [inputValue, setInputValue] = useState('');
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
     const token = readToken();
@@ -44,7 +45,10 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) =
     } else {
       setError(false);
       setErrorMessage('');
-      await updateUser(body).unwrap();
+      await updateUser(body)
+      .unwrap()
+      .catch((e) => e);
+    dispatch(openSuccessSnack(t('snack_message.update_user')));
     }
   };
 
