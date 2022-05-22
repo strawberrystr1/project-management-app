@@ -13,6 +13,8 @@ import { useTypedDispatch, useTypedSelector } from '../../../hooks/redux';
 import styles from '../style.module.scss';
 import { openSuccessSnack } from '../../../store/reducers/snackSlice';
 import { useTranslation } from 'react-i18next';
+import DialogButton from '../../layouts/DialogButton';
+import DialogControls from '../../layouts/DialogControls';
 
 type Props = { taskId: string };
 
@@ -63,9 +65,17 @@ const ImageList = ({ taskId }: Props) => {
                 onClick={() => handleOpenImage(path)}
               />
               <ListItemText primary={name} sx={{ wordBreak: 'break-word', cursor: 'default' }} />
-              <IconButton onClick={() => deleteImage(_id)}>
-                <DeleteIcon color="warning" />
-              </IconButton>
+              <DialogButton
+                type="delete_file"
+                btn={(handleOpenDialog) => (
+                  <IconButton onClick={handleOpenDialog}>
+                    <DeleteIcon color="warning" />
+                  </IconButton>
+                )}
+                form={(handleCloseDialog) => (
+                  <DialogControls onCancel={handleCloseDialog} onConfirm={() => deleteImage(_id)} />
+                )}
+              />
             </Stack>
           </ListItem>
         ))}

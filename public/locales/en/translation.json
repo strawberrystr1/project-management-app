@@ -66,6 +66,10 @@
     },
     "delete_task": {
       "title": "Are you sure you want to delete task ?"
+    },
+    "delete_file": {
+      "title": "Delete file",
+      "description": "Are you sure you want to remove file ?"
     }
   },
   "buttons": {
