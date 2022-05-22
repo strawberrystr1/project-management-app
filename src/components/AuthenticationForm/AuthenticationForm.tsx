@@ -50,7 +50,9 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
         });
       dispatch(openSuccessSnack(t('forms.auth.success')));
       setTimeout(() => navigate('/boards'), 1000);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const formik = useFormik({
