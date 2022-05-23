@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogContent, Divider, Input, Stack } from '@mui/material';
+import { Button, Dialog, DialogContent, Divider, Stack } from '@mui/material';
 import TaskDescription from './components/TaskDescription';
 import TaskHeader from './components/TaskHeader';
 import CloseIcon from '@mui/icons-material/Close';
@@ -11,12 +11,13 @@ import DialogControls from '../layouts/DialogControls';
 import ImageUpload from './components/ImageUpload';
 import ImageList from './components/ImageList';
 import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../store/services/tasksService';
-import { useTypedDispatch } from '../../hooks/redux';
+import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import { editTask, removeTask } from '../../store/reducers/boardSlice';
 import UserPicker from '../UserPicker';
 import { ColorPicker } from './components/ColorPicker';
 import { useEffect, useState } from 'react';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
+import { addThemeScroll } from '../../utils/functions';
 
 interface Props {
   open: boolean;
@@ -80,10 +81,12 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
     handleUpdateTask({ users });
   };
 
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+
   return (
     <Dialog open={open} maxWidth="md" fullWidth={true} onClose={handleClose}>
       {color && <DialogContent sx={{ background: color }} />}
-      <DialogContent className={styles.dialog}>
+      <DialogContent className={addThemeScroll(isDarkTheme, [styles['dialog']])}>
         <TaskHeader
           userId={task.userId}
           title={task.title}

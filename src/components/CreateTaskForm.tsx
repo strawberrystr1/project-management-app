@@ -28,10 +28,11 @@ const CreateTaskForm = ({ handleClose, addTask }: Props) => {
   const formik = useFormik({
     initialValues,
     onSubmit: ({ taskTitle, taskDescription }) => {
-      if (taskTitle.trim() || taskDescription.trim())
-        dispatch(openErrorSnack(t('snack_message.task.required_fields')));
+      const title = taskTitle.trim();
+      const description = taskDescription.trim();
+      if (!title || !description) dispatch(openErrorSnack(t('snack_message.task.required_fields')));
       else {
-        addTask({ title: taskTitle, description: taskDescription, users });
+        addTask({ title, description, users });
         handleClose();
       }
     },

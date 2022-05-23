@@ -125,7 +125,6 @@
     "update_task": "Task updated",
     "add_column": "Column added",
     "delete_column": "Column removed",
-    "update_column": "Column updated",
     "create_board": "Board created",
     "delete_board": "Board removed",
     "update_board": "Board updated",
@@ -134,7 +133,14 @@
       "delete_file": "File removed"
     },
     "task": {
-      "required_fields": "Title and description are obligatory to fill in!"
+      "required_fields": "Task's title and description are obligatory to fill in !"
+    },
+    "column": {
+      "required_fields": "Column title is obligatory to fill in !",
+      "update": {
+        "success": "Column title successfully updated",
+        "validation_error": "Сolumn name cannot be empty !"
+      }
     }
   }
 }
