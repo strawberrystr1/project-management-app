@@ -45,6 +45,7 @@ const BoardColumn = ({
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
+  const { taskSearch } = useTypedSelector((state) => state.board);
 
   const addTaskCallback = (props: CreateTask) => {
     addTask({
@@ -59,6 +60,11 @@ const BoardColumn = ({
       .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.add_task')));
   };
+
+  const filteredSortedTasks = () => {
+    return sortedTasks.filter((task) => task.title.includes(taskSearch.trim()));
+  };
+
   return (
     <Draggable draggableId={_id} index={index}>
       {(provider) => (
@@ -95,7 +101,7 @@ const BoardColumn = ({
               <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (
                   <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
-                    {sortedTasks.map((task, index) => (
+                    {filteredSortedTasks().map((task, index) => (
                       <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
                         <TaskColumn
                           _id={task._id}

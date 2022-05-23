@@ -1,5 +1,5 @@
 import { Add } from '@mui/icons-material';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, Input, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import BoardColumn from '../../components/BoardColumn';
@@ -17,6 +17,7 @@ import {
   updateColumns,
   updateColumnTasks,
   resetBoard,
+  setTaskSearch,
 } from '../../store/reducers/boardSlice';
 import Loader from '../../components/Loader';
 import { useSetTasksMutation } from '../../store/services/tasksService';
@@ -28,7 +29,7 @@ const Board = () => {
   const { boardId = '' } = useParams();
   const { isDarkTheme } = useTypedSelector((state) => state.settings);
   const [getBoard, { isLoading: loadingBoards, isError: isBoardError }] = useGetBoardMutation();
-  const { board } = useTypedSelector((state) => state.board);
+  const { board, taskSearch } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
@@ -219,6 +220,15 @@ const Board = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <Input
+        placeholder="input"
+        value={taskSearch}
+        onChange={(e) => {
+          const value = e.target.value;
+          console.log('value', value);
+          dispatch(setTaskSearch(value));
+        }}
+      />
       <Droppable direction="horizontal" droppableId="list" type="list">
         {(provider) => (
           <Box

@@ -9,6 +9,7 @@ import {
 
 type BoardState = {
   board: IBoard;
+  taskSearch: string;
 };
 
 const initialState: BoardState = {
@@ -19,6 +20,9 @@ const initialState: BoardState = {
     _id: '',
     columns: [],
   },
+  taskSearch: '',
+  // pointsSearch(color),
+  // owner,
 };
 
 export const boardSlice = createSlice({
@@ -81,6 +85,9 @@ export const boardSlice = createSlice({
       );
       state.board.columns[columnIndex].tasks[indexTask] = action.payload.body;
     },
+    setTaskSearch: (state, action: PayloadAction<string>) => {
+      state.taskSearch = action.payload;
+    },
   },
 });
 
@@ -93,6 +100,7 @@ export const {
   resetBoard,
   removeTask,
   editTask,
+  setTaskSearch,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

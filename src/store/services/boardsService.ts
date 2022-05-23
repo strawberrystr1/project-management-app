@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { IBoard, ICreateBoard } from '../../interfaces/apiInterfaces';
 import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
@@ -15,9 +14,9 @@ const getApi = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ _id }) => ({ type: 'boards' as const, id: _id })),
-            { type: 'boards', id: 'LIST' },
-          ]
+              ...result.map(({ _id }) => ({ type: 'boards' as const, id: _id })),
+              { type: 'boards', id: 'LIST' },
+            ]
           : [{ type: 'boards', id: 'LIST' }],
     }),
     createBoard: build.mutation<IBoard, ICreateBoard>({
