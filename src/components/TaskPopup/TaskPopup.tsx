@@ -20,6 +20,7 @@ import UserPicker from '../UserPicker';
 import { ColorPicker } from './components/ColorPicker';
 import { useEffect, useState } from 'react';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
+import { addThemeScroll } from '../../utils/functions';
 
 interface Props {
   open: boolean;
@@ -30,6 +31,7 @@ interface Props {
 
 const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const { t } = useTranslation();
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
   const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const dispatch = useTypedDispatch();
   const [updateTask] = useUpdateTaskMutation();
@@ -86,7 +88,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   return (
     <Dialog open={open} maxWidth="md" fullWidth={true} onClose={handleClose}>
       {color && <DialogContent sx={{ background: color }} />}
-      <DialogContent className={styles.dialog}>
+      <DialogContent className={addThemeScroll(isDarkTheme, ['styles.dialog'])}>
         <TaskHeader
           userId={task.userId}
           title={task.title}
