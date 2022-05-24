@@ -1,14 +1,9 @@
-import { Button, Dialog, DialogContent, Divider, Input } from '@mui/material';
+import { Button, Dialog, DialogContent, Divider } from '@mui/material';
 import TaskDescription from './components/TaskDescription';
 import TaskHeader from './components/TaskHeader';
 import CloseIcon from '@mui/icons-material/Close';
 import styles from './style.module.scss';
-import {
-  IColumn,
-  IFullTask,
-  IUpdateTask,
-  IUpdateTaskFromPopup,
-} from '../../interfaces/apiInterfaces';
+import { IFullTask, IUpdateTask, IUpdateTaskFromPopup } from '../../interfaces/apiInterfaces';
 import DialogButton from '../layouts/DialogButton';
 import { LoadingButton } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
