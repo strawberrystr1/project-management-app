@@ -1,6 +1,8 @@
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useTypedDispatch } from '../hooks/redux';
+import { openErrorSnack } from '../store/reducers/snackSlice';
 import DialogControls from './layouts/DialogControls';
 
 type Props = {
@@ -9,14 +11,19 @@ type Props = {
 };
 
 const CreateColumnForm = ({ handleClose, addColumn }: Props) => {
+  const dispatch = useTypedDispatch();
   const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
       columnName: '',
     },
     onSubmit: ({ columnName }) => {
-      addColumn(columnName);
-      handleClose();
+      const title = columnName.trim();
+      if (!title) dispatch(openErrorSnack(t('snack_message.column.required_fields')));
+      else {
+        addColumn(title);
+        handleClose();
+      }
     },
   });
 

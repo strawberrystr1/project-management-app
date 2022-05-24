@@ -66,6 +66,10 @@
     },
     "delete_task": {
       "title": "Are you sure you want to delete task ?"
+    },
+    "delete_file": {
+      "title": "Delete file",
+      "description": "Are you sure you want to remove file ?"
     }
   },
   "buttons": {
@@ -110,19 +114,33 @@
     "desc": "Description:",
     "delete": "Delete task",
     "asigned": "No asigned users",
-    "color": "You can choose a cover for this task:"
+    "color": "You can choose a cover for this task:",
+    "upload": "Upload image"
   },
   "snack_message": {
-    "delete_user": "Successfully deleted",
+    "delete_user": "Successfully removed",
     "update_user": "Successfully updated",
     "add_task": "Task added",
-    "delete_task": "Task deleted",
+    "delete_task": "Task removed",
     "update_task": "Task updated",
     "add_column": "Column added",
-    "delete_column": "Column deleted",
-    "update_column": "Column updated",
+    "delete_column": "Column removed",
     "create_board": "Board created",
-    "delete_board": "Board deleted",
-    "update_board": "Board updated"
+    "delete_board": "Board removed",
+    "update_board": "Board updated",
+    "file": {
+      "create_file": "File uploaded",
+      "delete_file": "File removed"
+    },
+    "task": {
+      "required_fields": "Task's title and description are obligatory to fill in !"
+    },
+    "column": {
+      "required_fields": "Column title is obligatory to fill in !",
+      "update": {
+        "success": "Column title successfully updated",
+        "validation_error": "Сolumn name cannot be empty !"
+      }
+    }
   }
 }
