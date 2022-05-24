@@ -45,7 +45,7 @@ const BoardColumn = ({
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
-  const { taskSearch } = useTypedSelector((state) => state.board);
+  const { taskSearch, usersSearch } = useTypedSelector((state) => state.board);
 
   const addTaskCallback = (props: CreateTask) => {
     addTask({
@@ -62,7 +62,15 @@ const BoardColumn = ({
   };
 
   const filteredSortedTasks = () => {
-    return sortedTasks.filter((task) => task.title.includes(taskSearch.trim()));
+    return sortedTasks
+      .filter((task) => task.title.split(' <!> ')[0].includes(taskSearch.trim()))
+      .filter((task) => {
+        if (usersSearch.length === 0) return true;
+        const a = task.users.filter((item) => {
+          return usersSearch.includes(item);
+        });
+        return a.length > 0;
+      });
   };
 
   return (

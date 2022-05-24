@@ -101,7 +101,8 @@
   },
   "boards": {
     "boardDescriptionNoColumns": "Еще нет колонок",
-    "boardDescription": "Колонок - {{count}}"
+    "boardDescription": "Колонок - {{count}}",
+    "search_board": "Найти доску"
   },
   "task_popup": {
     "column": "в колонке",

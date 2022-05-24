@@ -101,7 +101,8 @@
   },
   "boards": {
     "boardDescriptionNoColumns": "No columns yet",
-    "boardDescription": "Columns - {{count}}"
+    "boardDescription": "Columns - {{count}}",
+    "search_board": "Search board"
   },
   "task_popup": {
     "column": "in the column",
