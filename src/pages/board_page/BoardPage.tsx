@@ -97,7 +97,7 @@ const Board = () => {
             {...provider.droppableProps}
             ref={provider.innerRef}
           >
-            <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
+            <Stack direction={'row'} spacing={1} className={styles['board']} mb={2}>
               {loadingBoards || isLoadingColumn ? (
                 <Loader />
               ) : (

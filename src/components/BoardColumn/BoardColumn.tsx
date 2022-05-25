@@ -45,7 +45,7 @@ const BoardColumn = ({
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
-  const { taskSearch, usersSearch } = useTypedSelector((state) => state.board);
+  const { taskSearch, usersSearch, colorSearch } = useTypedSelector((state) => state.board);
 
   const addTaskCallback = (props: CreateTask) => {
     addTask({
@@ -70,6 +70,14 @@ const BoardColumn = ({
           return usersSearch.includes(item);
         });
         return a.length > 0;
+      })
+      .filter((task) => {
+        const color = task.title.split(' <!> ')[1];
+        const isColorExists = !!color;
+        if (isColorExists) {
+          return color.includes(colorSearch);
+        }
+        return true;
       });
   };
 

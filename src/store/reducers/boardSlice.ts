@@ -11,6 +11,7 @@ type BoardState = {
   board: IBoard;
   taskSearch: string;
   usersSearch: string[];
+  colorSearch: string;
 };
 
 const initialState: BoardState = {
@@ -23,8 +24,7 @@ const initialState: BoardState = {
   },
   taskSearch: '',
   usersSearch: [],
-  // pointsSearch(color),
-  // owner,
+  colorSearch: '',
 };
 
 export const boardSlice = createSlice({
@@ -93,6 +93,9 @@ export const boardSlice = createSlice({
     setUsersSearch: (state, action: PayloadAction<string[]>) => {
       state.usersSearch = action.payload;
     },
+    setColorSearch: (state, action: PayloadAction<string>) => {
+      state.colorSearch = action.payload;
+    },
   },
 });
 
@@ -107,6 +110,7 @@ export const {
   editTask,
   setTaskSearch,
   setUsersSearch,
+  setColorSearch,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

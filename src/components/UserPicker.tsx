@@ -23,19 +23,22 @@ const MenuProps = {
 type Props = {
   users: string[];
   setUsers: (pickedUsers: string[]) => void;
+  message?: string;
 };
 
-const UserPicker = ({ users, setUsers }: Props) => {
+const UserPicker = ({ users, setUsers, message }: Props) => {
   const { t } = useTranslation();
   const { data = [], isLoading } = useGetUsersQuery();
   const handleChange = ({ target: { value } }: SelectChangeEvent<typeof users>) => {
     setUsers(typeof value === 'string' ? value.split(',') : value);
   };
 
+  const labelMessage = message ? message : t('forms.new_task.users');
+
   return (
     <Box mt={1} mb={1}>
       <FormControl sx={{ mt: 1, mb: 1, width: '100%' }}>
-        <InputLabel htmlFor="users-picker-label">{t('forms.new_task.users')}</InputLabel>
+        <InputLabel htmlFor="users-picker-label">{labelMessage}</InputLabel>
         <Select
           labelId="users-picker-label"
           id="users-picker"
