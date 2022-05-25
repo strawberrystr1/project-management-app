@@ -1,4 +1,4 @@
-import { Container, Stack, Typography } from '@mui/material';
+import { Container, Link, Stack, Typography } from '@mui/material';
 import teamInfo from '../../../utils/constants/teamInfo';
 import styles from './style.module.scss';
 import github from '../../../assets/icons/github.png';
@@ -9,8 +9,8 @@ const Footer = () => {
     <Container
       maxWidth={false}
       component="footer"
-      className={styles.footerWrapper}
-      sx={{ backgroundColor: 'primary.main' }}
+      className="footer-container"
+      sx={{ padding: '5px 0' }}
     >
       <Container maxWidth="xl">
         <Stack
@@ -38,11 +38,7 @@ const Footer = () => {
                 rel="noreferrer"
               >
                 <img src={github} alt="github logo" className={styles.git_logo} />
-                <Typography
-                  color="white"
-                  fontSize={{ xs: 16, md: 18 }}
-                  lineHeight={{ xs: 1.2, md: 1.5 }}
-                >
+                <Typography fontSize={{ xs: 16, md: 18 }} lineHeight={{ xs: 1.2, md: 1.5 }}>
                   {item.name}
                 </Typography>
               </a>
@@ -52,7 +48,7 @@ const Footer = () => {
             fontSize={{ xs: 20, md: 30 }}
             display={{ xs: 'none', sm: 'block' }}
             fontWeight={600}
-            color="white"
+            color="inherit"
           >
             2022
           </Typography>

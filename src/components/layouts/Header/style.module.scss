@@ -1,39 +1,10 @@
 .headerWrapper {
   height: 80px;
-  background-color: rgb(65, 1, 44);
-}
-
-.color{
-  background-color: #486c29 !important;
 }
 
 .small{
   @media (min-width: 600px) {
     min-height: 48px !important;
-  }
-}
-
-.btnStyle{
-  color: white !important;
-
-  &:hover {
-    color: #c2c2c2 !important;
-  }
-}
-
-.btnStyleLocation{
-  color: rgb(197, 197, 197) !important;
-
-  &:hover {
-    color: #c2c2c2 !important;
-  }
-}
-
-.btnStyleLight{
-  color: black !important;
-
-  &:hover {
-    color: #c2c2c2 !important;
   }
 }
 
