@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogContent, Divider } from '@mui/material';
+import { Button, Dialog, DialogContent, Divider, Stack } from '@mui/material';
 import TaskDescription from './components/TaskDescription';
 import TaskHeader from './components/TaskHeader';
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,6 +8,8 @@ import DialogButton from '../layouts/DialogButton';
 import { LoadingButton } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
 import DialogControls from '../layouts/DialogControls';
+import ImageUpload from './components/ImageUpload';
+import ImageList from './components/ImageList';
 import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../store/services/tasksService';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import { editTask, removeTask } from '../../store/reducers/boardSlice';
@@ -80,10 +82,12 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
     handleUpdateTask({ users });
   };
 
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+
   return (
     <Dialog open={open} maxWidth="md" fullWidth={true} onClose={handleClose}>
       {color && <DialogContent sx={{ background: color }} />}
-      <DialogContent className={addThemeScroll(isDarkTheme, ['styles.dialog'])}>
+      <DialogContent className={addThemeScroll(isDarkTheme, [styles['dialog']])}>
         <TaskHeader
           userId={task.userId}
           title={task.title}
@@ -101,6 +105,16 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
         />
         <Divider />
         <ColorPicker handleUpdate={handleUpdateTask} title={task.title} />
+        <Stack
+          direction={{ xs: 'column', lg: 'row' }}
+          m={1}
+          p={1}
+          divider={<Divider orientation="vertical" variant="middle" flexItem />}
+          sx={{ border: '2px dashed #868d92' }}
+        >
+          <ImageList taskId={task._id} />
+          <ImageUpload taskId={task._id} boardId={task.boardId}></ImageUpload>
+        </Stack>
         <DialogButton
           type="delete_task"
           message=" "

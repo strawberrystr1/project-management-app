@@ -5,7 +5,6 @@ import {
   User,
 } from '../../interfaces/apiInterfaces';
 import { IInitialFormValues } from '../../interfaces/formInterfaces';
-import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
@@ -13,9 +12,6 @@ const getApi = api.injectEndpoints({
     getUser: build.mutation<IUserResponse, string>({
       query: (id) => ({
         url: `users/${id}`,
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
     }),
     createUser: build.mutation({
@@ -37,26 +33,17 @@ const getApi = api.injectEndpoints({
         url: `users/${body.id}`,
         method: 'PUT',
         body: body.body,
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
     }),
     deleteUser: build.mutation<unknown, IRequestBasic>({
       query: (body) => ({
         url: `users/${body.id}`,
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
     }),
     getUsers: build.query<User[], void>({
       query: () => ({
         url: 'users',
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
     }),
   }),
