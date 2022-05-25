@@ -88,11 +88,6 @@ const Board = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {/*
-          direction={{ xs: 'column', sm: 'row' }}
-          spacing={{ xs: 1, md: 2 }}
-          sx={{ display: { xs: 'none', md: 'flex' }, columnGap: '10px' }}
-      */}
       <Stack
         sx={{ display: { xs: 'none', md: 'flex' } }}
         minHeight={95}
