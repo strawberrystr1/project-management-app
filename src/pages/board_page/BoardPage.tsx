@@ -88,7 +88,21 @@ const Board = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <FilterBar />
+      {/*
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={{ xs: 1, md: 2 }}
+          sx={{ display: { xs: 'none', md: 'flex' }, columnGap: '10px' }}
+      */}
+      <Stack
+        sx={{ display: { xs: 'none', md: 'flex' } }}
+        minHeight={95}
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
+        gap={2}
+      >
+        <FilterBar />
+      </Stack>
 
       <Droppable direction="horizontal" droppableId="list" type="list">
         {(provider) => (

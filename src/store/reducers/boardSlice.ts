@@ -96,6 +96,11 @@ export const boardSlice = createSlice({
     setColorSearch: (state, action: PayloadAction<string>) => {
       state.colorSearch = action.payload;
     },
+    clearFilters: (state) => {
+      state.taskSearch = '';
+      state.usersSearch = [];
+      state.colorSearch = '';
+    },
   },
 });
 
@@ -111,6 +116,7 @@ export const {
   setTaskSearch,
   setUsersSearch,
   setColorSearch,
+  clearFilters,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

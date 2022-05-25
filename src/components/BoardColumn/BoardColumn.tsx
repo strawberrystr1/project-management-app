@@ -72,12 +72,13 @@ const BoardColumn = ({
         return a.length > 0;
       })
       .filter((task) => {
-        const color = task.title.split(' <!> ')[1];
-        const isColorExists = !!color;
-        if (isColorExists) {
-          return color.includes(colorSearch);
+        const splitedTitle = task.title.split(' <!> ');
+        if (colorSearch) {
+          const color = splitedTitle[1];
+          return splitedTitle.length > 1 && color.includes(colorSearch);
+        } else {
+          return true;
         }
-        return true;
       });
   };
 

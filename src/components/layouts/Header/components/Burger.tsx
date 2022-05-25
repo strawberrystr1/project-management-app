@@ -1,10 +1,11 @@
-import { Divider, Drawer, IconButton, List, ListItem, Typography } from '@mui/material';
+import { Divider, Drawer, IconButton, List, ListItem, Stack, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from 'react';
 import { Box } from '@mui/system';
 import ThemeSwitcher from './ThemeSwitcher';
 import LanguageSwitch from './LanguageSwitch';
 import { useTranslation } from 'react-i18next';
+import FilterBar from '../../../BoardFilterBar/FilterBar';
 
 const Burger = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
@@ -22,9 +23,19 @@ const Burger = () => {
   };
 
   const list = () => (
-    <Box onKeyDown={toggleDrawer(false)}>
+    <Box>
       <Typography sx={{ textAlign: 'center', mt: '20px' }}>{t(`header.burgerMenu`)}</Typography>
       <List>
+        <ListItem>
+          <Stack
+            sx={{ display: { xs: 'flex', md: 'none' } }}
+            minHeight={95}
+            direction="column"
+            justifyContent="flex-start"
+          >
+            <FilterBar />
+          </Stack>
+        </ListItem>
         <ListItem>
           <LanguageSwitch />
         </ListItem>
