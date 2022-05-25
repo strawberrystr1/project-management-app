@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
-import { IColumn, IFullTask, ITask } from '../../interfaces/apiInterfaces';
+import { IColumn, IFullTask } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation } from '../../store/services/tasksService';

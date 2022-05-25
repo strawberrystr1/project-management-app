@@ -28,6 +28,7 @@ interface Props {
 
 const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const { t } = useTranslation();
+  const { isDarkTheme } = useTypedSelector((state) => state.settings);
   const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const dispatch = useTypedDispatch();
   const [updateTask] = useUpdateTaskMutation();
