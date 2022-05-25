@@ -82,8 +82,6 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
     handleUpdateTask({ users });
   };
 
-  const { isDarkTheme } = useTypedSelector((state) => state.settings);
-
   return (
     <Dialog open={open} maxWidth="md" fullWidth={true} onClose={handleClose}>
       {color && <DialogContent sx={{ background: color }} />}
