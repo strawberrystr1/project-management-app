@@ -18,8 +18,10 @@ import {
 import UserPicker from '../UserPicker';
 import { colors } from '../../utils/constants/colors';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { useTranslation } from 'react-i18next';
 
 const FilterBar = () => {
+  const { t } = useTranslation();
   const { taskSearch, usersSearch, colorSearch } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
 
@@ -41,6 +43,7 @@ const FilterBar = () => {
     dispatch(clearFilters());
   };
 
+  //  {t(`buttons.${type}`)}
   return (
     <>
       <Box position="relative" sx={{ width: 300, m: 0 }}>
@@ -48,21 +51,25 @@ const FilterBar = () => {
           fullWidth
           value={taskSearch}
           onChange={handleInputChange}
-          label="Filter by title"
+          label={t('forms.filter_board.title')}
           variant="outlined"
         />
       </Box>
       <Box sx={{ width: 300, m: 0 }}>
-        <UserPicker users={usersSearch} setUsers={setUsersCallback} message="Filter by members" />
+        <UserPicker
+          users={usersSearch}
+          setUsers={setUsersCallback}
+          message={t('forms.filter_board.members')}
+        />
       </Box>
 
       <FormControl sx={{ minWidth: 120 }}>
-        <InputLabel id="color-select-helper-label">Color</InputLabel>
+        <InputLabel id="color-select-helper-label">{t('forms.filter_board.color')}</InputLabel>
         <Select
           labelId="color-select-helper-label"
           id="color-select-helper"
           value={colorSearch}
-          label="Color"
+          label={t('forms.filter_board.color')}
           onChange={handleChange}
           renderValue={(_) => (
             <Box
@@ -75,7 +82,7 @@ const FilterBar = () => {
           )}
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>{t('forms.filter_board.color_none')}</em>
           </MenuItem>
           {colors.map((color) => (
             <MenuItem
@@ -97,7 +104,7 @@ const FilterBar = () => {
         endIcon={<HighlightOffIcon />}
         sx={{ mt: { xs: 2, md: 0 } }}
       >
-        Clear
+        {t('forms.filter_board.clear_button')}
       </Button>
     </>
   );

@@ -56,7 +56,7 @@
       "login": "login",
       "change_btn_sup": "Already have an account? Sign in",
       "change_btn_sin": "Back to registration",
-      "success": "You successfully loged in!"
+      "success": "You successfully logged in!"
     },
     "change_password": {
       "title": "Are you sure you want to change password ?"
@@ -66,6 +66,13 @@
     },
     "delete_task": {
       "title": "Are you sure you want to delete task ?"
+    },
+    "filter_board":{
+      "title": "Filter by title",
+      "members": "Filter by members",
+      "color": "Color",
+      "color_none": "None",
+      "clear_button": "Clear"
     }
   },
   "buttons": {
@@ -107,10 +114,10 @@
   "task_popup": {
     "column": "in the column",
     "author": "Task created by:",
-    "users": "Users asigned to this task:",
+    "users": "Users assigned to this task:",
     "desc": "Description:",
     "delete": "Delete task",
-    "asigned": "No asigned users",
+    "asigned": "No assigned users",
     "color": "You can choose a cover for this task:"
   },
   "snack_message": {
