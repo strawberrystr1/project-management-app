@@ -69,7 +69,12 @@ const Home = () => {
                   <a href={member.github}>
                     <img src={githubIcon} alt="link icon" />
                   </a>
-                  <Typography variant="h6" fontSize={34}>
+                  <Typography
+                    variant="h6"
+                    align="center"
+                    fontSize={34}
+                    sx={{ '@media (max-width: 500px)': { fontSize: '26px' } }}
+                  >
                     {member.name}
                   </Typography>
                   <Typography paragraph align="center" fontSize={18}>
