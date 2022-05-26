@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import CreateTaskForm from '../CreateTaskForm';
 import DialogButton from '../layouts/DialogButton';
 import styles from './style.module.scss';
-import { IColumn, IFullTask, ITask } from '../../interfaces/apiInterfaces';
+import { IColumn, IFullTask } from '../../interfaces/apiInterfaces';
 import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation } from '../../store/services/tasksService';
@@ -15,6 +15,7 @@ import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
 import { Draggable, Droppable, DroppableProvided } from '@react-forked/dnd';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
+import { useFilterTasks } from '../../hooks/useFilterTasks';
 interface Props extends IColumn {
   editId: string;
   index: number;
@@ -45,7 +46,6 @@ const BoardColumn = ({
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
-  const { taskSearch, usersSearch, colorSearch } = useTypedSelector((state) => state.board);
 
   const addTaskCallback = (props: CreateTask) => {
     addTask({
@@ -61,26 +61,7 @@ const BoardColumn = ({
     dispatch(openSuccessSnack(t('snack_message.add_task')));
   };
 
-  const filteredSortedTasks = () => {
-    return sortedTasks
-      .filter((task) => task.title.split(' <!> ')[0].includes(taskSearch.trim()))
-      .filter((task) => {
-        if (usersSearch.length === 0) return true;
-        const a = task.users.filter((item) => {
-          return usersSearch.includes(item);
-        });
-        return a.length > 0;
-      })
-      .filter((task) => {
-        const splitedTitle = task.title.split(' <!> ');
-        if (colorSearch) {
-          const color = splitedTitle[1];
-          return splitedTitle.length > 1 && color.includes(colorSearch);
-        } else {
-          return true;
-        }
-      });
-  };
+  const filteredSortedTasks = useFilterTasks(sortedTasks);
 
   return (
     <Draggable draggableId={_id} index={index}>
@@ -118,7 +99,7 @@ const BoardColumn = ({
               <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (
                   <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
-                    {filteredSortedTasks().map((task, index) => (
+                    {filteredSortedTasks.map((task, index) => (
                       <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
                         <TaskColumn
                           _id={task._id}
