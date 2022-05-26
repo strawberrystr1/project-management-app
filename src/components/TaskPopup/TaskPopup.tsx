@@ -18,6 +18,7 @@ import { ColorPicker } from './components/ColorPicker';
 import { useEffect, useState } from 'react';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
 import { addThemeScroll } from '../../utils/functions';
+import ErrorBoundary from '../ErrorBoundary';
 
 interface Props {
   open: boolean;
@@ -81,65 +82,86 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const changeUsers = (users: string[]) => {
     handleUpdateTask({ users });
   };
-
   return (
-    <Dialog open={open} maxWidth="md" fullWidth={true} onClose={handleClose}>
-      {color && <DialogContent sx={{ background: color }} />}
-      <DialogContent className={addThemeScroll(isDarkTheme, [styles['dialog']])}>
-        <TaskHeader
-          userId={task.userId}
-          title={task.title}
-          users={task.users}
-          columnTitle={columnTitle}
-          handleChange={handleUpdateTask}
-          color={color}
-        />
-        <UserPicker users={task.users} setUsers={changeUsers} />
-        <Divider />
-        <TaskDescription
-          color={color}
-          description={task.description}
-          handleChange={handleUpdateTask}
-        />
-        <Divider />
-        <ColorPicker handleUpdate={handleUpdateTask} title={task.title} />
-        <Stack
-          direction={{ xs: 'column', lg: 'row' }}
-          m={1}
-          p={1}
-          divider={<Divider orientation="vertical" variant="middle" flexItem />}
-          sx={{ border: '2px dashed #868d92' }}
-        >
-          <ImageList taskId={task._id} />
-          <ImageUpload taskId={task._id} boardId={task.boardId}></ImageUpload>
-        </Stack>
-        <DialogButton
-          type="delete_task"
-          message=" "
-          btn={(handleOpen) => (
-            <LoadingButton
-              variant="contained"
-              color="error"
-              size="small"
-              onClick={handleOpen}
-              className={styles.delete}
-              loading={isLoading}
-              sx={{ marginTop: '50px' }}
-            >
-              {t('task_popup.delete')}
-            </LoadingButton>
-          )}
-          form={(handleClose) => (
-            <DialogControls
-              onConfirm={() => {
-                deleteTaskHandler();
-                handleClose();
-              }}
-              onCancel={handleClose}
-            />
-          )}
-        />
-      </DialogContent>
+    <Dialog
+      open={open}
+      maxWidth="md"
+      fullWidth={true}
+      onClose={handleClose}
+      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+    >
+      <ErrorBoundary
+        fallback={
+          <DialogContent
+            sx={{
+              height: '150px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {t('errors.popup')}
+          </DialogContent>
+        }
+        text={t('errors.default')}
+      >
+        {color && <DialogContent sx={{ background: color }} />}
+        <DialogContent className={addThemeScroll(isDarkTheme, [styles['dialog']])}>
+          <TaskHeader
+            userId={task.userId}
+            title={task.title}
+            users={task.users}
+            columnTitle={columnTitle}
+            handleChange={handleUpdateTask}
+            color={color}
+          />
+          <UserPicker users={task.users} setUsers={changeUsers} />
+          <Divider />
+          <TaskDescription
+            color={color}
+            description={task.description}
+            handleChange={handleUpdateTask}
+          />
+          <Divider />
+          <ColorPicker handleUpdate={handleUpdateTask} title={task.title} />
+          <Stack
+            direction={{ xs: 'column', lg: 'row' }}
+            m={1}
+            p={1}
+            divider={<Divider orientation="vertical" variant="middle" flexItem />}
+            sx={{ border: '2px dashed #868d92' }}
+          >
+            <ImageList taskId={task._id} />
+            <ImageUpload taskId={task._id} boardId={task.boardId}></ImageUpload>
+          </Stack>
+          <DialogButton
+            type="delete_task"
+            message=" "
+            btn={(handleOpen) => (
+              <LoadingButton
+                variant="contained"
+                color="error"
+                size="small"
+                onClick={handleOpen}
+                className={styles.delete}
+                loading={isLoading}
+                sx={{ marginTop: '50px' }}
+              >
+                {t('task_popup.delete')}
+              </LoadingButton>
+            )}
+            form={(handleClose) => (
+              <DialogControls
+                onConfirm={() => {
+                  deleteTaskHandler();
+                  handleClose();
+                }}
+                onCancel={handleClose}
+              />
+            )}
+          />
+        </DialogContent>
+      </ErrorBoundary>
       <Button onClick={handleClose} className={styles.close}>
         <CloseIcon sx={{ color: 'black' }} />
       </Button>
