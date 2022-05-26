@@ -126,7 +126,7 @@
     "desc": "Description:",
     "delete": "Delete task",
     "asigned": "No assigned users",
-    "color": "You can choose a cover for this task:"
+    "color": "You can choose a cover for this task:",
     "upload": "Upload image"
   },
   "snack_message": {

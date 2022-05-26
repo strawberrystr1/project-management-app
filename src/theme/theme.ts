@@ -97,6 +97,19 @@ export const themeOptionsDark: ThemeOptions = {
         }),
       },
     },
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '*::-webkit-scrollbar': {
+            width: '5px',
+            backgroundColor: '#443e3e',
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#2c292b',
+          },
+        },
+      },
+    },
   },
 };
 
@@ -190,6 +203,20 @@ export const themeOptionsLight: ThemeOptions = {
               },
             })),
         }),
+      },
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '*::-webkit-scrollbar': {
+            width: '5px',
+            height: '15px',
+            backgroundColor: '#d8d8d8',
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#b8b8b8',
+          },
+        },
       },
     },
   },

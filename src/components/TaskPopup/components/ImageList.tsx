@@ -8,8 +8,7 @@ import { useDeleteFileMutation, useGetFilesQuery } from '../../../store/services
 import { Box, Dialog, LinearProgress, Stack } from '@mui/material';
 import { useRef, useState } from 'react';
 import { baseUrl } from '../../../store/services/basicAPItemplate';
-import { addThemeScroll } from '../../../utils/functions';
-import { useTypedDispatch, useTypedSelector } from '../../../hooks/redux';
+import { useTypedDispatch } from '../../../hooks/redux';
 import styles from '../style.module.scss';
 import { openSuccessSnack } from '../../../store/reducers/snackSlice';
 import { useTranslation } from 'react-i18next';
@@ -38,13 +37,13 @@ const ImageList = ({ taskId }: Props) => {
       .then(() => dispatch(openSuccessSnack(t('snack_message.file.delete_file'))))
       .catch((e) => e);
   };
-  const { theme } = useTypedSelector((state) => state.settings);
+
   return (
     <>
       <List
         dense
         sx={{ height: '8rem', maxHeight: '8rem', overflow: 'auto', flex: '1 0 50%', width: '100%' }}
-        className={addThemeScroll(theme, [styles['image-list']])}
+        className={styles['image-list']}
       >
         {files.map(({ _id, name, path }) => (
           <ListItem key={_id}>
