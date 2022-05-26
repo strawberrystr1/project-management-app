@@ -18,7 +18,7 @@ function App() {
   const dispatch = useTypedDispatch();
   const [getUser] = useGetUserMutation();
   const [load, setLoad] = useState(true);
-  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+  const { theme } = useTypedSelector((state) => state.settings);
 
   const checkToken = async () => {
     try {
@@ -41,7 +41,7 @@ function App() {
   if (load) return <Loader />;
 
   return (
-    <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+    <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <CssBaseline />
       <Header />
       <Main>

@@ -53,7 +53,7 @@ const Burger = () => {
 
   return (
     <>
-      <IconButton size="large" onClick={toggleDrawer(true)} color="inherit">
+      <IconButton size="large" onClick={toggleDrawer(true)} color="inherit" className="header-btn">
         <MenuIcon />
       </IconButton>
       <Drawer anchor="left" open={isOpenDrawer} onClose={toggleDrawer(false)}>

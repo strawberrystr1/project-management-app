@@ -29,7 +29,7 @@ interface Props {
 
 const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const { t } = useTranslation();
-  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+  const { theme } = useTypedSelector((state) => state.settings);
   const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const dispatch = useTypedDispatch();
   const [updateTask] = useUpdateTaskMutation();
@@ -106,7 +106,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
         text={t('errors.default')}
       >
         {color && <DialogContent sx={{ background: color }} />}
-        <DialogContent className={addThemeScroll(isDarkTheme, [styles['dialog']])}>
+        <DialogContent className={addThemeScroll(theme, [styles['dialog']])}>
           <TaskHeader
             userId={task.userId}
             title={task.title}

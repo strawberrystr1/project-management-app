@@ -31,7 +31,7 @@ const Header = () => {
   const navigateToBoards = () => navigate('/boards');
   const navigateToHome = () => navigate('/home');
   const btnNavigationClass = (btnLocation: string) => {
-    return btnLocation === location.pathname ? styles.btnStyleLocation : styles.btnStyle;
+    return btnLocation === location.pathname ? 'header-btn active' : 'header-btn';
   };
 
   return (
@@ -54,7 +54,7 @@ const Header = () => {
                   <DialogButton
                     type="new_board"
                     btn={(handleOpen) => (
-                      <IconButton onClick={handleOpen} className={styles.btnStyle}>
+                      <IconButton onClick={handleOpen} className="header-btn">
                         <AddIcon />
                       </IconButton>
                     )}
@@ -69,6 +69,7 @@ const Header = () => {
                 className={btnNavigationClass('/home')}
                 onClick={navigateToHome}
                 startIcon={<HomeIcon />}
+                color="inherit"
               >
                 {t(`buttons.home`)}
               </Button>
@@ -78,13 +79,14 @@ const Header = () => {
                     className={btnNavigationClass('/boards')}
                     onClick={navigateToBoards}
                     startIcon={<DashboardIcon />}
+                    color="inherit"
                   >
                     {t(`buttons.boards`)}
                   </Button>
                   <DialogButton
                     type="new_board"
                     btn={(handleOpen, type) => (
-                      <Button onClick={handleOpen} className={styles.btnStyle}>
+                      <Button onClick={handleOpen} className="header-btn" color="inherit">
                         {t(`buttons.${type}`)}
                       </Button>
                     )}
