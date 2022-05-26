@@ -28,6 +28,7 @@ interface Props {
 
 const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const { t } = useTranslation();
+  const { theme } = useTypedSelector((state) => state.settings);
   const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const dispatch = useTypedDispatch();
   const [updateTask] = useUpdateTaskMutation();
@@ -80,8 +81,6 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const changeUsers = (users: string[]) => {
     handleUpdateTask({ users });
   };
-
-  const { theme } = useTypedSelector((state) => state.settings);
 
   return (
     <Dialog open={open} maxWidth="md" fullWidth={true} onClose={handleClose}>

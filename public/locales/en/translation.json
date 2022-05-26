@@ -5,11 +5,11 @@
     "sin_btn": "Sign In",
     "board_btn": "Go to Main Page",
     "team": "Our team",
-    "about": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi provident nisi, ipsum repellat deserunt ipsam id quod laudantium illum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, rem ducimus! Cupiditate quam recusandae dolor aut dolores distinctio labore deleniti minima. Quaerat enim consectetur voluptate nobis, laboriosam inventore iure ipsam?",
+    "about": "This application is suitable for project planning in any industry, for working with a team of any size. It will help to build and track the work process from start to finish, you can always see at what stage a certain task is. Assign responsible for certain tasks, markers are used for visual convenience, form the structure as you like and change it depending on the needs.",
     "info": {
-      "0": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse, explicabo.",
-      "1": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse, explicabo.",
-      "2": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse, explicabo."
+      "0": "Team lead. Coordinated the work of the team. Implemented authorization and the task window.",
+      "1": "Developer. Implemented boards page and D'n'D logic for application.",
+      "2": "Developer. Implemented single board page and was responsible for back-end."
     }
   },
   "not_found": {

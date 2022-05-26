@@ -78,7 +78,13 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
       )}
       {input && (
         <>
-          <Input autoFocus value={inputValue} multiline onChange={handleInput} />
+          <Input
+            autoFocus
+            value={inputValue}
+            multiline
+            onChange={handleInput}
+            sx={{ '@media (max-width: 610px)': { width: '65%' } }}
+          />
           <IconButton
             onClick={handleConfirm}
             size="small"

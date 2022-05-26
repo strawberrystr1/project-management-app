@@ -48,7 +48,7 @@ const TaskDescription = ({ description, handleChange, color }: Props) => {
             defaultValue={description.split(' <!> ')[0]}
             onChange={handleInput}
             rows={4}
-            sx={{ width: '60%' }}
+            sx={{ width: '60%', '@media (max-width: 610px)': { width: '100%' } }}
           />
         )}
         {!input && (

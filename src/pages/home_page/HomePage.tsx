@@ -2,7 +2,6 @@ import { Avatar, Box, Button, Container, Divider, Typography } from '@mui/materi
 import { useNavigate } from 'react-router-dom';
 import styles from './style.module.scss';
 import picture from '../../assets/images/2.png';
-import person from '../../assets/images/person1.png';
 import githubIcon from '../../assets/icons/github.png';
 import team from '../../utils/constants/teamInfo';
 import { useTypedSelector } from '../../hooks/redux';
@@ -62,7 +61,7 @@ const Home = () => {
             <Box key={member.name} className={styles['member-wrapper']}>
               <Box className={styles['member']}>
                 <Avatar
-                  src={person}
+                  src={require(`../../assets/images/${member.photo}`)}
                   alt="person avatar"
                   className={`${styles['member-avatar']} ${styles.override}`}
                 />

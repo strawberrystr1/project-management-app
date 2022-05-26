@@ -20,6 +20,7 @@ const getApi = api.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: [{ type: 'User', id: 'LIST' }],
     }),
     signIn: build.mutation({
       query: (body: Omit<IInitialFormValues, 'name'>) => ({
@@ -40,11 +41,19 @@ const getApi = api.injectEndpoints({
         url: `users/${body.id}`,
         method: 'DELETE',
       }),
+      invalidatesTags: [{ type: 'User', id: 'LIST' }],
     }),
     getUsers: build.query<User[], void>({
       query: () => ({
         url: 'users',
       }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({ type: 'boards' as const, id: _id })),
+              { type: 'User', id: 'LIST' },
+            ]
+          : [{ type: 'User', id: 'LIST' }],
     }),
   }),
 });
