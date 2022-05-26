@@ -1,4 +1,8 @@
 {
+  "errors": {
+    "default": "Что-то пошло не так. Попробуйте перезагрузить страницу",
+    "popup": "Извините, что-то пошло не так, попробуйте открыть меня снова :)"
+  },
   "welcome_page": {
     "about_project": "",
     "sup_btn": "Регистрация",
@@ -67,6 +71,13 @@
     "delete_task": {
       "title": "Вы уверены что хотите удалить задание ?"
     },
+    "filter_board":{
+      "title": "Фильтр по названию",
+      "members": "Фильтр по участникам",
+      "color": "Цвет",
+      "color_none": "без цвета",
+      "clear_button": "Очистить"
+    },
     "delete_file": {
       "title": "Удалить файл",
       "description": "Вы действительно хотите удалить файл ?"
@@ -105,7 +116,8 @@
   },
   "boards": {
     "boardDescriptionNoColumns": "Еще нет колонок",
-    "boardDescription": "Колонок - {{count}}"
+    "boardDescription": "Колонок - {{count}}",
+    "search_board": "Найти доску"
   },
   "task_popup": {
     "column": "в колонке",

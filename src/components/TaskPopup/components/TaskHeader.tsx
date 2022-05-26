@@ -33,7 +33,6 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
   const [usersData, setUsersData] = useState<string[][]>([]);
   const { t } = useTranslation();
   const { data, isLoading } = useGetUsersQuery();
-
   useEffect(() => {
     if (data) {
       const owner = data.find((item) => item._id === userId) as User;

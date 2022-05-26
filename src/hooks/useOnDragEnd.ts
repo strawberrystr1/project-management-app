@@ -1,5 +1,5 @@
 import { DropResult } from '@react-forked/dnd';
-import { IBoard, IFullTask } from '../interfaces/apiInterfaces';
+import { IBoard, IColumn, IFullTask } from '../interfaces/apiInterfaces';
 import { updateColumns, updateColumnTasks } from '../store/reducers/boardSlice';
 import { useUpdateColumnMutation } from '../store/services/columnsService';
 import { useSetTasksMutation } from '../store/services/tasksService';
@@ -29,12 +29,12 @@ export const useOnDragEnd = (board: IBoard, boardId: string) => {
       .catch((e) => e);
   };
 
-  const onDragColumns = (sourceIndex: number, destinationIndex: number) => {
+  const onDragColumns = (destinationIndex: number, draggableId: string) => {
     const orderedColumns = makeOrderedArrayWithReplace(
       board.columns,
-      sourceIndex,
-      destinationIndex
-    );
+      destinationIndex,
+      draggableId
+    ) as IColumn[];
     dispatch(updateColumns(orderedColumns));
     orderedColumns.forEach((column) =>
       updateColumnsApi({
@@ -53,13 +53,14 @@ export const useOnDragEnd = (board: IBoard, boardId: string) => {
   const onDragTaskBetweenColumns = (
     columnFrom: IFullTask[],
     columnTo: IFullTask[],
-    sourceIndex: number,
     destinationIndex: number,
     sourceDroppableId: string,
-    destinationDroppableId: string
+    destinationDroppableId: string,
+    draggableId: string
   ) => {
     const copyColumnFrom = [...columnFrom];
     const copyColumnTo = [...columnTo];
+    const sourceIndex = copyColumnFrom.findIndex((task) => task._id === draggableId);
     const [removedItem] = copyColumnFrom.splice(sourceIndex, 1);
     copyColumnTo.splice(destinationIndex, 0, removedItem);
     const orderedColumnTo = copyColumnTo.map((task, index) => ({
@@ -84,15 +85,15 @@ export const useOnDragEnd = (board: IBoard, boardId: string) => {
 
   const onDragTaskInsideColumn = (
     columnFrom: IFullTask[],
-    sourceIndex: number,
     destinationIndex: number,
-    sourceDroppableId: string
+    sourceDroppableId: string,
+    draggableId: string
   ) => {
     const orderedColumnFrom = makeOrderedArrayWithReplace(
       columnFrom,
-      sourceIndex,
-      destinationIndex
-    );
+      destinationIndex,
+      draggableId
+    ) as IFullTask[];
     dispatch(
       updateColumnTasks({
         columnId: sourceDroppableId,
@@ -103,31 +104,32 @@ export const useOnDragEnd = (board: IBoard, boardId: string) => {
   };
 
   const onDragEnd = (result: DropResult) => {
-    const { source, destination, type } = result;
+    const { source, destination, type, draggableId } = result;
     if (
       !destination ||
       (destination.droppableId === source.droppableId && destination.index === source.index)
     ) {
       return;
     }
+
     if (type === 'list') {
-      onDragColumns(source.index, destination.index);
+      onDragColumns(destination.index, draggableId);
       return;
     }
     const columnFrom = board.columns.find((column) => column._id === source.droppableId)?.tasks;
     const columnTo = board.columns.find((column) => column._id === destination.droppableId)?.tasks;
     if (columnFrom && destination.droppableId === source.droppableId) {
-      onDragTaskInsideColumn(columnFrom, source.index, destination.index, source.droppableId);
+      onDragTaskInsideColumn(columnFrom, destination.index, source.droppableId, draggableId);
       return;
     }
     if (columnFrom && columnTo && destination.droppableId !== source.droppableId) {
       onDragTaskBetweenColumns(
         columnFrom,
         columnTo,
-        source.index,
         destination.index,
         source.droppableId,
-        destination.droppableId
+        destination.droppableId,
+        draggableId
       );
       return;
     }

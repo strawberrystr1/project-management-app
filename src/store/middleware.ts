@@ -9,14 +9,14 @@ const authChecker: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
     // todo
     console.log('action from middleware', action);
 
-    if (status === 401) {
+    if (status === 403) {
       api.dispatch(logOut);
       window.history.pushState({}, '', '/home');
       message = action.payload.data.message;
     } else if (
       status === 400 ||
+      status === 401 ||
       status === 402 ||
-      status === 403 ||
       status === 404 ||
       status === 409
     ) {

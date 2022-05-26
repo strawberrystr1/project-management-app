@@ -1,3 +1,5 @@
+import { IColumn, IFullTask } from '../interfaces/apiInterfaces';
+
 export const stringAvatar = (name: string): string => {
   const [first, second] = name.split(' ');
   return second ? `${first[0]}${second[0]}`.toUpperCase() : first[0].toUpperCase();
@@ -15,13 +17,14 @@ export const getSubstring = (string: string): string => {
   return stringLength > lastIndex ? `${subString}...` : subString;
 };
 
-export function makeOrderedArrayWithReplace<T>(
-  array: T[],
-  sourceIndex: number,
-  destIndex: number
-): T[] {
+export function makeOrderedArrayWithReplace(
+  array: IFullTask[] | IColumn[],
+  destIndex: number,
+  draggableId: string
+) {
   const modifiedArray = [...array];
-  const [removedItem] = modifiedArray.splice(sourceIndex, 1);
+  const sourceIndexId = modifiedArray.findIndex((item) => item._id === draggableId);
+  const [removedItem] = modifiedArray.splice(sourceIndexId, 1);
   modifiedArray.splice(destIndex, 0, removedItem);
   return modifiedArray.map((item, index) => ({ ...item, order: index }));
 }
