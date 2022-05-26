@@ -1,5 +1,4 @@
 import { IBoard, ICreateBoard } from '../../interfaces/apiInterfaces';
-import { readToken } from '../../utils/functions';
 import { api } from './basicAPItemplate';
 
 const getApi = api.injectEndpoints({
@@ -7,9 +6,6 @@ const getApi = api.injectEndpoints({
     getBoards: build.query<IBoard[], void>({
       query: () => ({
         url: 'boards',
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
       providesTags: (result) =>
         result
@@ -23,9 +19,6 @@ const getApi = api.injectEndpoints({
       query: (body) => ({
         url: `boards`,
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
         body,
       }),
       invalidatesTags: [{ type: 'boards', id: 'LIST' }],
@@ -34,9 +27,6 @@ const getApi = api.injectEndpoints({
       query: (body) => ({
         url: `boards/${body['_id']}`,
         method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
         body: {
           title: body.title,
           owner: body.owner,
@@ -49,26 +39,17 @@ const getApi = api.injectEndpoints({
       query: (id) => ({
         url: `boards/${id}`,
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
       invalidatesTags: [{ type: 'boards', id: 'LIST' }],
     }),
     getBoardById: build.query<IBoard, string>({
       query: (id) => ({
         url: `boards/${id}`,
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
     }),
     getBoard: build.mutation<IBoard, string>({
       query: (id) => ({
         url: `boards/${id}`,
-        headers: {
-          Authorization: `Bearer ${readToken()}`,
-        },
       }),
     }),
   }),

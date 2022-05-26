@@ -19,7 +19,7 @@ interface IProps {
   fieldName: string;
 }
 
-const SettingsFormItem: React.FC<IProps> = ({ userId, data, omit, fieldName }) => {
+const SettingsFormItem: React.FC<IProps> = ({ userId, data, fieldName }) => {
   const { t } = useTranslation();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const dispatch = useTypedDispatch();

@@ -33,7 +33,6 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
   const [usersData, setUsersData] = useState<string[][]>([]);
   const { t } = useTranslation();
   const { data, isLoading } = useGetUsersQuery();
-
   useEffect(() => {
     if (data) {
       const owner = data.find((item) => item._id === userId) as User;
@@ -78,7 +77,13 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
       )}
       {input && (
         <>
-          <Input autoFocus value={inputValue} multiline onChange={handleInput} />
+          <Input
+            autoFocus
+            value={inputValue}
+            multiline
+            onChange={handleInput}
+            sx={{ '@media (max-width: 610px)': { width: '65%' } }}
+          />
           <IconButton
             onClick={handleConfirm}
             size="small"
