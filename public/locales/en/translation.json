@@ -1,4 +1,8 @@
 {
+  "errors": {
+    "default": "Something went wrong. Try to reload the page",
+    "popup": "Sorry, something went wrong, try to re-open me :)"
+  },
   "welcome_page": {
     "about_project": "",
     "sup_btn": "Sign Up",

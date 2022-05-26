@@ -100,9 +100,10 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
               justifyContent: 'center',
             }}
           >
-            {'Sorry, something went wrong, try to re-open me :)'}
+            {t('errors.popup')}
           </DialogContent>
         }
+        text={t('errors.default')}
       >
         {color && <DialogContent sx={{ background: color }} />}
         <DialogContent className={addThemeScroll(isDarkTheme, [styles['dialog']])}>

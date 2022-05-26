@@ -1,6 +1,6 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react';
 
-type Props = { children: ReactNode; fallback?: ReactNode };
+type Props = { children: ReactNode; text: string; fallback?: ReactNode };
 
 export default class ErrorBoundary extends Component<Props, { error: boolean }> {
   constructor(props: Props) {
@@ -24,15 +24,15 @@ export default class ErrorBoundary extends Component<Props, { error: boolean }> 
           <div
             style={{
               height: '100px',
-              width: '300px',
+              width: '400px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'column',
+              padding: '20px',
             }}
           >
-            <p>Something went wrong...</p>
-            <p>You can try to reload the page</p>
+            <p>{this.props.text}</p>
           </div>
         );
       }
