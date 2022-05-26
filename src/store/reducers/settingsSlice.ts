@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ISettings {
-  isDarkTheme: boolean;
+  theme: string;
   language: string;
 }
 
 const initialState: ISettings = {
-  isDarkTheme: true,
+  theme: localStorage.getItem('theme') || 'dark',
   language: localStorage.getItem('i18nextLng') || 'en',
 };
 
@@ -15,7 +15,8 @@ const settingsSlice = createSlice({
   initialState,
   reducers: {
     settingsToggleTheme(state) {
-      state.isDarkTheme = !state.isDarkTheme;
+      state.theme = state.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', state.theme);
     },
     settingsToggleLanguage(state, action: PayloadAction<string>) {
       state.language = action.payload;

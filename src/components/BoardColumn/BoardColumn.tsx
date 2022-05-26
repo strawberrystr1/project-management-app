@@ -41,7 +41,7 @@ const BoardColumn = ({
 }: Props) => {
   const { t } = useTranslation();
   const dispatch = useTypedDispatch();
-  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+  const { theme } = useTypedSelector((state) => state.settings);
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
@@ -63,7 +63,7 @@ const BoardColumn = ({
     <Draggable draggableId={_id} index={index}>
       {(provider) => (
         <Box
-          className={addThemeScroll(isDarkTheme, [styles['column-container']])}
+          className={addThemeScroll(theme, [styles['column-container']])}
           {...provider.draggableProps}
           ref={provider.innerRef}
           {...provider.dragHandleProps}
@@ -90,7 +90,7 @@ const BoardColumn = ({
             <Stack
               direction={'column'}
               spacing={1}
-              className={addThemeScroll(isDarkTheme, [styles['column']])}
+              className={addThemeScroll(theme, [styles['column']])}
             >
               <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (

@@ -38,13 +38,13 @@ const ImageList = ({ taskId }: Props) => {
       .then(() => dispatch(openSuccessSnack(t('snack_message.file.delete_file'))))
       .catch((e) => e);
   };
-  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+  const { theme } = useTypedSelector((state) => state.settings);
   return (
     <>
       <List
         dense
         sx={{ height: '8rem', maxHeight: '8rem', overflow: 'auto', flex: '1 0 50%', width: '100%' }}
-        className={addThemeScroll(isDarkTheme, [styles['image-list']])}
+        className={addThemeScroll(theme, [styles['image-list']])}
       >
         {files.map(({ _id, name, path }) => (
           <ListItem key={_id}>

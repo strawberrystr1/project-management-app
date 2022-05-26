@@ -22,7 +22,7 @@ import { useOnErrorRedirect } from '../../hooks/useOnErrorRedirect';
 
 const Board = () => {
   const { boardId = '' } = useParams();
-  const { isDarkTheme } = useTypedSelector((state) => state.settings);
+  const { theme } = useTypedSelector((state) => state.settings);
   const [getBoard, { isLoading: loadingBoards, isError: isBoardError }] = useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
@@ -90,7 +90,7 @@ const Board = () => {
       <Droppable direction="horizontal" droppableId="list" type="list">
         {(provider) => (
           <Box
-            className={addThemeScroll(isDarkTheme, [styles['board-wrapper']])}
+            className={addThemeScroll(theme, [styles['board-wrapper']])}
             {...provider.droppableProps}
             ref={provider.innerRef}
           >

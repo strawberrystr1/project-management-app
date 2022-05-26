@@ -26,8 +26,8 @@ export function makeOrderedArrayWithReplace<T>(
   return modifiedArray.map((item, index) => ({ ...item, order: index }));
 }
 
-export const addThemeScroll = (themeMode: boolean, classes: string[]): string => {
-  if (themeMode) {
+export const addThemeScroll = (themeMode: string, classes: string[]): string => {
+  if (themeMode === 'dark') {
     classes.push('scrollbar-dark');
   } else {
     classes.push('scrollbar-light');
