@@ -105,7 +105,7 @@ export const themeOptionsLight: ThemeOptions = {
   palette: {
     mode: 'light',
     background: {
-      paper: '#f0f0f0',
+      paper: '#e3e3e3',
     },
     primary: {
       main: '#69e36a',
