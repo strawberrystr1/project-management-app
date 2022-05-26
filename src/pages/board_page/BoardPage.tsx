@@ -19,6 +19,7 @@ import { IFullTask } from '../../interfaces/apiInterfaces';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
 import { useOnDragEnd } from '../../hooks/useOnDragEnd';
 import { useOnErrorRedirect } from '../../hooks/useOnErrorRedirect';
+import FilterBar from '../../components/BoardFilterBar/FilterBar';
 
 const Board = () => {
   const { boardId = '' } = useParams();
@@ -87,6 +88,17 @@ const Board = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <Stack
+        sx={{ display: { xs: 'none', md: 'flex' } }}
+        minHeight={95}
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
+        gap={2}
+      >
+        <FilterBar />
+      </Stack>
+
       <Droppable direction="horizontal" droppableId="list" type="list">
         {(provider) => (
           <Box
@@ -94,7 +106,7 @@ const Board = () => {
             {...provider.droppableProps}
             ref={provider.innerRef}
           >
-            <Stack direction={'row'} spacing={1} className={styles['board']} mt={2} mb={2}>
+            <Stack direction={'row'} spacing={1} className={styles['board']} mb={2}>
               {loadingBoards || isLoadingColumn ? (
                 <Loader />
               ) : (

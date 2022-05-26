@@ -8,12 +8,14 @@ import { useGetBoardsQuery } from '../../store/services/boardsService';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { IBoard } from '../../interfaces/apiInterfaces';
 import { Box } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
 const Boards = () => {
   const { data } = useGetBoardsQuery();
   const [boards, setBoards] = useState<IBoard[]>([]);
   const [search, setSearch] = useState(() => localStorage.getItem('searchBoards-rss') || '');
   const [focused, setFocused] = useState(false);
+  const { t } = useTranslation();
 
   const filterBoards = (data: IBoard[] | undefined, value: string) => {
     data &&
@@ -44,7 +46,7 @@ const Boards = () => {
       >
         <Input
           sx={{ paddingLeft: 4, fontSize: '1.2rem' }}
-          placeholder="Search"
+          placeholder={t('boards.search_board')}
           value={search}
           onChange={handleChange}
           onFocus={() => setFocused(true)}

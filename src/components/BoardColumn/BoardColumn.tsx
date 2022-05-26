@@ -15,6 +15,7 @@ import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
 import { Draggable, Droppable, DroppableProvided } from '@react-forked/dnd';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
+import { useFilterTasks } from '../../hooks/useFilterTasks';
 interface Props extends IColumn {
   editId: string;
   index: number;
@@ -59,6 +60,9 @@ const BoardColumn = ({
       .catch((e) => e);
     dispatch(openSuccessSnack(t('snack_message.add_task')));
   };
+
+  const filteredSortedTasks = useFilterTasks(sortedTasks);
+
   return (
     <Draggable draggableId={_id} index={index}>
       {(provider) => (
@@ -95,7 +99,7 @@ const BoardColumn = ({
               <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (
                   <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
-                    {sortedTasks.map((task, index) => (
+                    {filteredSortedTasks.map((task, index) => (
                       <Box onClick={() => setTaskForPopup(task, title)} key={task._id}>
                         <TaskColumn
                           _id={task._id}
