@@ -12,9 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import UpdateBoardBtn from './UpdateBoardBtn';
 import DeleteBoardBtn from './DeleteBoardBtn';
-import styles from './style.module.scss';
 import { useGetBoardByIdQuery } from '../../store/services/boardsService';
-import { useTypedSelector } from '../../hooks/redux';
 
 const BoardCard = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
@@ -29,10 +27,7 @@ const BoardCard = ({ board }: { board: IBoard }) => {
           <LinearProgress color="warning" />
         </Stack>
       ) : (
-        <Card
-          className={styles['card-item']}
-          sx={{ maxWidth: 345, position: 'relative', maxHeight: 100, overflow: 'auto' }}
-        >
+        <Card sx={{ maxWidth: 345, position: 'relative', maxHeight: 100, overflow: 'auto' }}>
           <CardActionArea
             onClick={() => {
               navigate(`/boards/${board['_id']}`);

@@ -6,8 +6,6 @@ const authChecker: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
   if (isRejectedWithValue(action)) {
     const status = action.payload.status;
     let message = '';
-    // todo
-    console.log('action from middleware', action);
 
     if (status === 403) {
       api.dispatch(logOut);

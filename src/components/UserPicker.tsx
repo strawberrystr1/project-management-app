@@ -47,7 +47,15 @@ const UserPicker = ({ users, setUsers, message }: Props) => {
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label={labelMessage} />}
           renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 0.5,
+                maxHeight: '32px',
+                overflowY: 'auto',
+              }}
+            >
               {selected.map((value) => (
                 <Chip key={value} label={data.find(({ _id }) => _id === value)?.name} />
               ))}

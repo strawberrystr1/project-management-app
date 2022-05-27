@@ -29,7 +29,7 @@ const Board = () => {
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
   const activateEdit = (id: string) => setEditId(id);
-  const disactivateEdit = () => setEditId('');
+  const deactivateEdit = () => setEditId('');
   const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [isTaskOpen, setIsTaskOpen] = useState(false);
   const [popupTaskData, setPopupTaskData] = useState<IFullTask>();
@@ -121,7 +121,7 @@ const Board = () => {
                     tasks={tasks}
                     editId={editId}
                     activateEdit={activateEdit}
-                    disactivateEdit={disactivateEdit}
+                    deactivateEdit={deactivateEdit}
                     updateBoard={updateBoard}
                     toggleTaskOpen={toggleTaskOpen}
                     setTaskForPopup={setTaskForPopup}
