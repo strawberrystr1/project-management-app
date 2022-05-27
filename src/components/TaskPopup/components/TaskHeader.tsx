@@ -63,14 +63,14 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
   };
 
   return (
-    <DialogContent sx={{ padding: '0', minHeight: '230px' }}>
+    <DialogContent sx={{ padding: '0', overflowY: 'visible' }}>
       {!input && (
         <DialogTitle
           onClick={() => {
             setInput(true);
             setInputValue(title.split(' <!> ')[0]);
           }}
-          sx={{ padding: '0', fontSize: '24px', marginTop: '10px' }}
+          sx={{ padding: '0', fontSize: '18px', marginTop: '10px' }}
         >
           {title.split(' <!> ')[0]}
         </DialogTitle>
@@ -82,7 +82,7 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
             value={inputValue}
             multiline
             onChange={handleInput}
-            sx={{ '@media (max-width: 610px)': { width: '65%' } }}
+            sx={{ '@media (max-width: 610px)': { width: '65%' }, width: '90%' }}
           />
           <IconButton
             onClick={handleConfirm}

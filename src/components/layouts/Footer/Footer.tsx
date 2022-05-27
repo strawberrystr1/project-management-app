@@ -1,7 +1,7 @@
-import { Container, Link, Stack, Typography } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import teamInfo from '../../../utils/constants/teamInfo';
 import styles from './style.module.scss';
-import github from '../../../assets/icons/github.png';
 import { Box } from '@mui/system';
 
 const Footer = () => {
@@ -37,7 +37,12 @@ const Footer = () => {
                 className={styles.link}
                 rel="noreferrer"
               >
-                <img src={github} alt="github logo" className={styles.git_logo} />
+                <GitHubIcon
+                  sx={{
+                    color: (theme) => theme.typography.body1.color,
+                  }}
+                  className={styles.git_logo}
+                />
                 <Typography fontSize={{ xs: 16, md: 18 }} lineHeight={{ xs: 1.2, md: 1.5 }}>
                   {item.name}
                 </Typography>

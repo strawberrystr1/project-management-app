@@ -103,7 +103,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
         }
         text={t('errors.default')}
       >
-        {color && <DialogContent sx={{ background: color }} />}
+        <DialogContent sx={{ background: color || 'transparent' }} />
         <DialogContent className={styles['dialog']}>
           <TaskHeader
             userId={task.userId}
@@ -161,7 +161,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
         </DialogContent>
       </ErrorBoundary>
       <Button onClick={handleClose} className={styles.close}>
-        <CloseIcon sx={{ color: 'black' }} />
+        <CloseIcon sx={{ color: theme === 'dark' ? 'white' : 'black' }} />
       </Button>
     </Dialog>
   );

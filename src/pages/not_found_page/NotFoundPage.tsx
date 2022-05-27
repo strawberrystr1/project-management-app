@@ -28,14 +28,14 @@ const NotFound = () => {
         <Typography
           variant="h2"
           sx={{
-            color: (theme) => theme.palette.error.main,
+            color: (theme) => theme.palette.warning.main,
             textAlign: 'center',
             padding: '1rem 0 2rem',
           }}
         >
           {t('not_found.title')}
         </Typography>
-        <Typography variant="h3" sx={{ color: (theme) => theme.palette.warning.main }} gutterBottom>
+        <Typography variant="h3" sx={{ color: (theme) => theme.palette.primary.main }} gutterBottom>
           {t('not_found.subtitle')}
         </Typography>
         <Typography variant="h6" sx={{ color: (theme) => theme.palette.info.main }}>

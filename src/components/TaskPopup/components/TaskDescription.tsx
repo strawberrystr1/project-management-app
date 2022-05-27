@@ -37,7 +37,7 @@ const TaskDescription = ({ description, handleChange, color }: Props) => {
   };
 
   return (
-    <DialogContent sx={{ padding: '15px 0', minHeight: '94px' }}>
+    <DialogContent sx={{ padding: '15px 0', overflowY: 'visible' }}>
       <DialogTitle sx={{ padding: '0' }}>{t('task_popup.desc')}</DialogTitle>
       <Box className={styles.description}>
         {!input && <DialogContentText>{description.split(' <!> ')[0]}</DialogContentText>}
@@ -47,12 +47,20 @@ const TaskDescription = ({ description, handleChange, color }: Props) => {
             multiline
             defaultValue={description.split(' <!> ')[0]}
             onChange={handleInput}
-            rows={4}
-            sx={{ width: '60%', '@media (max-width: 610px)': { width: '100%' } }}
+            sx={{
+              width: '100%',
+              '@media (max-width: 610px)': { width: '100%' },
+              overflowY: 'visible',
+            }}
           />
         )}
         {!input && (
-          <Button size="small" variant="contained" onClick={handleClick}>
+          <Button
+            size="small"
+            variant="contained"
+            onClick={handleClick}
+            sx={{ maxWidth: '200px', marginTop: '20px' }}
+          >
             {t('settings.change_btn')}
           </Button>
         )}

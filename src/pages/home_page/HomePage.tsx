@@ -2,10 +2,10 @@ import { Avatar, Box, Button, Container, Divider, Typography } from '@mui/materi
 import { useNavigate } from 'react-router-dom';
 import styles from './style.module.scss';
 import picture from '../../assets/images/2.png';
-import githubIcon from '../../assets/icons/github.png';
 import team from '../../utils/constants/teamInfo';
 import { useTypedSelector } from '../../hooks/redux';
 import { useTranslation } from 'react-i18next';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -46,6 +46,16 @@ const Home = () => {
           </Button>
         </Box>
       )}
+      <Typography
+        variant="h1"
+        sx={{
+          '@media (max-width: 800px)': { fontSize: '62px' },
+          '@media (max-width: 550px)': { fontSize: '52px' },
+          '@media (max-width: 440px)': { fontSize: '34px' },
+        }}
+      >
+        Project manager
+      </Typography>
       <Box className={styles['info-wrapper']}>
         <Typography paragraph fontSize={22} className={styles['info-text']}>
           {t('welcome_page.about')}
@@ -66,8 +76,17 @@ const Home = () => {
                   className={`${styles['member-avatar']} ${styles.override}`}
                 />
                 <Box className={styles['member-info']}>
-                  <a href={member.github}>
-                    <img src={githubIcon} alt="link icon" />
+                  <a target="_blank" href={member.github} rel="noreferrer">
+                    <GitHubIcon
+                      fontSize="large"
+                      sx={{
+                        color: (theme) => theme.typography.body1.color,
+                        '&:hover': {
+                          color: (theme) => theme.palette.primary.main,
+                        },
+                      }}
+                      className={styles.git_logo}
+                    />
                   </a>
                   <Typography
                     variant="h6"
