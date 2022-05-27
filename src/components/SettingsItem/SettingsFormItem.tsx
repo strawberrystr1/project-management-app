@@ -71,7 +71,7 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, fieldName }) => {
             error={error}
             helperText={error && errorMessage}
             value={inputValue}
-            sx={{ maxWidth: '240px' }}
+            sx={{ maxWidth: '240px', marginRight: '20px' }}
           />
           <DialogButton
             type="change_password"

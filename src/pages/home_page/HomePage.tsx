@@ -46,6 +46,16 @@ const Home = () => {
           </Button>
         </Box>
       )}
+      <Typography
+        variant="h1"
+        sx={{
+          '@media (max-width: 800px)': { fontSize: '62px' },
+          '@media (max-width: 550px)': { fontSize: '52px' },
+          '@media (max-width: 440px)': { fontSize: '34px' },
+        }}
+      >
+        Project manager
+      </Typography>
       <Box className={styles['info-wrapper']}>
         <Typography paragraph fontSize={22} className={styles['info-text']}>
           {t('welcome_page.about')}
