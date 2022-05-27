@@ -43,7 +43,6 @@ const FilterBar = () => {
     dispatch(clearFilters());
   };
 
-  //  {t(`buttons.${type}`)}
   return (
     <>
       <Box position="relative" sx={{ width: 300, m: 0 }}>

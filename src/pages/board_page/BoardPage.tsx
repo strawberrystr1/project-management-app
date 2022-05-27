@@ -8,7 +8,7 @@ import DialogButton from '../../components/layouts/DialogButton';
 import styles from './style.module.scss';
 import { DragDropContext, Droppable } from '@react-forked/dnd';
 import { useAddColumnMutation } from '../../store/services/columnsService';
-import { addThemeScroll, getNewOrder } from '../../utils/functions';
+import { getNewOrder } from '../../utils/functions';
 import { useEffect, useState } from 'react';
 import { useGetBoardMutation } from '../../store/services/boardsService';
 import { useTypedSelector, useTypedDispatch } from '../../hooks/redux';
@@ -23,7 +23,6 @@ import FilterBar from '../../components/BoardFilterBar/FilterBar';
 
 const Board = () => {
   const { boardId = '' } = useParams();
-  const { theme } = useTypedSelector((state) => state.settings);
   const [getBoard, { isLoading: loadingBoards, isError: isBoardError }] = useGetBoardMutation();
   const { board } = useTypedSelector((state) => state.board);
   const dispatch = useTypedDispatch();
@@ -102,7 +101,7 @@ const Board = () => {
       <Droppable direction="horizontal" droppableId="list" type="list">
         {(provider) => (
           <Box
-            className={addThemeScroll(theme, [styles['board-wrapper']])}
+            className={styles['board-wrapper']}
             {...provider.droppableProps}
             ref={provider.innerRef}
           >

@@ -11,13 +11,12 @@ import DialogControls from '../layouts/DialogControls';
 import ImageUpload from './components/ImageUpload';
 import ImageList from './components/ImageList';
 import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../store/services/tasksService';
-import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
+import { useTypedDispatch } from '../../hooks/redux';
 import { editTask, removeTask } from '../../store/reducers/boardSlice';
 import UserPicker from '../UserPicker';
 import { ColorPicker } from './components/ColorPicker';
 import { useEffect, useState } from 'react';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
-import { addThemeScroll } from '../../utils/functions';
 import ErrorBoundary from '../ErrorBoundary';
 
 interface Props {
@@ -29,7 +28,6 @@ interface Props {
 
 const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const { t } = useTranslation();
-  const { theme } = useTypedSelector((state) => state.settings);
   const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const dispatch = useTypedDispatch();
   const [updateTask] = useUpdateTaskMutation();
@@ -106,7 +104,7 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
         text={t('errors.default')}
       >
         <DialogContent sx={{ background: color || 'transparent' }} />
-        <DialogContent className={addThemeScroll(theme, [styles['dialog']])}>
+        <DialogContent className={styles['dialog']}>
           <TaskHeader
             userId={task.userId}
             title={task.title}
