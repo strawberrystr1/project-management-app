@@ -36,11 +36,11 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
   useEffect(() => {
     if (data) {
       const owner = data.find((item) => item._id === userId) as User;
-      const asigned = data
+      const assigned = data
         .filter((item) => users.includes(item._id))
         .map((item) => [item.name, item._id]);
       setUserOwner(owner.name);
-      setUsersData(asigned);
+      setUsersData(assigned);
     }
   }, [isLoading, users]);
 
@@ -105,7 +105,7 @@ const TaskHeader = ({ title, users, columnTitle, userId, handleChange, color }: 
       {userOwner && <UserAvatar name={userOwner} />}
       <Divider sx={{ marginTop: '10px' }} />
       <DialogContentText sx={{ paddingTop: '10px' }}>{t('task_popup.users')}</DialogContentText>
-      {usersData.length === 0 && <Typography>{t('task_popup.asigned')}</Typography>}
+      {usersData.length === 0 && <Typography>{t('task_popup.assigned')}</Typography>}
       {usersData.length > 0 && (
         <Box className={styles.users}>
           {usersData.map((item) => (

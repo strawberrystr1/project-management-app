@@ -35,9 +35,9 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
   const [color, setColor] = useState('');
 
   useEffect(() => {
-    const splited = task.title.split('<!>');
-    if (splited[1]) {
-      setColor(splited[1].trim());
+    const splitted = task.title.split('<!>');
+    if (splitted[1]) {
+      setColor(splitted[1].trim());
     }
 
     return () => setColor('');
