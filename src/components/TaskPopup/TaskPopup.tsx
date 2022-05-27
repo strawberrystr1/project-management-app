@@ -11,7 +11,7 @@ import DialogControls from '../layouts/DialogControls';
 import ImageUpload from './components/ImageUpload';
 import ImageList from './components/ImageList';
 import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../store/services/tasksService';
-import { useTypedDispatch } from '../../hooks/redux';
+import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import { editTask, removeTask } from '../../store/reducers/boardSlice';
 import UserPicker from '../UserPicker';
 import { ColorPicker } from './components/ColorPicker';
@@ -27,6 +27,7 @@ interface Props {
 }
 
 const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
+  const { theme } = useTypedSelector((state) => state.settings);
   const { t } = useTranslation();
   const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const dispatch = useTypedDispatch();
