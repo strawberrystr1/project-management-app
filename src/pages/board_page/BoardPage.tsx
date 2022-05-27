@@ -30,7 +30,7 @@ const Board = () => {
   const { t } = useTranslation();
   const [editId, setEditId] = useState('');
   const activateEdit = (id: string) => setEditId(id);
-  const disactivateEdit = () => setEditId('');
+  const deactivateEdit = () => setEditId('');
   const [addColumn, { isLoading: isLoadingColumn }] = useAddColumnMutation();
   const [isTaskOpen, setIsTaskOpen] = useState(false);
   const [popupTaskData, setPopupTaskData] = useState<IFullTask>();
@@ -123,12 +123,36 @@ const Board = () => {
                       tasks={tasks}
                       editId={editId}
                       activateEdit={activateEdit}
-                      disactivateEdit={disactivateEdit}
+                      deactivateEdit={deactivateEdit}
                       updateBoard={updateBoard}
                       toggleTaskOpen={toggleTaskOpen}
                       setTaskForPopup={setTaskForPopup}
                     />
                   ))
+                )}
+                {provider.placeholder}
+                {loadingBoards || isLoadingColumn ? (
+                  <Loader />
+                ) : (
+                  <DialogButton
+                    type="new_column"
+                    btn={(handleOpenDialog, type) => (
+                      <Button
+                        onClick={handleOpenDialog}
+                        className={styles['new-column-btn']}
+                        color="info"
+                        endIcon={<Add />}
+                      >
+                        {t(`buttons.${type}`)}
+                      </Button>
+                    )}
+                    form={(handleCloseDialog) => (
+                      <CreateColumnForm
+                        handleClose={handleCloseDialog}
+                        addColumn={addColumnCallback}
+                      />
+                    )}
+                  />
                 )}
                 {provider.placeholder}
                 {loadingBoards || isLoadingColumn ? (

@@ -82,7 +82,7 @@ const AuthLogo = () => {
       </Tooltip>
       <Menu
         sx={{ mt: '45px' }}
-        id="menu-appbar"
+        id="menu-appBar"
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',

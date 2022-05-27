@@ -20,7 +20,7 @@ interface Props extends IColumn {
   editId: string;
   index: number;
   activateEdit: (id: string) => void;
-  disactivateEdit: () => void;
+  deactivateEdit: () => void;
   updateBoard: () => void;
   toggleTaskOpen: () => void;
   setTaskForPopup: (task: IFullTask, title: string) => void;
@@ -35,7 +35,7 @@ const BoardColumn = ({
   tasks,
   editId,
   activateEdit,
-  disactivateEdit,
+  deactivateEdit,
   updateBoard,
   toggleTaskOpen,
   setTaskForPopup,
@@ -76,7 +76,7 @@ const BoardColumn = ({
               {editId === _id ? (
                 <ChangeColumnTitle
                   currentTitle={title}
-                  disactivateEdit={disactivateEdit}
+                  deactivateEdit={deactivateEdit}
                   boardId={boardId}
                   columnId={_id}
                   order={order}
@@ -119,7 +119,7 @@ const BoardColumn = ({
                   <Button
                     onClick={handleOpenDialog}
                     className={styles['new-task-btn']}
-                    color="warning"
+                    color="info"
                     endIcon={<Add />}
                   >
                     {t(`buttons.${type}`)}

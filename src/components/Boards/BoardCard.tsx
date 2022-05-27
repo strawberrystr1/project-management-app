@@ -12,9 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import UpdateBoardBtn from './UpdateBoardBtn';
 import DeleteBoardBtn from './DeleteBoardBtn';
-import styles from './style.module.scss';
 import { useGetBoardByIdQuery } from '../../store/services/boardsService';
-import { useTypedSelector } from '../../hooks/redux';
 
 const BoardCard = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
@@ -30,7 +28,6 @@ const BoardCard = ({ board }: { board: IBoard }) => {
         </Stack>
       ) : (
         <Card
-          className={styles['card-item']}
           sx={{
             height: 90,
             maxWidth: 345,
