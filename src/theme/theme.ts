@@ -45,6 +45,17 @@ export const themeOptionsDark: ThemeOptions = {
     borderRadius: 6,
   },
   components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          ...(ownerState.className === 'color-picker-search' && {
+            '&.Mui-selected': {
+              display: 'none',
+            },
+          }),
+        }),
+      },
+    },
     MuiContainer: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -108,7 +119,7 @@ export const themeOptionsLight: ThemeOptions = {
       paper: '#e3e3e3',
     },
     primary: {
-      main: '#69e36a',
+      main: primaryLightColor,
       contrastText: lightFontColor,
     },
     secondary: {
@@ -140,6 +151,17 @@ export const themeOptionsLight: ThemeOptions = {
     },
   },
   components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          ...(ownerState.className === 'color-picker-search' && {
+            '&.Mui-selected': {
+              display: 'none',
+            },
+          }),
+        }),
+      },
+    },
     MuiContainer: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -162,7 +184,7 @@ export const themeOptionsLight: ThemeOptions = {
           ...((ownerState.className === 'header-btn active' && {
             color: '#fefefe',
             ':hover': {
-              color: '#030303',
+              color: '#cfcfcf',
               background: 'transparent',
             },
           }) ||
@@ -181,14 +203,20 @@ export const themeOptionsLight: ThemeOptions = {
           ...((ownerState.className === 'header-btn active' && {
             color: '#fefefe',
             ':hover': {
-              color: '#030303',
+              color: '#cfcfcf',
             },
           }) ||
             (ownerState.className === 'header-btn' && {
               ':hover': {
                 color: '#cfcfcf',
               },
-            })),
+            }) || {
+              '&.MuiButton-containedPrimary': {
+                ':hover': {
+                  backgroundColor: '#7dbf46',
+                },
+              },
+            }),
         }),
       },
     },
