@@ -154,30 +154,6 @@ const Board = () => {
                     )}
                   />
                 )}
-                {provider.placeholder}
-                {loadingBoards || isLoadingColumn ? (
-                  <Loader />
-                ) : (
-                  <DialogButton
-                    type="new_column"
-                    btn={(handleOpenDialog, type) => (
-                      <Button
-                        onClick={handleOpenDialog}
-                        className={styles['new-column-btn']}
-                        color="info"
-                        endIcon={<Add />}
-                      >
-                        {t(`buttons.${type}`)}
-                      </Button>
-                    )}
-                    form={(handleCloseDialog) => (
-                      <CreateColumnForm
-                        handleClose={handleCloseDialog}
-                        addColumn={addColumnCallback}
-                      />
-                    )}
-                  />
-                )}
               </Stack>
               {popupTaskData && (
                 <TaskPopup
