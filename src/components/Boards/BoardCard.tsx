@@ -1,4 +1,12 @@
-import { Card, CardActionArea, CardContent, Grid, Typography } from '@mui/material';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Grid,
+  LinearProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { IBoard } from '../../interfaces/apiInterfaces';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +14,6 @@ import UpdateBoardBtn from './UpdateBoardBtn';
 import DeleteBoardBtn from './DeleteBoardBtn';
 import styles from './style.module.scss';
 import { useGetBoardByIdQuery } from '../../store/services/boardsService';
-import Loader from '../Loader';
 import { useTypedSelector } from '../../hooks/redux';
 import { addThemeScroll } from '../../utils/functions';
 
@@ -20,7 +27,9 @@ const BoardCard = ({ board }: { board: IBoard }) => {
   return (
     <Grid item xs={2} sm={4} md={4} key={board['_id']}>
       {isLoading ? (
-        <Loader />
+        <Stack minHeight={92} textAlign="center" justifyContent="center">
+          <LinearProgress color="warning" />
+        </Stack>
       ) : (
         <Card
           className={addThemeScroll(theme, [styles['card-item']])}

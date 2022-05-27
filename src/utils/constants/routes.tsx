@@ -40,10 +40,6 @@ const routes: IRouterRoutes = {
       element: <Board />,
     },
     {
-      path: '/profile/:id',
-      element: <NotFound />,
-    },
-    {
       path: '/user/settings',
       element: <Settings />,
     },
