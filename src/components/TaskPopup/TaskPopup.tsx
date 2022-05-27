@@ -102,7 +102,6 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
             {t('errors.popup')}
           </DialogContent>
         }
-        text={t('errors.default')}
       >
         <DialogContent sx={{ background: color || 'transparent' }} />
         <DialogContent className={styles['dialog']}>

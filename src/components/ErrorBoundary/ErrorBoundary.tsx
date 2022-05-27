@@ -1,6 +1,6 @@
 import { Component, ReactNode } from 'react';
 
-type Props = { children: ReactNode; text: string; fallback?: ReactNode };
+type Props = { children: ReactNode; text?: string; fallback?: ReactNode };
 
 export default class ErrorBoundary extends Component<Props, { error: boolean }> {
   constructor(props: Props) {
