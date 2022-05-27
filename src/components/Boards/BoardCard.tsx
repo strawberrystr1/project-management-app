@@ -25,13 +25,18 @@ const BoardCard = ({ board }: { board: IBoard }) => {
   return (
     <Grid item xs={2} sm={4} md={4} key={board['_id']}>
       {isLoading ? (
-        <Stack minHeight={92} textAlign="center" justifyContent="center">
+        <Stack height={90} textAlign="center" justifyContent="center">
           <LinearProgress color="warning" />
         </Stack>
       ) : (
         <Card
           className={styles['card-item']}
-          sx={{ maxWidth: 345, position: 'relative', maxHeight: 100, overflow: 'auto' }}
+          sx={{
+            height: 90,
+            maxWidth: 345,
+            position: 'relative',
+            overflow: 'auto',
+          }}
         >
           <CardActionArea
             onClick={() => {
@@ -39,7 +44,12 @@ const BoardCard = ({ board }: { board: IBoard }) => {
             }}
           >
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="h5"
+                fontSize={{ xs: '1em', sm: '1.5em' }}
+              >
                 {board.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
