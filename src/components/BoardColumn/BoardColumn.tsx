@@ -119,7 +119,7 @@ const BoardColumn = ({
                   <Button
                     onClick={handleOpenDialog}
                     className={styles['new-task-btn']}
-                    color="warning"
+                    color="info"
                     endIcon={<Add />}
                   >
                     {t(`buttons.${type}`)}

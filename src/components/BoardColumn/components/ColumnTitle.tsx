@@ -39,7 +39,7 @@ const ColumnTitle = ({ currentTitle, activateEdit, boardId, columnId }: Props) =
           <IconButton
             onClick={handleOpenDialog}
             size="small"
-            color="secondary"
+            color="warning"
             aria-label="delete column"
           >
             <BackspaceOutlinedIcon />
