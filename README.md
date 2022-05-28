@@ -1,4 +1,4 @@
-# Project manager
+# Project manager App
 
 The application is suitable for planning teamwork in any industry. It will help to build and track the workflow from start to finish, you can always see at what stage this or that task is. Assign responsible for certain tasks, markers are used for visual convenience, form the structure as you like and change it depending on the needs. The project management system was created as part of the React 2022Q1 training course from Rolling Scopes School.
 
