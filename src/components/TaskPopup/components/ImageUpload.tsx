@@ -51,7 +51,7 @@ const ImageUpload = ({ taskId, boardId }: Props) => {
         <Button
           variant="text"
           component="span"
-          color="primary"
+          color="warning"
           startIcon={<PublishIcon color="info" />}
         >
           {file ? file.name : t('task_popup.upload')}

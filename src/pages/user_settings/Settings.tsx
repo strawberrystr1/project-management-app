@@ -14,6 +14,7 @@ import { IUserResponse } from '../../interfaces/apiInterfaces';
 import DialogButton from '../../components/layouts/DialogButton';
 import DialogControls from '../../components/layouts/DialogControls';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
+import ErrorBoundary from '../../components/ErrorBoundary';
 
 const Settings = () => {
   const [getUser, { data }] = useGetUserMutation();
@@ -46,7 +47,7 @@ const Settings = () => {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary text={t('errors.default')}>
       <Box className={styles.settings_wrapper}>
         <Typography fontSize={24} variant="h3" sx={{ marginBottom: '40px' }}>
           {t('settings.title')}
@@ -100,7 +101,7 @@ const Settings = () => {
           </Box>
         </Box>
       </Box>
-    </>
+    </ErrorBoundary>
   );
 };
 

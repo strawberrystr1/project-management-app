@@ -1,30 +1,39 @@
-import { Card, CardActionArea, CardContent, Grid, Typography } from '@mui/material';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Grid,
+  LinearProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { IBoard } from '../../interfaces/apiInterfaces';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import UpdateBoardBtn from './UpdateBoardBtn';
 import DeleteBoardBtn from './DeleteBoardBtn';
-import styles from './style.module.scss';
 import { useGetBoardByIdQuery } from '../../store/services/boardsService';
-import Loader from '../Loader';
-import { useTypedSelector } from '../../hooks/redux';
-import { addThemeScroll } from '../../utils/functions';
 
 const BoardCard = ({ board }: { board: IBoard }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { theme } = useTypedSelector((state) => state.settings);
   const { data, isLoading } = useGetBoardByIdQuery(board['_id']);
   const columnsLength = data?.columns ? data?.columns.length : 0;
 
   return (
     <Grid item xs={2} sm={4} md={4} key={board['_id']}>
       {isLoading ? (
-        <Loader />
+        <Stack height={90} textAlign="center" justifyContent="center">
+          <LinearProgress color="warning" />
+        </Stack>
       ) : (
         <Card
-          className={addThemeScroll(theme, [styles['card-item']])}
-          sx={{ maxWidth: 345, position: 'relative', maxHeight: 100, overflow: 'auto' }}
+          sx={{
+            height: 90,
+            maxWidth: 345,
+            position: 'relative',
+            overflow: 'auto',
+          }}
         >
           <CardActionArea
             onClick={() => {
@@ -32,7 +41,12 @@ const BoardCard = ({ board }: { board: IBoard }) => {
             }}
           >
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="h5"
+                fontSize={{ xs: '1em', sm: '1.5em' }}
+              >
                 {board.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">

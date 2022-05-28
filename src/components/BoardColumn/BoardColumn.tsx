@@ -9,7 +9,7 @@ import ChangeColumnTitle from './components/ChangeColumnTitle';
 import ColumnTitle from './components/ColumnTitle';
 import { useAddTaskMutation } from '../../store/services/tasksService';
 import TaskColumn from '../TaskColumn';
-import { addThemeScroll, getNewOrder } from '../../utils/functions';
+import { getNewOrder } from '../../utils/functions';
 import { CreateTask } from '../../interfaces/formInterfaces';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import Loader from '../Loader';
@@ -20,7 +20,7 @@ interface Props extends IColumn {
   editId: string;
   index: number;
   activateEdit: (id: string) => void;
-  disactivateEdit: () => void;
+  deactivateEdit: () => void;
   updateBoard: () => void;
   toggleTaskOpen: () => void;
   setTaskForPopup: (task: IFullTask, title: string) => void;
@@ -35,14 +35,13 @@ const BoardColumn = ({
   tasks,
   editId,
   activateEdit,
-  disactivateEdit,
+  deactivateEdit,
   updateBoard,
   toggleTaskOpen,
   setTaskForPopup,
 }: Props) => {
   const { t } = useTranslation();
   const dispatch = useTypedDispatch();
-  const { theme } = useTypedSelector((state) => state.settings);
   const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useTypedSelector((state) => state.user);
   const { tasks: sortedTasks } = useTypedSelector((state) => state.board.board.columns[index]);
@@ -67,7 +66,7 @@ const BoardColumn = ({
     <Draggable draggableId={_id} index={index}>
       {(provider) => (
         <Box
-          className={addThemeScroll(theme, [styles['column-container']])}
+          className={styles['column-container']}
           {...provider.draggableProps}
           ref={provider.innerRef}
           {...provider.dragHandleProps}
@@ -77,7 +76,7 @@ const BoardColumn = ({
               {editId === _id ? (
                 <ChangeColumnTitle
                   currentTitle={title}
-                  disactivateEdit={disactivateEdit}
+                  deactivateEdit={deactivateEdit}
                   boardId={boardId}
                   columnId={_id}
                   order={order}
@@ -91,11 +90,7 @@ const BoardColumn = ({
                 />
               )}
             </Box>
-            <Stack
-              direction={'column'}
-              spacing={1}
-              className={addThemeScroll(theme, [styles['column']])}
-            >
+            <Stack direction={'column'} spacing={1} className={styles['column']}>
               <Droppable droppableId={_id} direction="vertical" type="tasks">
                 {(droppableProvided: DroppableProvided) => (
                   <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
@@ -124,7 +119,7 @@ const BoardColumn = ({
                   <Button
                     onClick={handleOpenDialog}
                     className={styles['new-task-btn']}
-                    color="warning"
+                    color="info"
                     endIcon={<Add />}
                   >
                     {t(`buttons.${type}`)}

@@ -17,7 +17,6 @@ import UserPicker from '../UserPicker';
 import { ColorPicker } from './components/ColorPicker';
 import { useEffect, useState } from 'react';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
-import { addThemeScroll } from '../../utils/functions';
 import ErrorBoundary from '../ErrorBoundary';
 
 interface Props {
@@ -28,17 +27,17 @@ interface Props {
 }
 
 const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
-  const { t } = useTranslation();
   const { theme } = useTypedSelector((state) => state.settings);
+  const { t } = useTranslation();
   const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const dispatch = useTypedDispatch();
   const [updateTask] = useUpdateTaskMutation();
   const [color, setColor] = useState('');
 
   useEffect(() => {
-    const splited = task.title.split('<!>');
-    if (splited[1]) {
-      setColor(splited[1].trim());
+    const splitted = task.title.split('<!>');
+    if (splitted[1]) {
+      setColor(splitted[1].trim());
     }
 
     return () => setColor('');
@@ -103,10 +102,9 @@ const TaskPopup = ({ open, handleClose, task, columnTitle }: Props) => {
             {t('errors.popup')}
           </DialogContent>
         }
-        text={t('errors.default')}
       >
         <DialogContent sx={{ background: color || 'transparent' }} />
-        <DialogContent className={addThemeScroll(theme, [styles['dialog']])}>
+        <DialogContent className={styles['dialog']}>
           <TaskHeader
             userId={task.userId}
             title={task.title}

@@ -11,13 +11,13 @@ import { openSuccessSnack, openErrorSnack } from '../../../store/reducers/snackS
 
 type Props = {
   currentTitle: string;
-  disactivateEdit: () => void;
+  deactivateEdit: () => void;
   boardId: string;
   columnId: string;
   order: number;
 };
 
-const ChangeColumnTitle = ({ currentTitle, disactivateEdit, boardId, columnId, order }: Props) => {
+const ChangeColumnTitle = ({ currentTitle, deactivateEdit, boardId, columnId, order }: Props) => {
   const { t } = useTranslation();
   const textarea = useRef<HTMLInputElement>();
   const dispatch = useTypedDispatch();
@@ -31,7 +31,7 @@ const ChangeColumnTitle = ({ currentTitle, disactivateEdit, boardId, columnId, o
     updateColumn(data)
       .unwrap()
       .catch((e) => e);
-    disactivateEdit();
+    deactivateEdit();
     trimmered
       ? dispatch(openSuccessSnack(t('snack_message.column.update.success')))
       : dispatch(openErrorSnack(t('snack_message.column.update.validation_error')));
@@ -49,7 +49,7 @@ const ChangeColumnTitle = ({ currentTitle, disactivateEdit, boardId, columnId, o
       <IconButton onClick={onConfirm} size="small" color="success" aria-label="delete column">
         <CheckCircleOutlineIcon />
       </IconButton>
-      <IconButton onClick={disactivateEdit} size="small" color="error" aria-label="delete column">
+      <IconButton onClick={deactivateEdit} size="small" color="error" aria-label="delete column">
         <HighlightOffIcon />
       </IconButton>
     </>

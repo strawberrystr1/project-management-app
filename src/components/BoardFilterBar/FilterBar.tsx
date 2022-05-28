@@ -43,7 +43,6 @@ const FilterBar = () => {
     dispatch(clearFilters());
   };
 
-  //  {t(`buttons.${type}`)}
   return (
     <>
       <Box position="relative" sx={{ width: 300, m: 0 }}>
@@ -81,7 +80,7 @@ const FilterBar = () => {
             ></Box>
           )}
         >
-          <MenuItem value="">
+          <MenuItem value="" className="color-picker-search">
             <em>{t('forms.filter_board.color_none')}</em>
           </MenuItem>
           {colors.map((color) => (
@@ -93,13 +92,14 @@ const FilterBar = () => {
                 height: '36px',
                 '&:hover': { backgroundColor: color, opacity: 0.8 },
               }}
+              className="color-picker-search"
             ></MenuItem>
           ))}
         </Select>
       </FormControl>
       <Button
         onClick={clearHandle}
-        variant="contained"
+        variant="outlined"
         color="warning"
         endIcon={<HighlightOffIcon />}
         sx={{ mt: { xs: 2, md: 0 } }}

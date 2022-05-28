@@ -9,6 +9,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { IBoard } from '../../interfaces/apiInterfaces';
 import { Box } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import ErrorBoundary from '../../components/ErrorBoundary';
 
 const Boards = () => {
   const { data } = useGetBoardsQuery();
@@ -36,7 +37,7 @@ const Boards = () => {
   };
 
   return (
-    <>
+    <ErrorBoundary text={t('errors.default')}>
       <Stack
         position="relative"
         my="20px"
@@ -65,7 +66,7 @@ const Boards = () => {
           form={(handleClose) => <CreateBoardForm handleClose={handleClose} />}
         />
       </Grid>
-    </>
+    </ErrorBoundary>
   );
 };
 

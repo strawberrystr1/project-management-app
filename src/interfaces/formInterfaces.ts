@@ -9,7 +9,7 @@ export interface IInitialFormValues {
 export interface IDialogButtonProps {
   btn: (handleOpenDialog: () => void, buttonType: string) => JSX.Element;
   form: (handleCloseDialog: () => void) => JSX.Element;
-  type: string; //translation type
+  type: string;
   className?: string;
   message?: string;
 }
