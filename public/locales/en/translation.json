@@ -9,7 +9,7 @@
     "sin_btn": "Sign In",
     "board_btn": "Go to Main Page",
     "team": "Our team",
-    "about": "This application is suitable for project planning in any industry, for working with a team of any size. It will help to build and track the work process from start to finish, you can always see at what stage a certain task is. Assign responsible for certain tasks, markers are used for visual convenience, form the structure as you like and change it depending on the needs.",
+    "about": "This application is suitable for project planning in any industry, for working with a team of any size. It will help to build and track the work process from start to finish, you can always see at what stage a certain task is. Assign responsible for certain tasks, markers are used for visual convenience, form the structure as you like and change it depending on the needs. This application for creating project management system was created as a part of the React 2022Q1 course from Rolling Scopes School.",
     "info": {
       "0": "Team lead. Coordinated the work of the team. Implemented authorization and the task window.",
       "1": "Developer. Implemented boards page and D'n'D logic for application.",
