@@ -60,7 +60,19 @@
       "login": "логин",
       "change_btn_sup": "Уже есть аккаунт? Войти",
       "change_btn_sin": "Вернуться к регистрации",
-      "success": "Вы вошли в аккаунт!"
+      "success": "Вы вошли в аккаунт!",
+      "login_required": "Логин обязателен",
+      "login_letters": "Login should contain only letters and numbers",
+      "login_min": "Login must be 6 or more characters",
+      "login_max": "Login must be 15 characters or less",
+      "password_whitespaces": "Password mustn't contain the whitespaces",
+      "password_required": "Password is required",
+      "password_characters": "Password mustn't contain the following characters '@, #, $, %, ^, &, *'",
+      "password_min": "Password must be 8 or more characters",
+      "name_required": "Name is required",
+      "name_letters": "Name should contain only letters and numbers",
+      "name_min": "Name must be 3 or more characters",
+      "name_max": "Name must be 20 or less characters"
     },
     "change_password": {
       "title": "Вы уверены что хотите изменить пароль ?"
