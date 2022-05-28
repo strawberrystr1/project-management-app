@@ -64,6 +64,24 @@ const Home = () => {
           </Typography>
           <img src={picture} alt="main picture" />
         </Box>
+        <Box className={styles.frame}>
+          <Typography
+            variant="h4"
+            sx={{
+              '@media (max-width: 440px)': { fontSize: '30px' },
+              margin: '20px 0',
+            }}
+          >
+            {t('welcome_page.video')}
+          </Typography>
+          <iframe
+            src="https://www.youtube.com/embed/nXEGJ9nbJyc"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </Box>
         <Box>
           <Typography variant="h2" align="center">
             {t('welcome_page.team')}
