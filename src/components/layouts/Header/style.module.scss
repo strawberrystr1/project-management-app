@@ -1,0 +1,15 @@
+.headerWrapper {
+  height: 80px;
+}
+
+.small{
+  @media (min-width: 600px) {
+    min-height: 48px !important;
+  }
+}
+
+.theme{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

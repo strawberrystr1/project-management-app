@@ -1,0 +1,5 @@
+*.css
+*.svg
+/.git
+/.vscode
+node-modules

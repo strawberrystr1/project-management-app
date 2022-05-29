@@ -1,0 +1,27 @@
+.new-column-btn {
+  width: 272px !important;
+  min-width: 272px !important;
+  align-self: flex-start;
+}
+
+.back-page-button {
+  align-self: flex-start;
+}
+
+.board-wrapper {
+  height: calc(100vh - (64px + 55px + 95px));
+  display: flex;
+  overflow-x: auto;
+
+  @media (max-width: 900px){
+    height: calc(100vh - (64px + 49px));
+  };
+
+  @media (max-width: 600px){
+    height: calc(100vh - (48px + 75px));
+  };
+
+  @media (max-width: 490px){
+    height: calc(100vh - (56px + 93px));
+  };
+}

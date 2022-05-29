@@ -1,0 +1,26 @@
+.settings_item {
+  display: flex;
+  width: 30%;
+  justify-content: space-between;
+  margin: 20px 0;
+
+  @media (max-width: 1400px) {
+    width: 45%;
+  }
+
+  @media (max-width: 1100px) {
+    width: 45%;
+  }
+
+  @media (max-width: 1100px) {
+    width: 65%;
+  }
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+}
+
+.submit {
+  height: 45px;
+}

@@ -1,0 +1,171 @@
+{
+  "errors": {
+    "default": "Something went wrong. Try to reload the page",
+    "popup": "Sorry, something went wrong, try to re-open me :)"
+  },
+  "welcome_page": {
+    "about_project": "",
+    "sup_btn": "Sign Up",
+    "sin_btn": "Sign In",
+    "board_btn": "Go to Main Page",
+    "team": "Our team",
+    "video": "Video presentation",
+    "about": "This application is suitable for project planning in any industry, for working with a team of any size. It will help to build and track the work process from start to finish, you can always see at what stage a certain task is. Assign responsible for certain tasks, markers are used for visual convenience, form the structure as you like and change it depending on the needs. This application for creating project management system was created as a part of the React 2022Q1 course from Rolling Scopes School.",
+    "info": {
+      "0": "Team lead. Coordinated the work of the team. Implemented authorization and the task window.",
+      "1": "Developer. Implemented boards page and D'n'D logic for application.",
+      "2": "Developer. Implemented single board page and was responsible for back-end."
+    }
+  },
+  "not_found": {
+    "title": "Whoops!",
+    "subtitle": "This page got lost in conversation",
+    "paragraph": "Not to worry. You will be redirected to homepage in "
+  },
+  "forms": {
+    "new_board": {
+      "title": "Create new board",
+      "description": "To create new board, please enter the title of the board",
+      "label": "Title"
+    },
+    "new_column": {
+      "title": "Create new column",
+      "description": "To create new column, please enter the title of the column",
+      "label": "Title"
+    },
+    "new_task": {
+      "title": "Create new task",
+      "description": "To create new task, please enter the title and description of the task",
+      "taskTitle": "Title",
+      "taskDescription": "Description",
+      "users": "Members"
+    },
+    "delete_column": {
+      "title": "Remove column",
+      "description": "Do you really want to remove column?",
+      "label": "Board name"
+    },
+    "delete_board": {
+      "title": "Delete board",
+      "description": "Are you sure to delete \"{{ title }}\" board?"
+    },
+    "update_board": {
+      "title": "Edit board",
+      "description": "Edit title of your current board"
+    },
+    "auth": {
+      "title_sup": "Sign Up",
+      "title_sin": "Sign In",
+      "name": "name",
+      "password": "password",
+      "login": "login",
+      "change_btn_sup": "Already have an account? Sign in",
+      "change_btn_sin": "Back to registration",
+      "success": "You successfully logged in!",
+      "login_required": "Login is required",
+      "login_letters": "Login should contain only letters and numbers",
+      "login_min": "Login must be 6 or more characters",
+      "login_max": "Login must be 15 characters or less",
+      "password_whitespaces": "Password mustn't contain the whitespaces",
+      "password_required": "Password is required",
+      "password_characters": "Password mustn't contain the following characters '@, #, $, %, ^, &, *'",
+      "password_min": "Password must be 8 or more characters",
+      "name_required": "Name is required",
+      "name_letters": "Name should contain only letters and numbers",
+      "name_min": "Name must be 3 or more characters",
+      "name_max": "Name must be 20 or less characters"
+    },
+    "change_password": {
+      "title": "Are you sure you want to change password ?"
+    },
+    "delete_profile": {
+      "title": "Are you sure you want to delete account ?"
+    },
+    "delete_task": {
+      "title": "Are you sure you want to delete task ?"
+    },
+    "filter_board":{
+      "title": "Filter by title",
+      "members": "Filter by members",
+      "color": "Color",
+      "color_none": "None",
+      "clear_button": "Clear"
+    },
+    "delete_file": {
+      "title": "Delete file",
+      "description": "Are you sure you want to remove file ?"
+    }
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "back": "Back",
+    "new_board": "Create board",
+    "boards": "Boards",
+    "new_column": "New column",
+    "new_task": "New task",
+    "home": "Home"
+  },
+  "header": {
+    "userSettings": "User settings",
+    "editProfile": "Edit",
+    "logOutProfile": "Log out",
+    "signInProfile": "sign in",
+    "signUpProfile": "sign up",
+    "burgerMenu": "Menu"
+  },
+  "settings": {
+    "title": "User settings",
+    "password": "Change password",
+    "language": "Change language",
+    "name": "Change name",
+    "delete": "Delete profile",
+    "name_block": "User name",
+    "login": "User login",
+    "change_btn": "change",
+    "delete_btn": "delete",
+    "placeholder_name": "Enter new name",
+    "placeholder_password": "Enter new password"
+  },
+  "boards": {
+    "boardDescriptionNoColumns": "No columns yet",
+    "boardDescription": "Columns - {{count}}",
+    "search_board": "Search board"
+  },
+  "task_popup": {
+    "column": "in the column",
+    "author": "Task created by:",
+    "users": "Users assigned to this task:",
+    "desc": "Description:",
+    "delete": "Delete task",
+    "assigned": "No assigned users",
+    "color": "You can choose a cover for this task:",
+    "upload": "Upload image"
+  },
+  "snack_message": {
+    "delete_user": "Successfully removed",
+    "update_user": "Successfully updated",
+    "add_task": "Task added",
+    "delete_task": "Task removed",
+    "update_task": "Task updated",
+    "add_column": "Column added",
+    "delete_column": "Column removed",
+    "create_board": "Board created",
+    "delete_board": "Board removed",
+    "update_board": "Board updated",
+    "file": {
+      "create_file": "File uploaded",
+      "delete_file": "File removed"
+    },
+    "task": {
+      "required_fields": "Task's title and description are obligatory to fill in !"
+    },
+    "column": {
+      "required_fields": "Column title is obligatory to fill in !",
+      "update": {
+        "success": "Column title successfully updated",
+        "validation_error": "Column name cannot be empty !"
+      }
+    }
+  }
+}
