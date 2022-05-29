@@ -20,7 +20,7 @@ import useFormikTranslation from '../../hooks/useFormikTranslate';
 const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const { pathname } = useLocation();
   const [login] = useState(pathname.includes('up'));
-  const [createUser] = useCreateUserMutation();
+  const [createUser, { isLoading: createUserLoading }] = useCreateUserMutation();
   const [signInUser, { isLoading }] = useSignInMutation({
     fixedCacheKey: 'user-data',
   });
@@ -133,7 +133,7 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
           type="submit"
           className={`${styles.button} ${styles.override}`}
           variant="contained"
-          loading={isLoading}
+          loading={isLoading || createUserLoading}
         >
           {login ? t('forms.auth.title_sup') : t('forms.auth.title_sin')}
         </LoadingButton>
