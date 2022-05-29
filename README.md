@@ -1,46 +1,29 @@
-# Getting Started with Create React App
+# Project manager App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The application is suitable for planning teamwork in any industry. It will help to build and track the workflow from start to finish, you can always see at what stage this or that task is. Assign responsible for certain tasks, markers are used for visual convenience, form the structure as you like and change it depending on the needs. The project management system was created as part of the React 2022Q1 training course from Rolling Scopes School.
 
-## Available Scripts
+## Stack
 
-In the project directory, you can run:
+**1. Typescript** is a strict syntactical superset of JavaScript that adds optional static typing to the language.
 
-### `npm start`
+**2. React.js v18** is a JavaScript library for building UI that allows to create encapsulated components that manage their own state
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**3. Redux** is a predictable state container for JavaScript apps. It helps to write applications that behave consistently, run in different environments (client, server, and native), and are easy to test.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**4. Redux Toolkit** is the official toolset for efficient Redux development. Includes utilities to simplify common use cases like store setup, creating reducers, immutable update logic, and more.
 
-### `npm test`
+**5. RTK Query** is a powerful data fetching and caching tool. It is designed to simplify common cases for loading data in a web application, eliminating the need to hand-write data fetching & caching logic yourself.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**6. Material-UI v5** is a simple and customizable component library to build faster, beautiful, and more accessible React applications.
 
-### `npm run build`
+**7. React router DOM v6** is a library that allows to use routes in your projects to render multiple pages with SPA.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**8. SASS** is a preprocessor scripting language that is interpreted or compiled into CSS.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**9. @react-forked/dnd** is a React drag-and-drop library specifically built for lists.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**10. @react-i18next** is a powerful internationalization framework for React / React Native which is based on i18next. The module provides multiple components eg. to assert that needed translations get loaded or that your content gets rendered when the language changes.
 
-### `npm run eject`
+**11. Formik** is a library that helps get values in and out of form state, validate messages and error messages, handle form submission.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+**12. Git** - distributed version control system designed to handle everything from small to very large projects with speed and efficiency.

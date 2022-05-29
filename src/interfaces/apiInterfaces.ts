@@ -68,15 +68,7 @@ export interface IFile {
   taskId: string;
 }
 
-/* THIS CODE IS USED IN OLD METHODS */
-export interface ITaskResponse extends IColumn, IDeleteColumn {
-  description: string;
-  userId: string;
-}
-
 export type IGetTasks = IDeleteColumn;
-
-/* THIS CODE IS USED IN OLD METHODS */
 
 export interface ICreateColumn {
   title: string;
