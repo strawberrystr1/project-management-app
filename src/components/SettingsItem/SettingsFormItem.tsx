@@ -1,4 +1,4 @@
-import { Box, Typography, Divider, TextField } from '@mui/material';
+import { Box, Typography, Divider, TextField, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import styles from './style.module.scss';
 import { useUpdateUserMutation } from '../../store/services/userService';
@@ -9,8 +9,9 @@ import DialogControls from '../layouts/DialogControls';
 import { readToken } from '../../utils/functions';
 import { useTypedDispatch } from '../../hooks/redux';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { validate } from '../../utils/helpers/validatePassword';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface IProps {
   userId: string;
@@ -20,12 +21,13 @@ interface IProps {
 }
 
 const SettingsFormItem: React.FC<IProps> = ({ userId, data, fieldName }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const dispatch = useTypedDispatch();
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async () => {
     const token = readToken();
@@ -38,7 +40,7 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, fieldName }) => {
         password: inputValue,
       },
     };
-    const validity = validate(inputValue);
+    const validity = validate(inputValue, i18n.language);
     if (validity) {
       setError(true);
       setErrorMessage(validity);
@@ -52,8 +54,16 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, fieldName }) => {
     }
   };
 
+  useEffect(() => {
+    handleSubmit();
+  }, [i18n.language]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
   return (
@@ -66,12 +76,24 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, fieldName }) => {
           <TextField
             placeholder={t(`settings.placeholder_${fieldName}`)}
             id={fieldName}
-            name={fieldName}
+            type={showPassword ? 'text' : 'password'}
             onChange={handleChange}
             error={error}
             helperText={error && errorMessage}
             value={inputValue}
             sx={{ maxWidth: '240px', marginRight: '20px' }}
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  sx={{ position: 'absolute', right: '12px', top: '8px' }}
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              ),
+            }}
           />
           <DialogButton
             type="change_password"
