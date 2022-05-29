@@ -1,4 +1,12 @@
-import { Avatar, FormControl, IconButton, TextField, Typography } from '@mui/material';
+import {
+  Avatar,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  OutlinedInput,
+  TextField,
+  Typography,
+} from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styles from './style.module.scss';
@@ -15,6 +23,7 @@ import jwt from 'jwt-decode';
 import { openSuccessSnack } from '../../store/reducers/snackSlice';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import useValidationSchema from '../../utils/helpers/validationSchema';
+import useFormikTranslation from '../../hooks/useFormikTranslate';
 
 const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   const { pathname } = useLocation();
@@ -25,7 +34,7 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   });
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
 
   const initialValues = fields.reduce<IInitialFormValues>((acc, item) => {
@@ -62,6 +71,7 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
     validationSchema: login ? validationSchema : validationSchema.omit(['name']),
     onSubmit: handleSubmit,
   });
+  useFormikTranslation(formik.validateForm);
 
   const handleClickShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -78,30 +88,34 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
       {fields.map((item) => {
         if (item === 'password') {
           return (
-            <FormControl key={item} className={styles.input} sx={{ position: 'relative' }}>
-              <TextField
-                classes={{
-                  root: styles.label,
-                }}
-                id={item}
-                name={item}
-                label={t(`forms.auth.${item}`)}
-                autoComplete="on"
-                type={showPassword ? 'text' : 'password'}
-                value={formik.values[item]}
-                onChange={formik.handleChange}
-                error={formik.touched[item] && Boolean(formik.errors[item])}
-                helperText={formik.touched[item] && formik.errors[item]}
-              />
-              <IconButton
-                sx={{ position: 'absolute', right: '12px', top: '8px' }}
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </FormControl>
+            <TextField
+              className={styles.input}
+              classes={{
+                root: styles.label,
+              }}
+              id={item}
+              key={item}
+              name={item}
+              label={t(`forms.auth.${item}`)}
+              autoComplete="on"
+              type={showPassword ? 'text' : 'password'}
+              value={formik.values[item]}
+              onChange={formik.handleChange}
+              error={formik.touched[item] && Boolean(formik.errors[item])}
+              helperText={formik.touched[item] && formik.errors[item]}
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    sx={{ position: 'absolute', right: '12px', top: '8px' }}
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                ),
+              }}
+            />
           );
         } else {
           return (

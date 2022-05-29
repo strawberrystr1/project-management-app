@@ -27,6 +27,10 @@
   & p {
     text-transform: none;
   }
+
+  & > div {
+    padding: 0 !important;
+  }
 }
 
 .button {
