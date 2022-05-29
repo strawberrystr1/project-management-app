@@ -83,6 +83,7 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, fieldName }) => {
             error={error}
             helperText={error && errorMessage}
             value={inputValue}
+            autoComplete="on"
             sx={{ maxWidth: '240px', marginRight: '20px' }}
             InputProps={{
               endAdornment: (
