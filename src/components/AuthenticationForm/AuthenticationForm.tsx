@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  OutlinedInput,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Avatar, IconButton, TextField, Typography } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styles from './style.module.scss';
@@ -34,7 +26,7 @@ const AuthenticationForm: React.FC<IFromField> = ({ fields }) => {
   });
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
 
   const initialValues = fields.reduce<IInitialFormValues>((acc, item) => {
