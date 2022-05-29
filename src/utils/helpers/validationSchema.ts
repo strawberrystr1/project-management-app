@@ -1,37 +1,40 @@
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
-const validationSchema = yup.object({
-  login: yup
-    .string()
-    .required('Login is required')
-    .test('only letters', 'Login should contain only letters and numbers', (value) => {
-      return !/[\&!@#$%\^\*\)\(\[\]\{\}<>,/\/\+\\]/.test(value as string);
-    })
-    .min(6, 'Login must be 6 or more characters')
-    .max(15, 'Login must be 15 characters or less'),
-  password: yup
-    .string()
-    .trim()
-    .test('password', `Password mustn't contain the whitespaces`, (value) => {
-      return !/\s/.test(value as string);
-    })
-    .required('Password is required')
-    .test(
-      'password',
-      `Password mustn't contain the following characters '@, #, $, %, ^, &, *'`,
-      (value) => {
+const useValidationSchema = () => {
+  const { t } = useTranslation();
+
+  const validationSchema = yup.object({
+    login: yup
+      .string()
+      .required(t('forms.auth.login_required'))
+      .test('only letters', t('forms.auth.login_letters'), (value) => {
+        return !/[\&!@#$%\^\*\)\(\[\]\{\}<>,/\/\+\\]/.test(value as string);
+      })
+      .min(6, t('forms.auth.login_min'))
+      .max(15, t('forms.auth.login_max')),
+    password: yup
+      .string()
+      .trim()
+      .test('password', t('forms.auth.password_whitespaces'), (value) => {
+        return !/\s/.test(value as string);
+      })
+      .required(t('forms.auth.password_required'))
+      .test('password', t('forms.auth.password_characters'), (value) => {
         return !/[\&@#$%\^\*]/.test(value as string);
-      }
-    )
-    .min(8, 'Password must be 8 or more characters'),
-  name: yup
-    .string()
-    .required('Name is required')
-    .test('only letters', 'Name should contain only letters and numbers', (value) => {
-      return !/[\&!@#$%\^\*\)\(\[\]\{\}<>,/\/\+\\]/.test(value as string);
-    })
-    .min(3, 'Name must be 3 or more characters')
-    .max(20, 'Name must be 20 or less characters'),
-});
+      })
+      .min(8, t('forms.auth.password_min')),
+    name: yup
+      .string()
+      .required(t('forms.auth.name_required'))
+      .test('only letters', t('forms.auth.name_letters'), (value) => {
+        return !/[\&!@#$%\^\*\)\(\[\]\{\}<>,/\/\+\\]/.test(value as string);
+      })
+      .min(3, t('forms.auth.name_min'))
+      .max(20, t('forms.auth.name_max')),
+  });
 
-export default validationSchema;
+  return validationSchema;
+};
+
+export default useValidationSchema;
