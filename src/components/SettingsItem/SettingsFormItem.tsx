@@ -55,7 +55,9 @@ const SettingsFormItem: React.FC<IProps> = ({ userId, data, fieldName }) => {
   };
 
   useEffect(() => {
-    handleSubmit();
+    if (data) {
+      handleSubmit();
+    }
   }, [i18n.language]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
